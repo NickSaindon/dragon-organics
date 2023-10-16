@@ -1,6 +1,6 @@
 import { createRouter } from 'next-connect';
-import Category from '../../../../models/Category';
-import db from '../../../../utils/db';
+import Category from '../../../models/Categories';
+import db from '../../../utils/db';
 
 const router = createRouter();
 

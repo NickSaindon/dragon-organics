@@ -1,6 +1,6 @@
 import { createRouter } from 'next-connect';
 import News from '../../../models/News';
-import db from '../../../../utils/db';
+import db from '../../../utils/db';
 
 const router = createRouter();
 

@@ -1,17 +1,15 @@
 import axios from 'axios';
 import { signIn, useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import Image from "next/image";
 import { getError } from '../utils/error';
-import { Controller, useForm } from 'react-hook-form';
-import NumberFormat from "react-number-format";
+import { useForm } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
-import { Store } from '../utils/Store';
-import bcryptjs from 'bcryptjs';
 
 const Profile = () => {
   const { data: session } = useSession();
+
   const {
     handleSubmit,
     register,
@@ -24,19 +22,19 @@ const Profile = () => {
   useEffect(() => {
     setValue('name', session.user.name);
     setValue('email', session.user.email);
-  }, [session.user, setValue]);
+  }, [session, setValue]);
     
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.put('/api/auth/update', {
         name,
         email,
-        password: bcryptjs.hashSync(password),
+        password,
       });
       const result = await signIn('credentials', {
         redirect: false,
         email,
-        password: bcryptjs.hashSync(password),
+        password,
       });
       toast.success('Profile updated successfully');
       if (result.error) {
@@ -49,9 +47,7 @@ const Profile = () => {
     
   return (
     <Layout
-      title="Register Page"
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      title="Profile Page">
       <div className="register-container bg-black text-white text-center">
         <ToastContainer 
           position="top-center" 
