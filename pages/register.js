@@ -1,63 +1,60 @@
 import axios from 'axios';
 import Layout from '../components/Layout';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import Image from "next/image";
-import StateOptions from "../utils/stateOptions";
-import { Store } from '../utils/Store';
-import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
-// import { getError } from '../utils/error';
+import { getError } from '../utils/error';
 import NumberFormat from "react-number-format";
 import { ToastContainer, toast, Slide } from "react-toastify";
+import bcryptjs from 'bcryptjs';
 
 const Register = () => {
+  const { data: session } = useSession();
+  
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || '/');
+    }
+  }, [router, session, redirect]);
+
   const {
     handleSubmit,
+    register,
+    getValues,
     control,
     formState: { errors },
   } = useForm();
-  const router = useRouter();
-  const { redirect } = router.query;
-  const { state, dispatch } = useContext(Store);
-  const { userInfo } = state;
-  const [states, setStates] = useState("");
-  const stateOption = StateOptions.states;
 
-  useEffect(() => {
-    if (userInfo) {
-      router.push('/');
-    }
-  }, []);
-
-  const submitHandler = async ({ name, email, phone, companyName, address, city, state, zipCode, password, confirmPassword }) => {
-    if (password !== confirmPassword) {
-      // TODO: error message that passwords don't match
-      toast.error("Passwords don't match", {
-        theme: "colored"
-      });
-      return;
-    }
+  const submitHandler = async ({ name, email, birthDate, password }) => {
     try {
-      const { data } = await axios.post('/api/users/register', {
+      await axios.post('/api/auth/signup', {
         name,
         email,
-        phone,
-        companyName,
-        address,
-        city,
-        state,
-        zipCode,
+        birthDate,
         password,
       });
-      dispatch({ type: 'USER_LOGIN', payload: data });
-      Cookies.set('userInfo', data);
-      router.push(redirect || '/');
+
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+      if (result.error) {
+        toast.error(result.error), {
+          theme: "colored"
+        };        
+
+      }
     } catch (err) {
-    //   toast.error(getError(err), {
-    //     theme: "colored"
-    //   });   
+      toast.error(getError(err), {
+        theme: "colored"
+      });   
     }
   };
 
@@ -86,275 +83,119 @@ const Register = () => {
                 Denver (CO), and San Diego (CA).  If you are ordering from any of these States or cities we will not ship and refund your order.
               </p>
               <div className="form-floating">
-                <Controller
-                  name="name"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="text" 
-                      className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                      id="name" 
-                      placeholder="Full Name" 
-                      {...field}
-                    />
-                  )}
+                <input
+                  type="text"
+                  className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                  id="name"
+                  placeholder="Full Name" 
+                  autoFocus
+                  {...register('name', {
+                    required: 'Please enter name',
+                  })}
                 />
-                <div className="invalid-feedback">
-                  {
-                    errors.name
-                      ? errors.name.type === 'minLength'
-                        ? 'Name length is more than 1'
-                        : 'Name is required'
-                      : ''
-                  }
-                </div>
+                {errors.name && (
+                  <div className="invalid-feedback">
+                    {errors.name.message}
+                  </div>
+                )}
                 <label htmlFor="name">Full Name</label>
               </div>
               <div className="form-floating">
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="email" 
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                      id="email" 
-                      placeholder="Email" 
-                      {...field}
-                    />
-                  )}
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'Please enter email',
+                    pattern: {
+                      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                      message: 'Please enter valid email',
+                    },
+                  })}
+                  className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                  id="email"
+                  placeholder="Email"
                 />
-                <div className="invalid-feedback">
-                  {
-                    errors.email
-                      ? errors.email.type === 'pattern'
-                        ? 'Email is not valid'
-                        : 'Email is required'
-                      : ''
-                  }
-                </div>
+                {errors.email && (
+                  <div className="invalid-feedback">
+                    {errors.email.message}
+                  </div>
+                )}
                 <label htmlFor="name">Email</label>
               </div>
               <div className="form-floating">
                 <Controller 
-                  name="phone"
+                  name="birthDate"
                   control={control}
                   rules={{
                     required: true,
-                    pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/
+                    pattern: /\d{2}\/\d{4}/
                     ,
                   }}
-                  render={({ field: {onChange, name, value} }) => (
+                  render={({ field: {onChange, birthDate, value} }) => (
                     <NumberFormat
-                      format="(###) ###-####"
-                      name={name}
-                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                      format="##/####"
+                      name={birthDate}
+                      className={`form-control ${errors.birthDate ? 'is-invalid' : ''}`}
                       value={value}
-                      id="phone" 
-                      placeholder="Phone Number" 
+                      id="birthDate" 
+                      placeholder="Birth Date mm/yyyy" 
                       onChange={onChange}
                     />
                   )}
                 />
                 <div className="invalid-feedback">
-                    {errors.phone
-                          ? errors.phone.type === 'pattern'
+                    {errors.birthDate
+                          ? errors.birthDate.type === 'pattern'
                             ? 'Phone number is not completed'
                             : 'Phone number is required'
                           : ''
                     }
                 </div>
-                <label htmlFor="floatingInput">Phone Number</label>
+                <label htmlFor="floatingInput">Birth Date mm/yyyy</label>
               </div>
               <div className="form-floating">
-                <Controller
-                  name="address"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="text" 
-                      className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                      id="address" 
-                      placeholder="Address" 
-                      {...field}
-                    />
-                  )}
+                <input
+                  type="password"
+                  {...register('password', {
+                    required: 'Please enter password',
+                    minLength: { value: 6, message: 'password is more than 5 chars' },
+                  })}
+                  className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                  id="password"
+                  placeholder="Password"
+                  autoFocus
                 />
-                <div className="invalid-feedback">
-                  {
-                    errors.address
-                      ? errors.address.type === 'minLength'
-                        ? 'Address length is more than 1'
-                        : 'Address is required'
-                      : ''
-                  }
-                </div>
-                <label htmlFor="address">Address</label>
-              </div>
-              <div className="form-floating">
-                <Controller
-                  name="city"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="text" 
-                      className={`form-control ${errors.city ? 'is-invalid' : ''}`}
-                      id="city" 
-                      placeholder="City" 
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {
-                    errors.city
-                      ? errors.city.type === 'minLength'
-                        ? 'City length is more than 1'
-                        : 'City is required'
-                      : ''
-                  }
-                </div>
-                <label htmlFor="city">City</label>
-              </div>
-              <div className="form-floating">
-              <Controller
-                name="state"
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field }) => (
-                  <select 
-                    defaultValue='DEFAULT'
-                    className={`form-select ${errors.state ? 'is-invalid' : ''}`} 
-                    onChange={(e) => setStates(e.target.value)}
-                    value={states}
-                    {...field}
-                  >
-                    <option disabled value="DEFAULT">Select a State</option>
-                    {stateOption.map((state) => (
-                      <option key={state.value} value={state.value}>{state.label}</option>
-                    ))}
-                  </select>
+                {errors.password && (
+                  <div className="invalid-feedback">
+                    {errors.password.message}
+                  </div>
                 )}
-                />
 
-                <div className="invalid-feedback">
-                  {
-                    errors.state
-                        ? 'State is required'
-                        : ''
-                  }
-                </div>
-              </div>
-              <div className="form-floating">
-                <Controller
-                  name="zipCode"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="text" 
-                      className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
-                      id="zipCode" 
-                      placeholder="Zip Code" 
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {
-                    errors.zipCode
-                      ? errors.zipCode.type === 'minLength'
-                        ? 'Zip Code length is more than 1'
-                        : 'Zip Code is required'
-                      : ''
-                  }
-                </div>
-                <label htmlFor="address">Zip Code</label>
-              </div>
-              <div className="form-floating">
-                <Controller
-                  name="password"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 6,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="password" 
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                      id="password" 
-                      placeholder="Password" 
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {
-                    errors.password
-                      ? errors.password.type === 'minLength'
-                        ? 'Password length is more than 5'
-                        : 'Password is required'
-                      : ''
-                  }
-                </div>
                 <label htmlFor="password">Password</label>
               </div>
               <div className="form-floating">
-                <Controller
-                  name="confirmPassword"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 6,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="password" 
-                      className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                      id="confirmPassword" 
-                      placeholder="Confirm Password" 
-                      {...field}
-                    />
-                  )}
+                <input
+                  className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm Password" 
+                  {...register('confirmPassword', {
+                    required: 'Please enter confirm password',
+                    validate: (value) => value === getValues('password'),
+                    minLength: {
+                      value: 6,
+                      message: 'confirm password is more than 5 chars',
+                    },
+                  })}
                 />
-                <div className="invalid-feedback">
-                  {
-                    errors.password
-                      ? errors.confirmPassword.type === 'minLength'
-                        ? 'Password Confirmation length is more than 5'
-                        : 'Password Confirmation is required'
-                      : ''
-                  }
-                </div>
+                {errors.confirmPassword && (
+                  <div className="invalid-feedback ">
+                    {errors.confirmPassword.message}
+                  </div>
+                )}
+                {errors.confirmPassword &&
+                  errors.confirmPassword.type === 'validate' && (
+                    <div className="invalid-feedback">Password do not match</div>
+                )}
                 <label htmlFor="confirmPassword">Confirm Password</label>
               </div>
               <button className="w-100 btn btn-lg btn-outline-primary light" type="submit">

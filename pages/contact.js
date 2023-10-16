@@ -10,7 +10,6 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 const Contact = () => {
   const { handleSubmit, control, formState: { errors }, reset } = useForm();
   const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState("");
 
   useEffect(() => {
     gsap.timeline()
@@ -60,149 +59,149 @@ const Contact = () => {
           hideProgressBar={true}
           className="toast-alert"
         />
-          <div className="page-header">
-            <div className="py-lg-5 container header-container">
-              <div className="row ">
-                <div className="contact-text col-lg-12 mx-auto text-center text-white">
-                  <h1 className="header-one">Have Questions?</h1>
-                  <h1 className="header-two">Let&apos;s Connect</h1>
-                  <p>Send us a message and we will get back to you as soon as possible.</p>
-                </div>
+        <div className="page-header">
+          <div className="py-lg-5 container header-container">
+            <div className="row ">
+              <div className="contact-text col-lg-12 mx-auto text-center text-white">
+                <h1 className="header-one">Have Questions?</h1>
+                <h1 className="header-two">Let&apos;s Connect</h1>
+                <p>Send us a message and we will get back to you as soon as possible.</p>
               </div>
             </div>
           </div>
+        </div>
         <div className="contact-form bg-black text-white">
           <div className="form-contact">
-          <div className="row justify-content-md-center ">
-            <form onSubmit={handleSubmit(onSubmitForm, phone, setPhone)} 
-              className="col-lg-4 col-md-12 col-sm-12 text-center needs-validation" noValidate>
-              <Image src="/images/do-logo-title-under.png" width={150} height={200} alt=""/>
-                  <div className="form-floating">
-                <Controller
-                  name="name"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="text" 
-                      className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                      id="name" 
-                      placeholder="Full Name" 
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {
-                    errors.name
-                      ? errors.name.type === 'minLength'
-                        ? 'Name length is more than 1'
-                        : 'Name is required'
-                      : ''
-                  }
-                </div>
-                <label htmlFor="name">Full Name</label>
-              </div>
-              <div className="form-floating">
-                <Controller 
-                  name="phone"
-                  control={control}
-                  rules={{
-                    required: true,
-                    pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/,
-                  }}
-                  render={({ field: {name, onChange = (e) => setPhone(e.target.value), value = phone}}) => (
-                    <NumberFormat
-                      format="(###) ###-####"
-                      name={name}
-                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-                      value={value}
-                      id="phone" 
-                      placeholder="Phone Number" 
-                      onChange={onChange}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                    {errors.phone
-                          ? errors.phone.type === 'pattern'
-                            ? 'Phone number is not completed'
-                            : 'Phone number is required'
-                          : ''
+            <div className="row justify-content-md-center ">
+              <form onSubmit={handleSubmit(onSubmitForm, phone, setPhone)} 
+                className="col-lg-4 col-md-12 col-sm-12 text-center needs-validation" noValidate>
+                <Image src="/images/do-logo-title-under.png" width={150} height={200} alt=""/>
+                <div className="form-floating">
+                  <Controller
+                    name="name"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: true,
+                      minLength: 2,
+                    }}
+                    render={({ field }) => (
+                      <input 
+                        type="text" 
+                        className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                        id="name" 
+                        placeholder="Full Name" 
+                        {...field}
+                      />
+                    )}
+                  />
+                  <div className="invalid-feedback">
+                    {
+                      errors.name
+                        ? errors.name.type === 'minLength'
+                          ? 'Name length is more than 1'
+                          : 'Name is required'
+                        : ''
                     }
+                  </div>
+                  <label htmlFor="name">Full Name</label>
                 </div>
-                <label htmlFor="floatingInput">Phone Number</label>
-              </div>
-              <div className="form-floating">
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  }}
-                  render={({ field }) => (
-                    <input 
-                      type="email" 
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                      id="email" 
-                      placeholder="name@example.com" 
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {errors.email
+                <div className="form-floating">
+                  <Controller 
+                    name="phone"
+                    control={control}
+                    rules={{
+                      required: true,
+                      pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/,
+                    }}
+                    render={({ field: {name, onChange = (e) => setPhone(e.target.value), value = phone}}) => (
+                      <NumberFormat
+                        format="(###) ###-####"
+                        name={name}
+                        className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                        value={value}
+                        id="phone" 
+                        placeholder="Phone Number" 
+                        onChange={onChange}
+                      />
+                    )}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.phone
+                      ? errors.phone.type === 'pattern'
+                        ? 'Phone number is not completed'
+                        : 'Phone number is required'
+                      : ''
+                    }
+                  </div>
+                  <label htmlFor="floatingInput">Phone Number</label>
+                </div>
+                <div className="form-floating">
+                  <Controller
+                    name="email"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: true,
+                      pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                    }}
+                    render={({ field }) => (
+                      <input 
+                        type="email" 
+                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                        id="email" 
+                        placeholder="name@example.com" 
+                        {...field}
+                      />
+                    )}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.email
                       ? errors.email.type === 'pattern'
                           ? 'Email is not valid'
                           : 'Email is required'
                       : ''
-                  }
+                    }
+                  </div>
+                  <label htmlFor="email">Email</label>
                 </div>
-                <label htmlFor="email">Email</label>
-              </div>
-              <div className="form-floating">
-                <Controller 
-                  name="message"
-                  control={control}
-                  defaultValue=""
-                  rules={{
-                    required: true,
-                    minLength: 2,
-                  }}
-                  render={({ field }) => (
-                    <textarea 
-                      className={`form-control ${errors.message ? 'is-invalid' : ''}`}
-                      id="message" 
-                      placeholder="Message goes here" 
-                      rows="5"
-                      {...field}
-                    ></textarea>
+                <div className="form-floating">
+                  <Controller 
+                    name="message"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: true,
+                      minLength: 2,
+                    }}
+                    render={({ field }) => (
+                      <textarea 
+                        className={`form-control ${errors.message ? 'is-invalid' : ''}`}
+                        id="message" 
+                        placeholder="Message goes here" 
+                        rows="5"
+                        {...field}
+                      ></textarea>
 
-                  )}
-                />
-                <div className="invalid-feedback">
-                  {
-                    errors.message
-                      ? errors.message.type === 'minLength'
-                        ? 'Message length is more than 1'
-                        : 'Message is required'
-                      : ''
-                  }
+                    )}
+                  />
+                  <div className="invalid-feedback">
+                    {
+                      errors.message
+                        ? errors.message.type === 'minLength'
+                          ? 'Message length is more than 1'
+                          : 'Message is required'
+                        : ''
+                    }
+                  </div>
+                  <label htmlFor="message">Message</label>
                 </div>
-                <label htmlFor="message">Message</label>
-              </div>
-              <button className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 py-3 me-sm-3 light" type="submit">
-                Submit Message
-              </button>
-            </form>
+                <button className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 py-3 me-sm-3 light" type="submit">
+                  Submit Message
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </Layout>

@@ -39,26 +39,26 @@ export default async (req, res) => {
           <div id="mailsub">
             <center class="wrapper" style="table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; padding: 0; margin: 0 auto; width: 100%; max-width: 960px;">
                   <div class="webkit">
-                <table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="padding: 0; margin: 0 auto; width: 100%; max-width: 960px;">
+                <table cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="padding: 0; margin: 0 auto; width: 100%; max-width: 960px;">
                   <tbody>
                     <tr>
                       <td align="center">
-                        <table id="intro" cellpadding="0" cellspacing="0" border="0" bgcolor="#4F6331" align="center" style="width: 100%; padding: 0; margin: 0; background-image: url(https://images.pexels.com/photos/730424/pexels-photo-730424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1?raw=true); background-size: auto 102%; background-position: center center; background-repeat: no-repeat; background-color: #080e02">
+                        <table id="intro" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-image: url(https://github.com/NickSaindon/dragon-organics/blob/main/public/images/home-header.jpg?raw=true); background-size: auto 102%; background-position: center center; background-repeat: no-repeat; background-color: #000000">
                           <tbody >
                             <tr><td colspan="3" height="20"></td></tr>
                             <tr>
                               <td width="90" style="width: 9%;"></td>
                               <td align="center">
                                 <div border="0" style="border: none; height: 60px;">
-                                  <img src="https://github.com/NickSaindon/remedy/blob/main/public/images/remedy_logo.png?raw=true" alt="Remedy LLC" width="200" height="104" border="0" style="border: none; display: block; -ms-interpolation-mode: bicubic;">
+                                  <img src="https://github.com/NickSaindon/dragon-organics/blob/main/public/images/do-logo-title-under.png?raw=true" alt="Dragon Organics" width="154" height="200" border="0" style="border: none; display: block; -ms-interpolation-mode: bicubic;">
                                 </div>
                               </td>
                               <td width="90" style="width: 9%;"></td>
                             </tr>
-                            <tr><td colspan="3" height="100"></td></tr>
+                            <tr><td colspan="3" height="200"></td></tr>
                             <tr>
                               <td colspan="3" height="60" align="center">
-                                <div border="0" style="border: none; line-height: 60px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 52px; text-transform: uppercase; font-weight: bolder;">Remedy Contact</div>
+                                <div border="0" style="border: none; line-height: 60px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 52px; text-transform: uppercase; font-weight: bolder;">Dragon Organics Contact</div>
                               </td>
                             </tr>
                             <tr>
@@ -75,7 +75,7 @@ export default async (req, res) => {
                                       <td align="center">
                                         <div border="0" style="border: none; height: 60px;">
                                           <p style="font-size: 18px; line-height: 24px; font-family: Verdana, Geneva, sans-serif; color: #ffffff; text-align: center; mso-table-lspace:0;mso-table-rspace:0;">
-                                            This is an email from the Remedy LLC website contact form.  Please try and return this message with any answers to questions. 
+                                            This is an email from the Dragon Organics website contact form.  Please try and return this message with any answers to questions. 
                                           </p>
                                         </div>
                                       </td>
@@ -97,7 +97,7 @@ export default async (req, res) => {
                             <tr><td colspan="3" height="85"></td></tr>
                           </tbody>
                         </table>
-                        <table id="icon__article" class="device" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #ffffff">
+                        <table id="icon__article" class="device" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #000000">
                           <tbody>								
                             <tr>
                               <td align="center">
@@ -108,10 +108,10 @@ export default async (req, res) => {
                                     <tr>
                                       <td width="80" style="width: 8%;"></td>
                                       <td align="center">
-                                        <h3 border="0" style="border: none; line-height: 14px; color: #212121; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
                                           Name
                                         </h3>
-                                        <p style="line-height: 20px; color: #727272; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
                                           ${name}
                                         </p>
                                       </td>
@@ -133,10 +133,10 @@ export default async (req, res) => {
                                     <tr>
                                       <td width="80" style="width: 8%;"></td>
                                       <td align="center">
-                                        <h3 border="0" style="border: none; line-height: 14px; color: #212121; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
                                           Email
                                         </h3>
-                                        <p style="line-height: 20px; color: #727272; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
                                           ${email}
                                         </p>
                                       </td>
@@ -158,10 +158,10 @@ export default async (req, res) => {
                                     <tr>
                                       <td width="80" style="width: 8%;"></td>
                                       <td align="center">
-                                        <h3 border="0" style="border: none; line-height: 14px; color: #212121; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
                                           Phone Number
                                         </h3>
-                                        <p style="line-height: 20px; color: #727272; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
                                           ${phone}
                                         </p>
                                       </td>
@@ -181,7 +181,7 @@ export default async (req, res) => {
                             <tr> <td colspan="5" height="40"></td> </tr>
                           </tbody>
                         </table>						
-                        <table id="icon__article" class="device" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #ffffff">
+                        <table id="icon__article" class="device" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #000000">
                           <tbody>								
                             <tr>
                               <td align="center">
@@ -192,10 +192,10 @@ export default async (req, res) => {
                                     <tr>
                                       <td width="80" style="width: 8%;"></td>
                                       <td align="center">
-                                        <h3 border="0" style="border: none; line-height: 14px; color: #212121; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
                                           Message
                                         </h3>
-                                        <p style="line-height: 20px; color: #727272; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;">
+                                        <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;">
                                           ${message}
                                         </p>
                                       </td>
@@ -215,13 +215,13 @@ export default async (req, res) => {
                             <tr> <td colspan="5" height="40"></td> </tr>
                           </tbody>
                         </table>
-                        <table id="news__article" cellpadding="0" cellspacing="0" border="0" bgcolor="#008000ff" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #008000ff">
+                        <table id="news__article" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-color: #000000">
                           <tbody>
                             <tr><td colspan="3" height="23"></td></tr>
                             <tr>
                               <td align="center">
                                 <div border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px;">
-                                  2022 © Remedy LLC
+                                  2023 © Dragon Organics
                                 </div>
                               </td>
                             </tr>

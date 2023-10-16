@@ -7,7 +7,7 @@ const signToken = (user) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      isVendor: user.isVendor,
+      isManufacturer: user.isManufacturer,
     },
 
     process.env.JWT_SECRET,
@@ -42,12 +42,12 @@ const isAdmin = async (req, res, next) => {
   }
 };
 
-const isVendor = async (req, res, next) => {
-  if (req.user.isVendor) {
+const isManufacturer = async (req, res, next) => {
+  if (req.user.isManufacturer) {
     next();
   } else {
     res.status(401).send({ message: 'User is not a vendor' });
   }
 };
 
-export { signToken, isAuth, isAdmin, isVendor };
+export { signToken, isAuth, isAdmin, isManufacturer };

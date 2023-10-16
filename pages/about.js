@@ -62,12 +62,10 @@ const About = () => {
     });
   }, [])
 
-    
-
   return (
     <Layout 
       title="About Page"
-      description="Remedy Exports is a sourcing and exporter of wholesale raw materials for Asian produce from Thailand to US and Europe vendors.  We handle logistics from farm to exportation.">
+      description="Dragon Organics is a sourcing and exporter of wholesale raw materials for Asian produce from Thailand to US and Europe vendors.  We handle logistics from farm to exportation.">
       <div className="about-container bg-black">
         <div className="about-header bg-black">
           <Image src="/images/do-logo-title-under.png" width={140} height={190} alt=""/>
@@ -85,15 +83,20 @@ const About = () => {
               <div className="col-sm-12 col-md-12 col-lg-6">
                 <h2 className="text-center">Our Story</h2>
                 <p>
-                  Dragon Organics provides high-quality botanicals from all over the world.  Tested for quality assurance and free from bacteria through gamma treatment.
-                  What sets us apart from other vendors is we have partnered with the farms we source from and provide fair market value trade to get the best of the best 
-                  that these farms have to offer.  Dragon Organics products are premium quality at the right price.
-                  <br/><br/>  
-                  Our farms we work with agree in using GAP (Good Agricultural Pratices). This is to maintain a high quality standard from Kratom 
-                  plantation to consumer through mutual goals in quality.
+                  At Dragon Organics, we take immense pride in delivering exceptional botanicals sourced from many farms throughout Thailand. Our unwavering commitment to quality assurance is 
+                  demonstrated through rigorous testing processes, which include gamma treatment to ensure that our products remain free from harmful bacteria. What truly distinguishes us 
+                  from other vendors is our unique partnership with the farms we source our botanicals from, fostering fair market value trade relationships that enable us to access the 
+                  cream of the crop from these farms. The result is a collection of Dragon Organics products that exemplify premium quality, all offered at a competitive and just price point.
                   <br/><br/>
-                  Remedy Exports has partnered and works with over <b>30 plantations</b> in Thailand that produce a wide varity of botanicals, some of which only grow in Thailand or Southeast Asia.  Our company is dedicated to
-                  quality and consistency and work with our clients to supply them with the raw materials, extracts, or finished products their company needs.  We work to make the process as easy as possible, and straightforward so our clients get what they need.   
+                  A core principle guiding our partnerships with these farms is the adherence to Good Agricultural Practices (GAP). This shared commitment to maintaining the highest quality 
+                  standards stretches from the very birth of Kratom on the plantation to its journey into the hands of consumers. We share mutual goals with our farm partners in our relentless 
+                  pursuit of superior quality.
+                  <br/><br/>
+                  Dragon Organics came into existence in 2021, coinciding with the landmark moment when Kratom was legalized in Thailand. Since our inception, we've embarked on a comprehensive 
+                  quest, exploring the length and breadth of Thailand, and establishing partnerships with over 30 different Kratom plantations throughout the country. Our mission was clear: to 
+                  unearth the finest Kratom that Thailand has to offer. This expedition led us to discover exceptional varieties, including Kan Daeng, red and green vein; Haeng Kang, red and 
+                  green vein; and Tang Qua, white vein. Kratom has a profound historical and cultural significance in Thailand, with ancient mythology even proclaiming it as the preferred sustenance 
+                  of dragons. Thus, it was only fitting that our company be christened Dragon Organics, in tribute to this rich cultural heritage.
                 </p>
               </div>
               <div className="col-sm-12 col-md-12 col-lg-6 about-do-img">
@@ -112,40 +115,31 @@ const About = () => {
             </div>
             <div>
               <p>
-                Thailand has a long and storied history when it comes to Kratom.  In Thailand Kratom has grown in the wild for hundreds of years and is the 
-                origin of many other regional species of Kratom that users know and love today.  Kratom has been regarded as a culturally significant plant in 
-                Thai society since the 19th century, and began to be cultivated with the goal of providing Kratom for human consumption in the early 1900’s.  Kratom 
-                is known as the evergreen tree in Thailand, Ketum (Biak) in Malaysia, and Neithum in Laos. The name Kratom itself is a Thai word that means “Hut” and 
-                is used to describe the shape of the Kratom tree. Another word for a particular species of Kratom leaf is Maeng Da, which also a Thai word that 
-                means “Horseshoe Crab”.  Kratom has been historically used in Thailand in local communities for the treatment of pain, cough, fever, enhancement of work 
-                performance; and as a natural substitute for substances like synthetic opioids. There are various forms of Kratom consumption that exist in Southeast Asia, but 
-                mainly fresh Kratom leaves are often chewed or boiled to produce a decoction. Today most marketplaces sell fresh Kratom leaves and is readily available 
-                throughout most of Thailand. 
+                Dragon Organics, headquartered in Atlanta, Georgia, is dedicated to providing the highest quality kratom products available today, underpinned by a passionate and conscientious 
+                team genuinely concerned about our customers' health and well-being. Our mission revolves around offering the world's finest Kratom from Thailand, all while contributing to a 
+                greener and more vibrant world. What truly distinguishes us is our unwavering commitment to fair trade partnerships with the farms we source from, ensuring we access the 
+                pinnacle of Kratom quality. Dragon Organics stands for premium-quality products at the right price for our valued US customers, founded on an unwavering commitment to 
+                industry-leading levels of quality and transparency. Our dedication to botanicals shines through in the caliber of our offerings, our customer service, and our relentless 
+                pursuit of positive change. We acknowledge that our success is intrinsically linked to the experiences of our customers, and we wholeheartedly pledge to go to great lengths 
+                to make sure it's a positive one. Ultimately, we firmly believe that our top-tier Kratom and exceptional customer service position us as the premier destination for purchasing Kratom.
+                <br/><br/>
+                Thailand boasts a rich and intricate history intertwined with the story of Kratom. This botanical treasure has thrived in the wilds of Thailand for countless centuries, even giving 
+                rise to many of the regional Kratom variants beloved by users today. Its cultural significance within Thai society dates back to the 19th century, and it transitioned from growing 
+                wild to being cultivated with the specific purpose of providing Kratom for human consumption in the early 1900s. Known as the evergreen tree in Thailand, Ketum (Biak) in Malaysia, and 
+                Neithum in Laos, the very name "Kratom" is derived from the Thai word for "Hut," a reference to the tree's characteristic shape. Another term often associated with a particular species 
+                of Kratom leaf is "Maeng Da," which also finds its roots in the Thai language, translating to "Horseshoe Crab."
+                <br/><br/>
+                Historically, Kratom has been a staple in Thai communities, serving a multitude of purposes, including pain relief, alleviating coughs and fevers, enhancing work performance, and even 
+                offering a natural alternative to synthetic opioids. A range of Kratom consumption methods has flourished in Southeast Asia, with the chewing and boiling of fresh Kratom leaves to create 
+                a decoction being among the most prevalent. In the present day, fresh Kratom leaves are readily available in most of Thailand, accessible through a multitude of marketplaces, ensuring 
+                its continued presence in this vibrant cultural landscape.
               </p>
               <p>
-                Most Kratom before the 1900&apos;s was wild Kratom that grew in the jungle and remote ares in the south of Thailand. However, it wasn&apos;t until it was domesticated that 
-                we have the Kratom we know and love today. This was through generations of improvement through both selective breeding and careful agricultural practices 
-                that optimized the alkaloid profile of the Kratom leaf.  Perhaps you are asking the question, <em>&quot;Is wild Thai Kratom available to users and is it the same as 
-                domesticated Thai Kratom?&quot;</em>. The answer to both these questions is simply <em>No</em>. The reason is because it isn&apos;t as potent as domesticated Kratom 
-                and because it grows in very remote areas making it hard to come by. These two reasons are why it would be pointless to harvest wild Kratom, and why you 
-                don&apos;t find wild Kratom even in Thai marketplaces.
-              </p>
-              <p>
-                Bangkok, Thailand is considered to be one of the hottest places in the world. So one could imagine that it gets pretty hot in Thailand. Fortunately Kratom trees are a 
-                tree that thrives in the heat and high humidity. Paired with these two factors, the moist and acidic soil create the perfect environment for Kratom trees 
-                to grow. Actually these are the reasons why Kratom leaves grow so fast that they can be harvested again only after 15 to 30 days. Sometimes the leaves will even skip from 
-                white to red because Thailands environment is simply the perfect place for them. Many of these reason are why Kratom is also very difficult to grow outsides of its natural 
-                environment. There are those who try to grow it using greenhouses but that is simply not conducive to growing it for large productions.
-              </p>
-              <p>
-                Today, Thai Kratom is more widely available than ever before, and fresh leaves can be found in any marketplace as well as many restaurants selling Kratom tea. With a powerful alkaloid 
-                profile, it is no wonder that Thailand produces some of the finest Kratom in the world.&nbsp;
-              </p>
-              <p>
-                Thailand was the point of origin for Kratom and a large part of Thailand&nbsp;s culture for over a century. Many historical records claim Kratom to be dragon food and despite the political 
-                issues science has prevailed in the legalization of Kratom in Thailand. As a Thai registered company limited Remedy Export is proud to be a part of this history as we look to produce 
-                new employment opportunities and increase product quality. Thailand&nbsp;s decision to legalize Kratom will open doors to new clinical studies and treatments. Remedy Exports will look to 
-                the future and help standardize the production of Kratom from farm to consumer.
+                Bangkok, Thailand, is renowned for its scorching climate, and it's no surprise given that it's one of the hottest places on Earth. This intense heat, along with high 
+                humidity, creates an ideal habitat for Kratom trees, as they thrive under these conditions, aided by the moisture and acidic soil. These environmental factors contribute to 
+                the rapid growth of Kratom leaves, which can often be harvested within just 15 to 30 days, sometimes transitioning from white to red due to the perfect Thai setting. However, these 
+                specific conditions also make Kratom cultivation challenging outside its natural habitat. While some attempt greenhouse cultivation, it is generally unsuitable for large-scale 
+                production, and the lush Thai environment remains unmatched in supporting Kratom growth.
               </p>
             </div>
           </div>
@@ -169,20 +163,22 @@ const About = () => {
               <div className="col-sm-12 col-md-12 col-lg-6">
                 <h2 className="text-center">Dedicated to Quality and GMP</h2>
                 <p>
-                  At Dragon Organics we are dedicated to providing a clean environment through GMP (Good Manufacturing Process).  Every step of the way, from the picking of the leaves to the grinding process we handle each leaf with the uttmost care.  
-                  Our drying is not done directly in the sun light in order not to cause leaves to turn brown and scortch, which essentially kills the leaf.  Once picked, washed, and dried the leaves are taken to our GMP certified facility to be 
-                  multched and and grinded into a fine powder.
-                  <br/><br/>  
-                  Our goal is to procure quality botanicals that are safe from any metals, bacteria, and that is grown naturally without the usage of any chemical pesticides 
-                  or fertilizers. Remedy Exports only looks to work with farms that agree in using GAP (Good Agricultural Pratices) as well as GMP (Good Manufacturing Practices). This 
-                  is to maintain a high quality standard from plantation to consumer through mutual goals in quality.
-                  <br/><br/> 
-                  Another goal of Remedy Exports is to help meet the needs of all the clients we work with. We do this by over-seeing the end-to-end production, 
-                  from farm, factory, exportation Remedy handles every step of the process from raw materials to finished products.  By partnering with our clients we look to create a process that will standardizes
-                  this industry in a way that is safe and profitable for all.    
+                  Dragon Organics is driven by an unwavering commitment to fostering a clean and hygienic environment, and we achieve this through stringent adherence to Good Manufacturing 
+                  Practices (GMP). Every facet of our Kratom production process is approached with meticulous care, beginning with the handpicking of the leaves. Throughout this journey, we 
+                  prioritize the utmost precision and delicacy in handling each leaf, ensuring their preservation and quality.
                   <br/><br/>
-                  Remedy Exports has partnered and works with over <b>30 plantations</b> in Thailand that produce a wide varity of botanicals, some of which only grow in Thailand or Southeast Asia.  Our company is dedicated to
-                  quality and consistency and work with our clients to supply them with the raw materials, extracts, or finished products their company needs.  We work to make the process as easy as possible, and straightforward so our clients get what they need.   
+                  Our drying process is a critical step in the journey of our Kratom leaves. To avoid discoloration and scorching, which can ultimately compromise the integrity of the leaf, we meticulously 
+                  ensure that our drying does not occur directly under the harsh glare of sunlight. Once the leaves are carefully harvested, washed, and dried, they are transported to our 
+                  GMP-certified facility, where they are expertly mulched and ground into a finely textured powder.
+                  <br/><br/>
+                  Our overarching mission is to source botanicals of the highest quality, free from any contaminants, including metals and harmful bacteria. We are staunch advocates of all-natural 
+                  cultivation practices, abstaining from the use of chemical pesticides or fertilizers. To ensure these standards are upheld, we exclusively collaborate with farms that are committed 
+                  to both Good Agricultural Practices (GAP) and Good Manufacturing Practices (GMP), thereby establishing a mutual commitment to maintaining a superlative level of quality, extending 
+                  from the plantation to the hands of our cherished consumers.
+                  <br/><br/>
+                  Furthermore, our ambition at Dragon Organics is not only limited to upholding exceptional quality standards but also extends to seamlessly meeting the unique needs of our clients. To 
+                  achieve this, we oversee and meticulously manage every stage of production, right from the farm to the factory and, ultimately, the exportation process. This holistic approach allows 
+                  us to offer an end-to-end solution, simplifying the intricacies of the industry and making it a safe and profitable venture for all parties involved.   
                 </p>
               </div>
               <div className="col-sm-12 col-md-12 col-lg-6">
@@ -192,9 +188,7 @@ const About = () => {
           </div>
         </section>
         <section className="process-section bg-black text-white">
-
-        <div className="container-xxl">
-
+          <div className="container-xxl">
             <div className="row gy-5">
               <div className="col-md-12 p-2">
                 <h2 className="text-center">Our Process and Research</h2>
@@ -234,7 +228,6 @@ const About = () => {
             </div>
           </div>
         </section>
-
       </div>
     </Layout>
   )

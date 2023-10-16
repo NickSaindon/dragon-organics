@@ -22,41 +22,51 @@ const Footer = () => {
                 <div className="footer-nav text-center">
                 <ul>
                 <li>
-                    <Link href="/" legacyBehavior>
-                        <a aria-current="page">Home</a>
-                    </Link>
+                  <Link href="/">
+                    Home
+                  </Link>
+                </li>
+
+                <li>
+                  <Link href="/about">
+                    About
+                  </Link>
                 </li>
                 <li>
-                <Link href="/" legacyBehavior>
-                        <a  aria-current="page">Products</a>
-                    </Link>
+                  <Link href="/news">
+                    News
+                  </Link>
                 </li>
                 <li>
-                <Link href="/" legacyBehavior>
-                        <a aria-current="page">About</a>
-                    </Link>
+                  <Link href="/register">
+                    Register
+                  </Link>
+                </li>
+
+
+              </ul> 
+                <ul>
+                <li>
+                  <Link href="/privacy-policy">
+                    Privacy Policy
+                  </Link>
                 </li>
                 <li>
-                <Link href="/" legacyBehavior>
-                        <a aria-current="page">News</a>
-                    </Link>
+                  <Link href="/refund-policy">
+                    Refund Policy
+                  </Link>
                 </li>
                 <li>
-                <Link href="/" legacyBehavior>
-                        <a aria-current="page">Contact</a>
-                    </Link>
+                  <Link href="/shipping-policy">
+                    Shipping Policy
+                  </Link>
                 </li>
                 <li>
-                <Link href="/" legacyBehavior>
-                        <a aria-current="page">Login</a>
-                    </Link>
+                  <Link href="/terms-of-service">
+                    Terms of Service
+                  </Link>
                 </li>
-                <li>
-                <Link href="/" legacyBehavior>
-                        <a aria-current="page">Register</a>
-                    </Link>
-                </li>
-              </ul>  
+                </ul> 
                 </div>
 
             </div>
@@ -97,13 +107,15 @@ const Footer = () => {
                     <div className="contact-info">
                         <div className="call-contact">
                             <h5>MON - FRI 9 AM - 5PM EST</h5>
-                            <p>Call Us At: </p>
-                            <p className="text-primary">1-866-DRA-GON3</p>
+                            <p>Contact Us:</p>
+                            <Link href="/contact">
+                              <button className="btn btn-primary">Contact</button>
+                            </Link>
                         </div>
                         <div className="email-contact">
                             <h5>Need Help With An Online Order?</h5>
-                            <p>Contact Us At:</p>
-                            <p className="text-primary">support@dragonorganics.com</p>
+                            <p>Email Us At:</p>
+                            <p className="text-primary">dragonorganics.tm@gmail.com</p>
                         </div>
                     </div>
                 </div>

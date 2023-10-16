@@ -1,4 +1,37 @@
+import bcrypt from 'bcryptjs';
+
 const data = {
+    users: [
+        {
+            name: 'Chris Jones',
+            email: 'user@example.com',
+            birthDate: '03/1976',
+            password: bcrypt.hashSync('user12345'),
+            isAdmin: false,
+            isManufacturer: false
+        },
+        {
+            name: 'Test Admin',
+            email: 'admin@example.com',
+            password: bcrypt.hashSync('adminUser12345'),
+            isAdmin: true,
+            isManufacturer: false
+        },
+        {
+            name: 'John Smith',
+            email: 'vendor@example.com',
+            phone: '(555) 555-5555',
+            companyName: 'Thai Kratom',
+            streetName: '119 Rural Road 3009',
+            city: 'Song Phi Nong',
+            province: 'Suphan Buri',
+            postalCode: '72110',
+            country: 'Thailand',
+            password: bcrypt.hashSync('vendor12345'),
+            isAdmin: false,
+            isManufacturer: true
+        }
+    ],
     categories: [
         {
             name: 'Raw Leaf Powder',

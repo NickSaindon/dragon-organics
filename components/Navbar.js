@@ -1,20 +1,30 @@
+import { signOut, useSession } from 'next-auth/react';
 import React, { useContext, useEffect, useState } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+import Cookies from 'js-cookie';
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Store } from '../utils/Store';
 import data from '../utils/data';
+import DropdownLink from './DropdownLinks';
 
 function Navbar() {
-    const router = useRouter();
-    const { state } = useContext(Store);
-    const { cart } = state;
-    const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { status, data: session } = useSession();
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+  const router = useRouter();
+  const [ cartItemsCount, setCartItemsCount ] = useState(0);
 
-    useEffect(() => {
-      setCartItemsCount(parseInt(cart.cartItems.reduce((a, c) => a + c.quantity, 0)))
-    }, [cart.cartItems])
+  const logoutClickHandler = () => {
+    Cookies.remove('cart');
+    dispatch({ type: 'CART_RESET' });
+    signOut({ callbackUrl: '/login' });
+  };
+
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems])
  
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
@@ -50,6 +60,11 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
+              <Link href="/wholesale" className={router.asPath == "/wholesale" ? "nav-link active" : "nav-link"}>
+                Wholesale  
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href="/news" className={router.asPath == "/news" ? "nav-link active" : "nav-link"}>
                 News  
               </Link>
@@ -62,21 +77,150 @@ function Navbar() {
           </ul>
           <div className="d-flex">
             <ul className="navbar-nav navbar-left me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link href="/cart" className={router.asPath == "/cart" ? "nav-link active" : "nav-link"}>
-                  <i className="bi bi-cart3"></i> 
-                  {cartItemsCount > 0 && (
-                    <span className="badge rounded-pill bg-primary">
-                      {cartItemsCount}
-                    </span>
+              <li className="nav-item">
+                <Link href="/cart" className={router.asPath == "/cart" ? "nav-link active" : "nav-link"}>
+                    <i className="bi bi-cart3"></i> 
+                    {cartItemsCount > 0 && (
+                      <span className="badge rounded-pill bg-primary">
+                        {cartItemsCount}
+                      </span>
+                    )}
+                </Link>
+              </li>
+              <li className="nav-item">
+                {status === 'loading' ? (
+                  'Loading'
+                  ) : session?.user ? (
+                  <ul>
+                    <li className="nav-item dropdown">
+                      <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {session.user.name}
+                      </a>
+                      <ul 
+                        className="dropdown-menu dropdown-menu-end" 
+                        aria-labelledby="navbarDropdown"
+                      >
+                        {!session.user.isAdmin && !session.user.isManufacturer && 
+                          <>
+                            <li> 
+                              <Link href="/profile" className="dropdown-item">
+                                Profile
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/order-history" replace className="dropdown-item">
+                                Order History
+                              </Link>
+                            </li>
+                          </>
+                        }
+                        {session.user.isAdmin && (
+                          <>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/dashboard"
+                              >
+                                Admin Dashboard
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/categories"
+                              >
+                                Categories
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/products"
+                              >
+                                Products
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/orders"
+                              >
+                                Orders
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/supply-shipments"
+                              >
+                                Supply Shipments
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/generate-qr-code"
+                              >
+                                Generate QR Code
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/scan-qr-code"
+                              >
+                                Scan QR Code
+                              </DropdownLink>
+                            </li>
+                          </>
+                        )}
+                        {session.user.isManufacturer && (
+                            <>
+                            <li>
+                            <DropdownLink
+                              className="dropdown-item"
+                              href="/manufacturer/dashboard"
+                            >
+                              Dashboard
+                            </DropdownLink>
+                
+                            </li>
+                            <li>
+                            <DropdownLink
+                              className="dropdown-item"
+                              href="/manufacturer/create-shipment"
+                            >
+                              Create Shipment
+                            </DropdownLink>
+                            </li>
+                            <li>
+                            <DropdownLink
+                              className="dropdown-item"
+                              href="/manufacturer/manufacturer-shipments"
+                            >
+                              Manufacturer Shipments
+                            </DropdownLink>
+                            </li>
+                            </>
+                          )}
+                        <li>
+                          <a
+                            className="dropdown-item"
+                            href="#"
+                            onClick={logoutClickHandler}
+                          >
+                            Logout
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                  ) : (
+                    <Link href="/login" className={router.asPath == "/login" ? "nav-link active" : "nav-link"}>
+                      Login
+                    </Link>
                   )}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/login" className={router.asPath == "/login" ? "nav-link active" : "nav-link"}>
-                Login  
-              </Link>
-            </li>
+              </li>
             </ul>
           </div>
         </div>

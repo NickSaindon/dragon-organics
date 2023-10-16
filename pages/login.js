@@ -1,51 +1,55 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import { Store } from '../utils/Store';
-import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
-// import { getError } from '../utils/error';
-import { ToastContainer, Slide } from "react-toastify";
+import { getError } from '../utils/error';
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const Login = () => {
+  const { data: session } = useSession();
   const { handleSubmit, control, formState: { errors } } = useForm();
   const router = useRouter();
   const { redirect } = router.query;
-  const { state, dispatch } = useContext(Store);
-  const { userInfo } = state;
-//   const [ hasError, setHasError ] = useState(false);
 
   useEffect(() => {
-    if (userInfo) {
-      router.push('/login');
+    if (session?.user) {
+      router.push(redirect || '/');
     }
-  }, []);
+  }, [router, session, redirect]);
  
 
   const submitHandler = async ({email, password}) => {
     try {
-      const { data } = await axios.post('/api/users/login', {
-        email, 
-        password,
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: email, 
+        password: password,
       });
-      dispatch({ type: 'USER_LOGIN', payload: data });
-      Cookies.set('userInfo', data);
-      router.push(redirect || '/');
+
+      if (!result.error) {
+        return "Authorized Successful"
+      }
+
+      if (result.error) {
+        toast.error(result.error, {
+          theme: "colored"
+        });
+      }
+      
     } catch (err) {
-    //   toast.error(getError(err), {
-    //     theme: "colored"
-    //   });
+      toast.error(getError(err), {
+        theme: "colored"
+      });
     }
   }
 
   return (
     <Layout 
       title="Login"
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      description="Login and start purchasing your Thai botanicales today with Dragon Organics.  Our quality products and great prices are exactly what you have been looking for.">
       <div className="login-container bg-black text-white text-center">
         <main className="form-signin">
           <div className="row justify-content-md-center">
@@ -81,17 +85,17 @@ const Login = () => {
                   )}
                 />
                 <div className="invalid-feedback">
-                    {errors.email
-                          ? errors.email.type === 'pattern'
-                            ? 'Email is not valid'
-                            : 'Email is required'
-                          : ''
-                    }
-                  </div>
+                  {errors.email
+                    ? errors.email.type === 'pattern'
+                      ? 'Email is not valid'
+                      : 'Email is required'
+                    : ''
+                  }
+                </div>
                 <label htmlFor="email">Email</label>
               </div>
               <div className="form-floating">
-              <Controller
+                <Controller
                   name="password"
                   control={control}
                   defaultValue=""
@@ -109,21 +113,21 @@ const Login = () => {
                     />
                   )}
                 />
-                  <div className="invalid-feedback">
-                    {errors.password
-                          ? errors.password.type === 'minLength'
-                            ? 'Password is more than 5'
-                            : 'Password is required'
-                          : ''
-                    }
-                  </div>
+                <div className="invalid-feedback">
+                  {errors.password
+                    ? errors.password.type === 'minLength'
+                      ? 'Password is more than 5'
+                      : 'Password is required'
+                    : ''
+                  }
+                </div>
                 <label htmlFor="password">Password</label>
               </div>
               <button className="w-100 btn btn-lg btn-outline-primary signin-btn light" type="submit">Sign in</button>
               <p className="mt-5 mb-3 text-white">
                 Don&apos;t have an account? &nbsp;
-                <Link href="/register" legacyBehavior>
-                  <a>Register</a>
+                <Link href="/register" className="text-primary">
+                  Register
                 </Link>
               </p>
             </form>

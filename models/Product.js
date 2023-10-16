@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
         imageTwo: {  type: String, required: true },
         imageThree: {  type: String, required: true },
         imageFour: {  type: String, required: true },
-        color: { type: String, required: true },
+        color: { type: String, required: false },
         region: { type: String, required: true },
         leafName: { type: String, required: true },
         leafType: { type: String, required: true },

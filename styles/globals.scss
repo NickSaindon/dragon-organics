@@ -17,6 +17,37 @@ a {
   text-decoration: none;
 }
 
+#html-editor > div:nth-child(1) {
+  display: none !important;
+}
+
+.ql-editor {
+  color: white;
+}
+
+#html5-qrcode-button-file-selection {
+background-color: #96712F;
+color: #fff;
+border: none;
+padding: 5px 10px;
+}
+
+#html5-qrcode-button-camera-start {
+  background-color: #96712F;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+}
+
+.custom-spinner {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
 .toast-alert {
   width: 90% !important;
 }
@@ -253,7 +284,13 @@ main {
   }
 }
 
-//Page-header
+// Side Nav
+.side-nav {
+  background-color: #1A1A1A;
+}
+
+
+// Page-header
 .page-header {
   width: 100%;
   .contact-text {
@@ -340,12 +377,12 @@ main {
   }
   .home-raw-powder-category {
     .home-raw-powder-text {
-      padding-top: 10%;
+      padding-top: 3%;
     }
   }
   .home-extract-category {
     .home-extract-text {
-      padding-top: 10%;
+      padding-top: 3%;
     }
   }
 }
@@ -384,6 +421,9 @@ main {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 // Category Page
@@ -599,6 +639,37 @@ main {
   }
 }
 
+// Blog Post
+.blog-post-container {
+  padding: 75px 0 0 0;
+  a {
+    padding-bottom: 20px;
+    span {
+      padding-left: 5px;
+    }
+  }
+  .blog-post-header {
+    width: 100%;
+    h1 {
+      font-weight: bold;
+    }
+    span {
+      margin: 5px 5px 5px 0;
+    }
+    .blog-header-img {
+      width: 100%;
+      height: 600px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+  .blog-post {
+    padding-top: 25px;
+    white-space: pre-line;
+  }
+}
+
 // Register Form
 .register-container {
   display: flex;
@@ -627,11 +698,12 @@ main {
     }
     input {
       background-color: black;
+      color: white;
       &#name {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
       }
-      &#email, &#companyName, &#phone, &#address, &#city, &#zipCode, &#password {
+      &#email, &#birthDate, &#password {
         border-radius: 0;
       }
       &#confirmPassword {
@@ -698,6 +770,73 @@ main {
 
 .form-floating > label {
   color: white;
+}
+
+// Shipping
+.shipping-container {
+  padding: 80px 0;
+  h1 {
+    padding: 100px 0 0 0;
+  }
+  .form-shipping {
+    width: 100%;
+    padding: 15px;
+    margin: auto;
+    .form-select {
+      padding: 0 15px;
+      border-radius: 0;
+      background-color: black;
+      color: white;
+    }
+    input {
+      background-color: black;
+      color: white;
+      &#fullName {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &#address, &#city, &#email, &#companyName {
+        border-radius: 0;
+      }
+      &#zipCode{
+        margin-bottom: 25px;
+        border-radius: 0;
+        border-radius: 0;
+      }
+    }
+  }
+  .form-shipping .form-floating:focus-within {
+    z-index: 2;
+  }
+}
+
+.place-order-container {
+  padding: 100px 0;
+  .card {
+    margin: 10px 0;
+    background-color: #1A1A1A;
+    color: white;
+    h6 {
+      font-weight: bold;
+    }
+    th {
+      text-align: center;
+    }
+    
+    td {
+      text-align: center;
+    }
+  }
+  .summary-card {
+    .summary {
+      padding: 5px 0
+    }
+    .summary-total {
+      font-size: 18px;
+      padding: 25px 0 10px 0;
+      font-weight: bold;
+    }
+  }
 }
 
 // Contact Form
@@ -792,6 +931,199 @@ main {
   }
 }
 
+// Policy Pages
+.policy-container {
+  margin-top: 70px;
+  padding: 50px 0;
+}
+
+// Unauthorized
+.unauthorized-container {
+  padding: 200px 0 200px 0;
+  h1 {
+    font-size: 50px;
+  }
+  .message {
+    font-size: 26px;
+  }
+}
+
+// Orders History
+.orders-container {
+  margin-top: 70px;
+  padding: 50px 0;
+}
+
+// Admin
+.admin-container {
+  margin-top: 70px;
+  padding: 100px 0;
+  .card-title {
+    padding: 15px 0;
+  }
+  .admin-card-container {
+    background-color: #1A1A1A;
+    padding: 0 25px 25px 25px;
+    .form-floating {
+      .invalid-feedback {
+        position: absolute;
+        top: 0;
+      }
+    }
+    .form-edit {
+      padding: 15px;
+      margin: auto;
+      .form-select {
+        padding: 0 15px;
+        border-radius: 0;
+      }
+      input {
+        color: white;
+        background-color: #1A1A1A;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        &#leafType {
+          margin-bottom: 25px;
+        }
+      }
+      textarea {
+        color: white;
+        background-color: #1A1A1A;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 25px 0 45px 12px;
+        resize: none;
+        &#categoryText {
+          margin-bottom: 25px;
+        }
+      }
+      .file {
+        position: relative;
+        overflow: hidden;
+        margin: 5px 0 20px 0;
+        input {
+          position: absolute;
+          font-size: 50px;
+          opacity: 0;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+    .form-user-edit {
+      padding: 15px;
+      margin: auto;
+      .form-select {
+        color: white;
+        background-color: #1A1A1A;
+        padding: 0 15px;
+        border-radius: 0;
+        margin-bottom: -1px;
+      }
+      input {
+        color: white;
+        background-color: #1A1A1A;
+        border-radius: 0;
+        &.zip-code {
+          margin-top: 1px;
+        }
+        &.admin-checkbox, &.vendor-checkbox {
+          border-color: white;
+        }
+      }
+    }
+    .form-register .form-floating:focus-within {
+      z-index: 2;
+    }
+  }
+}
+
+.vendor-container {
+  margin-top: 70px;
+  padding: 100px 0;
+  .card-title {
+    padding: 15px 0;
+  }
+  .vendor-card-container {
+    background-color: #1A1A1A;
+    padding: 0 25px 25px 25px;
+    .form-floating {
+      .invalid-feedback {
+        position: absolute;
+        top: 0;
+      }
+    }
+    .form-shipment {
+      padding: 15px;
+      margin: auto;
+      .add-product-card {
+        background-color: black;
+        color: white;
+        margin: 10px 0;
+        input {
+          color: white;
+          background-color: black;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          &#totalBoxWeight {
+            margin-bottom: 15px;
+          }
+        }
+      }
+      .form-select {
+        padding: 0 15px;
+        border-radius: 0;
+      }
+      input {
+        color: white;
+        background-color: #1A1A1A;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        &#totalShipmentWeight {
+          margin-bottom: 25px;
+        }
+      }
+      .file {
+        position: relative;
+        overflow: hidden;
+        margin: 5px 0 20px 0;
+        input {
+          position: absolute;
+          font-size: 50px;
+          opacity: 0;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+    .form-user-edit {
+      padding: 15px;
+      margin: auto;
+      .form-select {
+        color: white;
+        background-color: #1A1A1A;
+        padding: 0 15px;
+        border-radius: 0;
+        margin-bottom: -1px;
+      }
+      input {
+        color: white;
+        background-color: #1A1A1A;
+        border-radius: 0;
+        &.zip-code {
+          margin-top: 1px;
+        }
+        &.admin-checkbox, &.vendor-checkbox {
+          border-color: white;
+        }
+      }
+    }
+    .form-register .form-floating:focus-within {
+      z-index: 2;
+    }
+  }
+}
+
 
 // Footer
 .footer {
@@ -800,6 +1132,7 @@ main {
   .footer-nav {
     ul {
       list-style-type: none;
+      margin: 0;
       li {
         padding: 20px 0;
       }

@@ -1,10 +1,15 @@
 import Layout from '../components/Layout';
+import Link from 'next/link';
 import { useEffect } from 'react';
+import db from '../utils/db';
 import gsap from 'gsap';
+import NewsArticle from '../models/News';
+import moment from 'moment';
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-const News = () => {
+const News = (props) => {
+  const { news } = props;
 
   useEffect(() => {
     gsap.timeline()
@@ -17,8 +22,7 @@ const News = () => {
   return (
     <Layout 
       title="News Page"
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      description="Dragon Organics | Findout about the latest with Dragon Organics and Thai Kratom">
       <div className="news-container bg-black">
         <div className="page-header">
           <div className="py-lg-5 container header-container">
@@ -32,35 +36,25 @@ const News = () => {
           </div>
         </div>
         <div className="container news-card-container">
-        <div class="row mb-2">
-          <div class="col-md-6">
-            <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative news-card">
-              <div class="col p-4 d-flex flex-column position-static text-white">
-                <h3 class="mb-0 text-primary"><b>Featured post</b></h3>
-                <div class="mb-1">Nov 12</div>
-                <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="stretched-link">Continue reading</a>
+        <div className="row mb-2">
+        {news.filter(news => news.published === true).map((news) => (
+          <div className="col-md-6" key={news._id}>
+            <div className="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative news-card">
+              <div className="col p-4 d-flex flex-column position-static text-white">
+                <h3 className="mb-0 text-primary"><b>Featured post</b></h3>
+                <div className="mb-1">{moment(new Date(news.createdAt)).format('MM/DD/YYYY')}</div>
+                <p className="card-text mb-auto">{news.description}</p>
+                <Link href={`/news/${news.slug}`} legacyBehavior>
+                  <a className="stretched-link">Continue reading</a>
+                </Link>
               </div>
-              <div class="col-auto d-none d-lg-block">
-                <div className="news-thumbnail"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative news-card">
-              <div class="col p-4 d-flex flex-column position-static text-white">
-                <h3 class="mb-0 text-primary text-bold"><b>Post title</b></h3>
-                <div class="mb-1">Nov 11</div>
-                <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="stretched-link">Continue reading</a>
-              </div>
-              <div class="col-auto d-none d-lg-block">
-                <div className="news-thumbnail"></div>
+              <div className="col-auto d-none d-lg-block">
+                <div className="news-thumbnail" style={{backgroundImage: `url(${news.headerImage})`}}></div>
               </div>
             </div>
           </div>
+          ))}
         </div>
-
         </div>
       </div>
     </Layout>
@@ -68,3 +62,14 @@ const News = () => {
 }
 
 export default News;
+
+export async function getServerSideProps() {
+  await db.connect();
+  const news = await NewsArticle.find({}).lean();
+  await db.disconnect();
+  return {
+    props: {
+      news: news.map(db.convertDocToObj)
+    }
+  }
+}

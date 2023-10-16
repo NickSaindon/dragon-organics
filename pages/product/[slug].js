@@ -6,6 +6,8 @@ import db from '../../utils/db';
 import Product from '../../models/Product';
 import { Store } from '../../utils/Store';
 import Rating from '../../components/Rating';
+import axios from 'axios';
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const ProductDetails = (props) => {
   const { state, dispatch } = useContext(Store);
@@ -17,19 +19,31 @@ const ProductDetails = (props) => {
     return <div>Product Not Found</div>
   }
 
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    if (product.countInStock < quantity) {
-        alert('This product is out of stock');
-        return;
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
+    if (data.countInStock < quantity) {
+      return toast.error('Sorry, this product is out of stock', {
+        theme: "colored"
+      });
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity }});
+
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
     router.push('/cart');
-  }
+  };
 
   return (
     <Layout title="Product Details Page">
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="details-container bg-black">
         <section>
           <div className="container-xxl">
@@ -107,6 +121,7 @@ const ProductDetails = (props) => {
                     <p>{product.description}</p>
                     <h5>Size</h5>
                     <p>{product.size}</p>
+                    <p>{product.leafName}</p>
                     <h5>Disclaimer</h5>
                     <p>
                       Our products are the highest quality (GAP/GMP).  They have not been evaluated by the FDA.  Only fro use as botanical specimen.  The information given is for 

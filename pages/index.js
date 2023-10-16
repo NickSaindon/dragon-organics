@@ -65,15 +65,12 @@ export default function Home() {
         scrub: true
       }, 
     });
-
-    
   }, []);
 
   return (
     <Layout 
       title="Home Page" 
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      description="Drangon Organics | Online and retail seller of Thai botanicals">
       <div id="page" className="home-container bg-black">
         <div className="home-header">
           <div className="py-5 container">
@@ -115,7 +112,7 @@ export default function Home() {
                   <Image src="/images/star-icon.png" width={50} height={50} alt="Computer and mobile devices"/>
                 </div>
                 <h3 className="fs-2">Our Guarantee</h3>
-                <p>We know our company wouldn’t work without you. If you aren’t 100% satisfied with your MIT45 product, contact us within 30 days for a full refund. No questions asked!</p>
+                <p>Our company prides ourselves on working and listening to our customers. If you are have issues with any of our products we will work tirelessly to get you what you need.</p>
               </div>
             </div>
           </div>
@@ -125,8 +122,19 @@ export default function Home() {
             <div className="row g-4 py-5">
               <div className="col-sm-12 col-md-12 col-lg-6 home-raw-powder-text text-white">
                 <h2 className="fs-2 text-center">Raw Powder</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-                  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>
+                  Thai Kratom stands as an illustrious symbol of exceptional quality, and here at Dragon Organics, we embrace the honor of sourcing the most outstanding, alkaloid-rich 
+                  strains of this extraordinary herb directly from Thai farmers who have cultivated a reputation for excellence in the world of Kratom. These seasoned farmers have dedicated 
+                  themselves to nurturing and harvesting top-tier Kratom, adhering to a time-honored tradition that ensures the utmost quality.
+                  <br /><br />
+                  This carefully tended Kratom undergoes a meticulous transformation as it is traditionally brewed into a soothing tea, resulting in 100% pure powder that embodies a spectrum of 
+                  beneficial effects. The remarkable properties of our Thai Kratom include mood enhancement, relaxation, and an overall sense of well-being, all derived from the natural magic of 
+                  this exceptional herb.
+                  <br /><br />
+                  In our relentless pursuit of excellence, we go a step further by partnering exclusively with GAP/GMP Qualified farms and manufacturers who adhere to the most stringent quality 
+                  standards. This dedication to quality assurance ensures that our Kratom remains a beacon of purity and potency, setting us apart in the industry.  We invite you to be among the first to experience the genuine 
+                  and unparalleled quality of Thai Kratom from Dragon Organics, where we make it our mission to deliver only the very best to our valued customers.
+                </p>
                   <div className="w-100 py-4 text-center">
                     <Link href="/category/raw-leaf-powder">
                       <button type="button" className="btn btn-3 btn-outline-primary btn-lg light">Shop Now</button>
@@ -142,18 +150,28 @@ export default function Home() {
         <div className="home-extract-category py-5 bg-black">
           <div className="container-xl">
             <div className="row g-4 py-5">
-            <div className="col-sm-12 col-md-12 col-lg-6">
-                <Image src="/images/home-img-raw-powder.jpg" className="w-100 h-100" width={600} height={600} alt="Computer and mobile devices"/>
+              <div className="col-sm-12 col-md-12 col-lg-6">
+                <Image src="/images/extract-ad-img.jpg" className="w-100 h-100" width={600} height={600} alt="Computer and mobile devices"/>
               </div>
               <div className="col-sm-12 col-md-12 col-lg-6 home-extract-text text-white">
                 <h2 className="fs-2 text-center">Extract</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation 
-                  ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                  <div className="w-100 py-4 text-center">
-                    <Link href="/category/extracts">
-                      <button type="button" className="btn btn-3 btn-outline-primary btn-lg light">Shop Now</button>
-                    </Link>
-                  </div>
+                <p>
+                  Dragon Organics takes immense pride in the meticulous crafting of our premium kratom extract. We ensure that every step of the production process adheres rigorously to the 
+                  stringent standards of a GMP-compliant laboratory. This commitment guarantees that our kratom extract maintains a level of mitragynine concentration that is both precise and 
+                  unwavering, batch after batch, delivering an unparalleled level of quality and consistency.
+                  <br /><br />
+                  At the heart of our premium kratom extract is the careful selection of only the highest quality plant material. This botanical treasure is sourced exclusively from the most 
+                  exceptional kratom farms nestled within the verdant landscapes of Thailand. These farms have been chosen for their dedication to cultivating the most potent and vibrant kratom leaves.
+                  <br /><br />
+                  But our dedication to quality doesn't stop at sourcing alone. We employ a range of proprietary processes that are designed to gently isolate and meticulously extract the natural 
+                  alkaloids found within the kratom leaf. These carefully guarded techniques have been honed to perfection, ensuring that the resulting kratom extract is not only powerful but also 
+                  free from any impurities that might compromise its purity. 
+                </p>
+                <div className="w-100 py-4 text-center">
+                  <Link href="/category/extracts">
+                    <button type="button" className="btn btn-3 btn-outline-primary btn-lg light">Shop Now</button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -177,7 +195,20 @@ export default function Home() {
                 </h2>
                 <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
-                    <strong>This is the first items accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. Its also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    Kratom, a tropical tree native to the lush landscapes of Southeast Asian nations like Thailand, Malaysia, the Philippines, Indonesia, Papua New Guinea, and 
+                    Borneo, serves as a botanical treasure trove. From these verdant locales, the leaves of the Kratom tree are carefully harvested, undergo meticulous washing, drying, and 
+                    grinding processes, and are then dispatched to destinations worldwide, sharing the unique qualities of this remarkable plant.
+                    <br/><br/>
+                    Within the regions where Kratom thrives, the utilization of these leaves has a storied history that spans centuries, forming an integral part of traditional botanical 
+                    practices. These leaves have been cherished for their myriad applications, playing a vital role in diverse ceremonies. From crafting invigorating teas using freshly 
+                    plucked leaves to incorporating them into various rituals, the cultural significance of Kratom remains deeply intertwined with the communities that have embraced its 
+                    legacy for generations.
+                    <br/><br/>
+                    In contemporary times, Kratom has proliferated across Thailand, becoming a readily accessible commodity sold by local vendors, marketplaces, and even featured on the
+                    menus of restaurants. It has firmly embedded itself as an integral element of Thai culture, and the very term "Kratom" itself resonates with this cultural significance, as 
+                    it is derived from the Thai word for "hut," reflecting the characteristic shape of the Kratom tree. Notably, over the past decade or two, Kratom has transcended 
+                    geographical boundaries, finding its way into international markets. Its appeal and popularity have experienced an extraordinary surge, capturing the fascination and 
+                    interest of individuals worldwide.
                   </div>
                 </div>
               </div>
@@ -189,7 +220,7 @@ export default function Home() {
                 </h2>
                 <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
-                    <strong>This is the second items accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. Its also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    Selling and/or shipping kratom to the following states, cities, and counties in the US is prohibited: Alabama, Arkansas, Indiana, Rhode Island, Tennessee, Vermont, Wisconsin. Sarasota County, Union County, San Diego.
                   </div>
                 </div>
               </div>
@@ -201,19 +232,29 @@ export default function Home() {
                 </h2>
                 <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
-                    <strong>This is the third items accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. Its also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    Indeed, our commitment to quality and safety is unwavering. We subject our Kratom to comprehensive testing procedures that span across borders and continents. To provide our 
+                    customers with the utmost confidence in the purity and potency of our products, we conduct rigorous testing in government-accredited third-party laboratories in Thailand, the 
+                    very heart of Kratom production. Not stopping there, we also extend our scrutiny to laboratories in the United States.
+                    <br /><br />
+                    Our testing regimen is thorough and leaves no stone unturned. We meticulously analyze the alkaloid content and diligently screen for the presence of heavy metals in every batch of 
+                    Kratom. Going the extra mile, we employ a stringent microbial testing protocol, ensuring that each farm we source from meets our exacting standards for cleanliness and safety.
+                    <br /><br />
+                    To further guarantee the integrity of our products, we employ gamma treatment, a process that eradicates 99% of all microbial contaminants. This additional layer of safety is so 
+                    effective that we are bestowed with a certificate attesting to the microbial elimination of every batch of Kratom we process.
                   </div>
                 </div>
               </div>
               <div className="accordion-item">
                 <h2 className="accordion-header" id="headingFour">
                   <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    <b>Where does your Kratom come from?</b>
+                    <b>Where does Dragon Organics Kratom come from?</b>
                   </button>
                 </h2>
                 <div id="collapseFour" className="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
-                    <strong>This is the third items accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. Its also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    The origin of our Kratom is a diverse tapestry, with numerous farms scattered across various regions of Thailand, including the renowned Kratom haven of Chumphon, celebrated for 
+                    its exceptional quality. If you seek visual confirmation of this, simply peruse the multitude of captivating images available on the Dragon Organics website. These photographs 
+                    offer a direct glimpse into the very landscapes and farms that give rise to the Kratom you cherish, connecting you to the very roots of our exceptional products.
                   </div>
                 </div>
               </div>
@@ -225,7 +266,8 @@ export default function Home() {
                 </h2>
                 <div id="collapseFive" className="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
-                    <strong>This is the third items accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. Its also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    Many of our terms of service and policies can be found in the footer links below.  At Dragon Organics we try to be as helpful and accomidating with all of our customers, so if you are unable to find your answers
+                    there then send us a message and we will do what we can to help.
                   </div>
                 </div>
               </div>
@@ -233,7 +275,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        </div>
+      </div>
     </Layout>
   )
 }
