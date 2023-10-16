@@ -62,9 +62,8 @@ const RegisterVendor = () => {
 
   return (
     <Layout
-      title="Register Page"
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      title="Dragon Organics | Register Page"
+      description="Register for Dragon Organics and start purchasing some of the best quality Thai botanicals.">
       <div className="register-container bg-black text-white text-center">
         <ToastContainer 
           position="top-center" 
@@ -78,7 +77,7 @@ const RegisterVendor = () => {
           <div className="row justify-content-md-center">
             <form onSubmit={handleSubmit(submitHandler)} className="col-lg-4 col-md-12 col-sm-12">
               <Image src="/images/do-logo-title-under.png" width={150} height={195} alt=""/>
-              <h1 className="h3 py-3 mb-3 fw-normal">Please Register to Become Vendor</h1>
+              <h1 className="h3 py-3 mb-3 fw-normal">Please Register as a Manufacturer</h1>
               <div className="form-floating">
                 <Controller
                   name="name"

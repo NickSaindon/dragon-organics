@@ -48,8 +48,8 @@ const Wholesale = () => {
 
   return (
     <Layout 
-      title="Contact Page"
-      description="Remedy Exports is a sourcing and exporter of wholesale raw materials for Asian produce from Thailand to US and Europe vendors.  We handle logistics from farm to exportation.">
+      title="Dragon Organics | Wholesale"
+      description="Join the Dragon Organics family as a wholesale partner and enjoy exclusive pricing on our top-selling.  Don't wait and start selling our quality products in your store today!">
       <div className="contact-container bg-black">
         <ToastContainer 
           position="top-center" 

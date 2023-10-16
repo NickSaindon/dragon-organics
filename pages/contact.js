@@ -48,8 +48,8 @@ const Contact = () => {
 
   return (
     <Layout 
-      title="Contact Page"
-      description="Remedy Exports is a sourcing and exporter of wholesale raw materials for Asian produce from Thailand to US and Europe vendors.  We handle logistics from farm to exportation.">
+      title="Dragon Organics | Contact"
+      description="Contact us today and findout more about our quality Thai botanical products.">
       <div className="contact-container bg-black">
         <ToastContainer 
           position="top-center" 

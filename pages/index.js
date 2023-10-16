@@ -69,8 +69,8 @@ export default function Home() {
 
   return (
     <Layout 
-      title="Home Page" 
-      description="Drangon Organics | Online and retail seller of Thai botanicals">
+      title="Dragon Organics | Home" 
+      description="Drangon Organics is an online and retail seller of quality Thai botanicals.">
       <div id="page" className="home-container bg-black">
         <div className="home-header">
           <div className="py-5 container">

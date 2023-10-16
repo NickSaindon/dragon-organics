@@ -47,7 +47,7 @@ const Profile = () => {
     
   return (
     <Layout
-      title="Profile Page">
+      title="Dragon Organics | Profile">
       <div className="register-container bg-black text-white text-center">
         <ToastContainer 
           position="top-center" 

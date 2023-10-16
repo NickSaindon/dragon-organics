@@ -4,8 +4,8 @@ const PrivacyPolicy = () => {
 
   return (
     <Layout 
-      title="Privacy Policy"
-      description="Drangon Organics | Privacy policy and usage of information in this site"
+      title="Dragon Organics | Privacy Policy"
+      description="Privacy policy and usage of information in this site"
     >
       <div className="policy-container bg-black text-white">
         <div className="container">

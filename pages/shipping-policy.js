@@ -3,8 +3,8 @@ import Layout from '../components/Layout';
 const ShippingPolicy = () => {
   return (
     <Layout 
-      title="Shipping Policy"
-      description="Drangon Organics | Shipping policies and customer support for shipped products"
+      title="Dragon Organics | Shipping Policy"
+      description="Shipping policies and customer support for shipped products"
     >
       <div className="policy-container bg-black text-white">
         <div className="container">

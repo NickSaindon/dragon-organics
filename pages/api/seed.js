@@ -11,6 +11,10 @@ router.get(async (req, res) => {
     await db.connect();
     await User.deleteMany();
     await User.insertMany(data.users);
+    await Product.deleteMany();
+    await Product.insertMany(data.users);
+    await Category.deleteMany();
+    await Category.insertMany(data.users);
     await db.disconnect();
     res.send({ message: 'seeded successfully' });
 });

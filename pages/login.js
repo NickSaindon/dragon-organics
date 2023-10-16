@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <Layout 
-      title="Login"
+      title="Dragon Organics | Login"
       description="Login and start purchasing your Thai botanicales today with Dragon Organics.  Our quality products and great prices are exactly what you have been looking for.">
       <div className="login-container bg-black text-white text-center">
         <main className="form-signin">

@@ -4,8 +4,8 @@ const TermsOfService = () => {
 
   return (
   <Layout 
-    title="Terms of Service"
-    description="Drangon Organics | Terms of service and useage of our website and products"
+    title="Dragon Organics | Terms of Service"
+    description="Terms of service and useage of Dragon Organics website and products"
   >
     <div className="policy-container bg-black text-white">
       <div className="container">

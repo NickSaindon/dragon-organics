@@ -9,7 +9,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { getError } from '../utils/error';
 import NumberFormat from "react-number-format";
 import { ToastContainer, toast, Slide } from "react-toastify";
-import bcryptjs from 'bcryptjs';
 
 const Register = () => {
   const { data: session } = useSession();
@@ -60,9 +59,8 @@ const Register = () => {
 
   return (
     <Layout
-      title="Register Page"
-      description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-      metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+      title="Dragon Organics | Register Page"
+      description="Register for Dragon Organics and start purchasing some of the best quality Thai botanicals.">
       <div className="register-container bg-black text-white text-center">
         <ToastContainer 
           position="top-center" 

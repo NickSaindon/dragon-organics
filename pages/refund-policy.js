@@ -5,8 +5,8 @@ const RefundPolicy = () => {
 
   return (
     <Layout 
-      title="Refund Policy"
-      description="Drangon Organics | Refund and return policies of products"
+      title="Dragon Organics | Refund Policy"
+      description="Refund and return policies of Dragon Organics products"
     >
       <div className="policy-container bg-black text-white">
         <div className="container">

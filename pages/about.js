@@ -64,8 +64,8 @@ const About = () => {
 
   return (
     <Layout 
-      title="About Page"
-      description="Dragon Organics is a sourcing and exporter of wholesale raw materials for Asian produce from Thailand to US and Europe vendors.  We handle logistics from farm to exportation.">
+      title="Dragon Organics | About"
+      description="Online and retail seller of quality Thai botanicals.  Findout about our company and the rich culture behind our products.">
       <div className="about-container bg-black">
         <div className="about-header bg-black">
           <Image src="/images/do-logo-title-under.png" width={140} height={190} alt=""/>

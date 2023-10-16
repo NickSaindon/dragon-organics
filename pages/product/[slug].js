@@ -35,7 +35,7 @@ const ProductDetails = (props) => {
   };
 
   return (
-    <Layout title="Product Details Page">
+    <Layout title={product?.name}>
       <ToastContainer 
         position="top-center" 
         draggable={false} 

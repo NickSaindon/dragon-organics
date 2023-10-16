@@ -52,7 +52,7 @@ const Shipping = () => {
   };
 
   return (
-    <Layout>
+    <Layout title="Dragon Organics | Shipping">
       <div className="shipping-container text-center bg-black">
         <CheckoutWizard activeStep={1} />
         <div className="container">

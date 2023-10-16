@@ -21,8 +21,8 @@ const News = (props) => {
 
   return (
     <Layout 
-      title="News Page"
-      description="Dragon Organics | Findout about the latest with Dragon Organics and Thai Kratom">
+      title="Dragon Organics | News"
+      description="Findout about the latest products with Dragon Organics and the many wonderful Thai botanicals.">
       <div className="news-container bg-black">
         <div className="page-header">
           <div className="py-lg-5 container header-container">

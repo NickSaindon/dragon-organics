@@ -28,7 +28,7 @@ const Cart = () => {
   };
 
   return (
-    <Layout>
+    <Layout title="Dragon Organics | Cart">
       <div className="cart-container bg-black">
         <div className="container-fluid">
           <div className="row text-center">
