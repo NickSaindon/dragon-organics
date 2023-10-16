@@ -9,7 +9,7 @@ function Layout({ title, description, children}) {
   return (
     <div>
       <Head>
-      <title>{title ? `${title} - Remedy Exports` : 'Remedy Exports'}</title>
+      <title>{title ? `${title}` : 'Dragon Organics'}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <Navbar />

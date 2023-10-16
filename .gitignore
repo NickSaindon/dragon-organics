@@ -36,4 +36,4 @@ yarn-error.log*
 .vercel
 
 #seed
-api/seed
+pages/api/seed.js

@@ -75,13 +75,16 @@ const Wholesale = () => {
               <div className="col-12 py-5 text-white">
                 <h1 className="text-center">Dragon Organics Wholesale!</h1>
                 <p>
-                  Thank you for your interest in buying kratom wholesale! Dragon Organics offers vendors the chance to buy Dragon Organics product, which means you can get amazing products at a 
-                  fraction of the price. This is a new and diverse market, and because of that, you want to ensure that the vendor you are working with can cater to your needs as a business. Look 
-                  no further because your business matters to us. When buying from us, you will get fresh products that your customers will love.
+                  We appreciate your interest in wholesale kratom with Dragon Organics! As a vendor, you have the opportunity to purchase our exceptional 
+                  Dragon Organics products at a significantly reduced cost. In this rapidly evolving and diverse market, it's crucial to partner with a 
+                  vendor who can address your business needs. Your business is important to us, and we're here to meet your requirements.
                   <br/><br/>
-                  Join the Dragon Organics family as a wholesale partner and enjoy exclusive pricing on our top-selling, GMP-compliant kratom products. We offer a diverse range of high-quality 
-                  Kratom shots, capsules, and powders that undergo rigorous quality control testing. We're eager to grow with your business, offering dedicated account support and special incentives 
-                  designed just for you.                
+                  <strong>By choosing us, you'll receive fresh products that will delight your customers.</strong>
+                  <br/><br/>
+                  Join the Dragon Organics family as a wholesale partner and gain access to exclusive pricing for our top-selling, GMP-compliant kratom 
+                  products. Our product range includes a diverse selection of high-quality Kratom shots, capsules, and powders that undergo stringent quality 
+                  control testing. We're enthusiastic about growing alongside your business, and we offer dedicated account support along with special incentives 
+                  tailored just for you.                
                 </p>
               </div>
             </div>
