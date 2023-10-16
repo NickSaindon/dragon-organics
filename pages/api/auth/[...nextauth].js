@@ -20,9 +20,6 @@ export default NextAuth({
             if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
             if (token?.isManufacturer) session.user.isManufacturer = token.isManufacturer;
             return session;
-        },
-        async signIn({ user, account, profile, email, credentials }) {
-            return true
         }
     },
     providers: [
@@ -36,9 +33,6 @@ export default NextAuth({
                 if (user && bcryptjs.compareSync(credentials.password, user.password)) {
                     user.password = '';
                     credentials.password = '';
-                    console.log(user.password)
-                    console.log(credentials.password)
-
 
                     return { 
                         _id: user._id,
