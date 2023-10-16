@@ -249,7 +249,7 @@ const data = {
         },
         {
             name: 'Raw Leaf Powder',
-            slug: 'raw-leaf-powder-red-250g',
+            slug: 'raw-leaf-powder-white-250g',
             category: 'raw-leaf-powder',
             imageOne: '/images/do-250g-pouch-raw-powder-white-front.jpg',
             imageTwo: '/images/do-250g-pouch-raw-powder-back.jpg',
