@@ -75,7 +75,7 @@ const Contact = () => {
             <div className="row justify-content-md-center ">
               <form onSubmit={handleSubmit(onSubmitForm, phone, setPhone)} 
                 className="col-lg-4 col-md-12 col-sm-12 text-center needs-validation" noValidate>
-                <Image src="/images/do-logo-title-under.png" width={150} height={200} alt=""/>
+                <Image src="/images/do-logo-title-under.png" className="my-5" width={150} height={200} alt=""/>
                 <div className="form-floating">
                   <Controller
                     name="name"

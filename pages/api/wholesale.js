@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export default async (req, res) => {
   require('dotenv').config()
-  const { name, email, phone, message } = req.body;
+  const { name, companyName, email, phone, websiteAddress, ein, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -126,6 +126,31 @@ export default async (req, res) => {
                                   </tbody>
                                   </table>
                                 </div>
+                                <div style="display: inline-block;">
+                                <table width="240" align="left" cellpadding="0" cellspacing="0" border="0" style="padding: 0; margin: 0; mso-table-lspace:0pt; mso-table-rspace:0pt;"  class="article">
+                                <tbody>
+                                  <tr> <td colspan="3" height="40"></td> </tr>
+                                  <tr>
+                                    <td width="80" style="width: 8%;"></td>
+                                    <td align="center">
+                                      <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                       Company Name
+                                      </h3>
+                                      <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        ${companyName}
+                                      </p>
+                                    </td>
+                                    <td width="80" style="width: 8%;"></td>
+                                  </tr>
+                                  <tr><td colspan="3" height="10"></td></tr>					
+                                  <tr>
+                                    <td colspan="3" height="5" valign="top" align="center">
+                                      <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                    </td>
+                                  </tr>						
+                                </tbody>
+                                </table>
+                              </div>
                                 <div style="display: inline-block; margin-left: -4px;">
                                   <table width="240" align="left" cellpadding="0" cellspacing="0" border="0" style="padding: 0; margin: 0; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="article">
                                   <tbody>
@@ -175,7 +200,59 @@ export default async (req, res) => {
                                     </tr>					
                                   </tbody>
                                   </table>
-                                </div>									
+                                </div>
+                                
+                                <div style="display: inline-block; margin-left: -4px;">
+                                <table width="240" align="left" cellpadding="0" cellspacing="0" border="0" style="padding: 0; margin: 0; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="article">
+                                <tbody>
+                                  <tr> <td colspan="3" height="40"></td> </tr>
+                                  <tr>
+                                    <td width="80" style="width: 8%;"></td>
+                                    <td align="center">
+                                      <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        Website Address
+                                      </h3>
+                                      <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        ${websiteAddress}
+                                      </p>
+                                    </td>
+                                    <td width="80" style="width: 8%;"></td>
+                                  </tr>
+                                  <tr><td colspan="3" height="10"></td></tr>					
+                                  <tr>
+                                    <td colspan="3" height="5" valign="top" align="center">
+                                      <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                    </td>
+                                  </tr>					
+                                </tbody>
+                                </table>
+                              </div>	
+                                
+                                <div style="display: inline-block; margin-left: -4px;">
+                                <table width="240" align="left" cellpadding="0" cellspacing="0" border="0" style="padding: 0; margin: 0; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="article">
+                                <tbody>
+                                  <tr> <td colspan="3" height="40"></td> </tr>
+                                  <tr>
+                                    <td width="80" style="width: 8%;"></td>
+                                    <td align="center">
+                                      <h3 border="0" style="border: none; line-height: 14px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-transform: uppercase; font-weight: normal; overflow: hidden; margin:17px 0 0px 0;">
+                                        EIN
+                                      </h3>
+                                      <p style="line-height: 20px; color: #ffffff; font-family: Verdana, Geneva, sans-serif; font-size: 16px; text-align: center; overflow: hidden; margin: 10px 0; mso-table-lspace:0;mso-table-rspace:0;"> 
+                                        ${ein}
+                                      </p>
+                                    </td>
+                                    <td width="80" style="width: 8%;"></td>
+                                  </tr>
+                                  <tr><td colspan="3" height="10"></td></tr>					
+                                  <tr>
+                                    <td colspan="3" height="5" valign="top" align="center">
+                                      <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                    </td>
+                                  </tr>					
+                                </tbody>
+                                </table>
+                              </div>	
                               </td>
                             </tr>
                             <tr> <td colspan="5" height="40"></td> </tr>

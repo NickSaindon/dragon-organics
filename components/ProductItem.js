@@ -7,7 +7,6 @@ const ProductItem = ({ product, addToCartHandler }) => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
-
   return (
     <div className="col col-md-6 col-lg-4 d-flex justify-content-center mx-auto">
       <div className="card shadow-sm">
@@ -19,37 +18,37 @@ const ProductItem = ({ product, addToCartHandler }) => {
             <div className="product-card-img" style={{backgroundImage: `url(${product.imageOne})` }}></div>
           </div>
         </Link>                  
-          <div className="card-body text-white text-center">
-            <h5 className="card-text">${product.price.toFixed(2)}</h5>
-            <h4 className="card-text">{product.name} {product.color}</h4>
-            <h5 className="card-text">{product.type}</h5>
-            <h6 className="card-text">Size: {product.size}</h6>
-            <div className="row">
-              <div className="col-lg-6 gy-2">
-                <Link 
-                  href={`/product/${product.slug}`} 
-                >
-                  <button 
-                    type="button" 
-                    className="w-100 btn btn-lg btn-outline-primary light"
-                  >
-                    Read More
-                  </button>
-                </Link>
-              </div>
-              <div className="col-lg-6 gy-2">
+        <div className="card-body text-white text-center">
+          <h5 className="card-text">${product.price.toFixed(2)}</h5>
+          <h4 className="card-text">{product.name} {product.color}</h4>
+          <h5 className="card-text">{product.type}</h5>
+          <h6 className="card-text">Size: {product.size}</h6>
+          <div className="row">
+            <div className="col-lg-6 gy-2">
+              <Link 
+                href={`/product/${product.slug}`} 
+              >
                 <button 
                   type="button" 
                   className="w-100 btn btn-lg btn-outline-primary light"
-                  onClick={() => addToCartHandler(product)}
                 >
-                  Add To Cart
+                  Read More
                 </button>
-              </div>
+              </Link>
+            </div>
+            <div className="col-lg-6 gy-2">
+              <button 
+                type="button" 
+                className="w-100 btn btn-lg btn-outline-primary light"
+                onClick={() => addToCartHandler(product)}
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   )
 }
 

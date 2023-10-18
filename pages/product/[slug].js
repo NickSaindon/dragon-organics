@@ -124,14 +124,14 @@ const ProductDetails = (props) => {
                     <p>{product.leafName}</p>
                     <h5>Disclaimer</h5>
                     <p>
-                      Our products are the highest quality (GAP/GMP).  They have not been evaluated by the FDA.  Only fro use as botanical specimen.  The information given is for 
+                      Our products are the highest quality (GAP/GMP).  They have not been evaluated by the FDA.  Only for use as botanical specimen.  The information given is for 
                       academic purpose only and not intended to diagnose, treat, cure or prevent disease.
                     </p>
-                    <Rating 
-                                rating={product.rating} 
-                                numReviews={product.numReviews}
-                            />
-                    <p>{product.rating} of {product.numReviews} reviews</p>
+                    {/* <Rating 
+                      rating={product.rating} 
+                      numReviews={product.numReviews}
+                    />
+                    <p>{product.rating} of {product.numReviews} reviews</p> */}
                     <div className="row">
                           <div className="col-6">
                             <h5><b>Price:</b></h5>
@@ -139,7 +139,7 @@ const ProductDetails = (props) => {
                           </div>
                           <div className="col-6 text-end">
                             <h5>${product.price}</h5>
-                            <div className="text-mute">{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
+                            <div className="text-mute">{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</div>
                           </div>
                         </div>
                         <div className="d-grid gap-2">

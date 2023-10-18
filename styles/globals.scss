@@ -862,24 +862,14 @@ main {
       input {
         background-color: black;
         color: white;
-        &#name {
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-        &#phone {
-          border-radius: 0;
-        }
-        &#email {
-          border-radius: 0;
-        }
+        border-radius: 0;
       }
       textarea {
         background-color: black;
         color: white;
         &#message {
           margin-bottom: 45px;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+          border-radius: 0;
           resize: none;
         }
       }

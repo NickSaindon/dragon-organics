@@ -151,6 +151,14 @@ function Navbar() {
                             <li>
                               <DropdownLink
                                 className="dropdown-item"
+                                href="/admin/news"
+                              >
+                                News
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
                                 href="/admin/supply-shipments"
                               >
                                 Supply Shipments

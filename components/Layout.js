@@ -5,7 +5,6 @@ import Footer from './Footer';
 
 function Layout({ title, description, children}) {
 
-
   return (
     <div>
       <Head>
