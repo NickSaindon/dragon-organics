@@ -62,7 +62,7 @@ const Categories = (props) => {
           </div>
             <div className="container-xl">
               <div className="row product-category-row gy-3">
-                {products.filter((p) => p.category === slug).sort((a, b) => a.size.localeCompare(b.size)).map((product) => (
+                {products.filter((p) => p.category === slug).sort((a, b) => a._id.localeCompare(b._id)).map((product) => (
                   <ProductItem 
                     product={product} 
                     key={product.slug}

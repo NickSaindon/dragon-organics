@@ -146,7 +146,7 @@ const AdminProducts = () => {
                             </tr>
                         </thead>
                         <tbody>
-                          {products.map((product) => (
+                          {products.sort((a, b) => a._id.localeCompare(b._id)).map((product) => (
                             <tr key={product._id} className="border-b">
                               <td className="p-2 text-center align-middle">{product._id.substring(20, 24)}</td>
                               <td className="p-2 text-center align-middle">{product.name} {product.color}</td>
