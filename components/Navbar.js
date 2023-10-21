@@ -143,6 +143,14 @@ function Navbar() {
                             <li>
                               <DropdownLink
                                 className="dropdown-item"
+                                href="/admin/users"
+                              >
+                                Users
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
                                 href="/admin/orders"
                               >
                                 Orders

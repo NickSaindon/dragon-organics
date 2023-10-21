@@ -1,12 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link'
 import Image from "next/image";
 import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import AgeVerification  from '../components/AgeVerification';
+import Cookies from 'js-cookie';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
+
 export default function Home() {
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     gsap.timeline()
     .from(".home-header h1", { y:-100, opacity:0, ease: 1, duration: 0.3 })
@@ -65,12 +70,27 @@ export default function Home() {
         scrub: true
       }, 
     });
+
+    Cookies.get('isVerified') ? JSON.parse(Cookies.get('isVerified')) : setOpenModal(true);
+    
+
   }, []);
+
+  const handleIsVerified = () => {
+    setOpenModal(false);
+    Cookies.set('isVerified', true)
+  }
+
 
   return (
     <Layout 
       title="Dragon Organics | Home" 
       description="Dragon Organics is an online and retail seller of quality Thai botanicals.">
+      <AgeVerification 
+        open={openModal}
+        onClose={handleIsVerified}
+      >
+      </AgeVerification>
       <div id="page" className="home-container bg-black">
         <div className="home-header">
           <div className="py-5 container">
@@ -92,6 +112,7 @@ export default function Home() {
         </div>
         <div className="about-section-container bg-black">
           <div className="container px-4 py-5" id="featured-3">
+
             <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
               <div className="feature col text-center text-white">
                 <div className="feature-icon d-inline-flex align-items-center justify-content-center">
@@ -151,7 +172,7 @@ export default function Home() {
           <div className="container-xl">
             <div className="row g-4 py-5">
               <div className="col-sm-12 col-md-12 col-lg-6">
-                <Image src="/images/extract-ad-img.jpg" className="w-100 h-100" width={600} height={600} alt="Computer and mobile devices"/>
+                <Image src="/images/extract-lab-img.jpg" className="w-100 h-100" width={600} height={600} alt="Computer and mobile devices"/>
               </div>
               <div className="col-sm-12 col-md-12 col-lg-6 home-extract-text text-white">
                 <h2 className="fs-2 text-center">Extract</h2>

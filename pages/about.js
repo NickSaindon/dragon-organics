@@ -65,7 +65,7 @@ const About = () => {
   return (
     <Layout 
       title="Dragon Organics | About"
-      description="Online and retail seller of quality Thai botanicals.  Findout about our company and the rich culture behind our products.">
+      description="Drangon Organics | Online and retail seller of quality Thai botanicals.  Findout about our company and the rich culture behind our products.">
       <div className="about-container bg-black">
         <div className="about-header bg-black">
           <Image src="/images/do-logo-title-under.png" width={140} height={190} alt=""/>
@@ -140,6 +140,9 @@ const About = () => {
                 the rapid growth of Kratom leaves, which can often be harvested within just 15 to 30 days, sometimes transitioning from white to red due to the perfect Thai setting. However, these 
                 specific conditions also make Kratom cultivation challenging outside its natural habitat. While some attempt greenhouse cultivation, it is generally unsuitable for large-scale 
                 production, and the lush Thai environment remains unmatched in supporting Kratom growth.
+              </p>
+              <p>
+                <strong>* Disclaimer:</strong> The above statement is for research purposes only. Dragon Organics does not claim any medical benefits of kratom and has not been approved by the US FDA for human consumption.
               </p>
             </div>
           </div>

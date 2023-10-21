@@ -28,8 +28,9 @@ const CreateManufacturerShipment = () => {
       loading: true,
       error: '',
     });
+    const router = useRouter();
 
-  const { register, control, handleSubmit, formState: { errors } } = useForm({});
+  const { register, control, handleSubmit, formState: { errors }, reset } = useForm({});
     const { fields, append, remove } = useFieldArray({
       control,
       name: 'shipmentItems',
@@ -52,9 +53,11 @@ const CreateManufacturerShipment = () => {
           isRecieved
         });
         dispatch({ type: 'UPDATE_SUCCESS' });
-        toast.success('Shipment created successfully'), {
+        reset();
+        toast.success("Shipment created successfully", {
           theme: "colored"
-        };
+        });
+        router.push('/manufacturer/manufacturer-shipments');
       } catch (err) {
         dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
         toast.error(getError(err), {
