@@ -1,7 +1,7 @@
 import { createRouter } from 'next-connect';
 import { getToken } from 'next-auth/jwt';
 import VendorAccount from '../../../../models/VendorAccount';
-import db from '../../../../../utils/db';
+import db from '../../../../utils/db';
 
 const router = createRouter();
 

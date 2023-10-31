@@ -82,9 +82,8 @@ const RegisterVendor = () => {
               <Image src="/images/do-logo-title-under.png" width={150} height={195} alt=""/>
               <h1 className="h3 py-3 mb-3 fw-normal">Please Register</h1>
               <p>
-                <b>Disclaimer:</b> Must be of legal age to purchase these products. Dragon Organics will not ship to the following US states, counties, and 
-                cities where kratom is banned: Alabama, Arkansas, Indiana, Rhode Island, Vermont, Wisconsin, Sarasota County (FL), Union County (NC), 
-                Denver (CO), and San Diego (CA).  If you are ordering from any of these States or cities we will not ship and refund your order.
+                Fill out all the information and make sure everything is correct.  Once everything has been submited you will be routed back to the site as a normal user.
+                We will verify your information and if everything is correct we will approve you as a retail vendor and send you an email that you have been approved.   
               </p>
               <div className="form-floating">
                 <input
