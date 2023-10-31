@@ -85,10 +85,10 @@ const AdminOrders = () => {
                                 {moment(new Date(supply.createdAt)).format('MM/DD/YYYY')}
                               </td>
                               <td className="p-2 text-center align-middle">{supply.shipmentItems.length}</td>
-                              <td className="p-2 text-center align-middle">{supply.numberOfBoxes}</td>
+                              <td className="p-2 text-center align-middle">{supply.totalNumberOfBoxes}</td>
                               <td className="p-2 text-center align-middle">
                                 {supply.isShipped
-                                ? `${supply.deliveredAt.substring(0, 10)}`
+                                ? `${supply.shippedAt.substring(0, 10)}`
                                 : 'not shipped'}
                             </td> 
                             <td className="p-2 text-center align-middle">
@@ -97,7 +97,7 @@ const AdminOrders = () => {
                                 : 'not revieved'}
                             </td>                            
                             <td className="p-2 text-center align-middle">
-                                <Link href={`/manufacturer/shipments/${supply._id}`} type="button" className="btn btn-primary">
+                                <Link href={`/admin/shipments/${supply._id}`} type="button" className="btn btn-primary">
                                   Details
                                 </Link>
                             </td>   

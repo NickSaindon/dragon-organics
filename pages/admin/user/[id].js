@@ -207,27 +207,19 @@ const AdminUserEdit = ({ params }) => {
                         )}
                         <label htmlFor="name">Email</label>
                       </div>
+
+
                       <div className="form-floating">
-                        <Controller 
-                          name="phone"
-                          control={control}
-                          rules={{
-                            required: false,
-                            pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/,
-                          }}
-                          render={({ field: {onChange, name, value} }) => (
-                            <NumberFormat
-                              format="(###) ###-####"
-                              name={name}
-                              className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-                              value={value}
-                              placeholder="Phone Number" 
-                              onChange={onChange}
-                            />
-                          )}
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Phone Number" 
+                          autoFocus
+                          {...register('phone')}
                         />
-                        <label htmlFor="floatingInput">Phone Number</label>
+                        <label htmlFor="phone">Phone Number</label>
                       </div>
+                      
                       <div className="form-floating">
                         <input
                           type="text"

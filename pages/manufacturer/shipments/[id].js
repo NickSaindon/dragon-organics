@@ -88,7 +88,7 @@ const ShipmentDetails = ({ params }) => {
             recievedAt,
           } = manufacturerShipment;
 
-          async function deliverOrderHandler() {
+          async function shippedProductHandler() {
             try {
               dispatch({ type: 'SHIPPING_REQUEST' });
               const { data } = await axios.put(
@@ -141,7 +141,7 @@ const ShipmentDetails = ({ params }) => {
                       <div>
                         <button 
                           className="w-100 btn btn-lg btn-primary" 
-                          onClick={deliverOrderHandler}
+                          onClick={shippedProductHandler}
                         >
                           {loadingShipped ? (
                             <>
@@ -195,10 +195,9 @@ const ShipmentDetails = ({ params }) => {
                             <td className="p-2 text-center align-middle">{item.boxSize}</td>
                             <td className="p-2 text-center align-middle">{item.packagesPerBox}</td>
                             <td className="p-2 text-center align-middle">{item.numberOfProductBoxes}</td>
-                            <td className="p-2 text-center align-middle">{item.totalBoxWeight}</td>
+                            <td className="p-2 text-center align-middle">{item.totalBoxWeight}kgs</td>
                         </tr>
                         ))}
-
                       </tbody>
                     </table>
                   </div>
