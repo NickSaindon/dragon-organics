@@ -143,36 +143,24 @@ const RegisterVendor = () => {
                 <label htmlFor="name">Email</label>
               </div>
               <div className="form-floating">
-                <Controller 
-                  name="phone"
-                  control={control}
-                  rules={{
-                    required: true,
-                    pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/
-                    ,
-                  }}
-                  render={({ field: {onChange, phone, value} }) => (
-                    <NumberFormat
-                      format="(###) ###-####"
-                      name={phone}
-                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-                      value={value}
-                      id="phone" 
-                      placeholder="Phone Number" 
-                      onChange={onChange}
-                    />
-                  )}
+                <input
+                  type="text"
+                  className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                  id="phone"
+                  placeholder="Phone Number" 
+                  autoFocus
+                  {...register('phone', {
+                    required: 'Please enter phone number',
+                  })}
                 />
-                <div className="invalid-feedback">
-                    {errors.phone
-                          ? errors.phone.type === 'pattern'
-                            ? 'Phone number is not completed'
-                            : 'Phone number is required'
-                          : ''
-                    }
-                </div>
+                {errors.phone && (
+                  <div className="invalid-feedback">
+                    {errors.phone.message}
+                  </div>
+                )}
                 <label htmlFor="phone">Phone Number</label>
               </div>
+
               <div className="form-floating">
                 <input
                   type="text"
