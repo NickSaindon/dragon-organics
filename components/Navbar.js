@@ -74,6 +74,13 @@ function Navbar() {
                 Contact  
               </Link>
             </li>
+            {session?.user && session.user.isVendor && (
+              <li className="nav-item">
+                <Link href="/vendor-pricing" className={router.asPath == "/vendor-pricing" ? "nav-link active" : "nav-link"}>
+                  Vendor Pricing  
+                </Link>
+              </li>    
+            )}
           </ul>
           <div className="d-flex">
             <ul className="navbar-nav navbar-left me-auto mb-2 mb-lg-0">

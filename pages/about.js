@@ -65,7 +65,7 @@ const About = () => {
   return (
     <Layout 
       title="Dragon Organics | About"
-      description="Drangon Organics | Online and retail seller of quality Thai botanicals.  Findout about our company and the rich culture behind our products.">
+      description="Dragon Organics | Online and retail seller of quality Thai botanicals.  Findout about our company and the rich culture behind our products.">
       <div className="about-container bg-black">
         <div className="about-header bg-black">
           <Image src="/images/do-logo-title-under.png" width={140} height={190} alt=""/>

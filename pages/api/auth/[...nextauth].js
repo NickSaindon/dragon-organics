@@ -13,12 +13,14 @@ export default NextAuth({
             if (user?._id) token._id = user._id;
             if (user?.isAdmin) token.isAdmin = user.isAdmin;
             if (user?.isManufacturer) token.isManufacturer = user.isManufacturer;
+            if (user?.isVendor) token.isVendor = user.isVendor;
             return token;
         },
         async session({ session, token }) {
             if (token?._id) session.user._id = token._id;
             if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
             if (token?.isManufacturer) session.user.isManufacturer = token.isManufacturer;
+            if (token?.isVendor) session.user.isVendor = token.isVendor;
             return session;
         }
     },
@@ -40,7 +42,8 @@ export default NextAuth({
                         email: user.email,
                         image: 'f',
                         isAdmin: user.isAdmin,
-                        isManufacturer: user.isManufacturer
+                        isManufacturer: user.isManufacturer,
+                        isVendor: user.isVendor
                     };
                 }
                 throw new Error('Invalid email or password');

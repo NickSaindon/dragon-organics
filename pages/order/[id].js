@@ -106,6 +106,7 @@ function OrderScreen() {
       loadPaypalScript();
     }
   }, [order, orderId, paypalDispatch, successDeliver, successPay]);
+  
   const {
     shippingAddress,
     paymentMethod,

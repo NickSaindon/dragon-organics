@@ -22,7 +22,7 @@ async function handler(req, res) {
     address,
     city,
     state,
-    zipCode,
+    postalCode,
     password 
   } = req.body;
 
@@ -48,7 +48,7 @@ async function handler(req, res) {
   toUpdateUser.address = address;
   toUpdateUser.city = city;
   toUpdateUser.state = state;
-  toUpdateUser.zipCode = zipCode;
+  toUpdateUser.postalCode = postalCode;
 
   if (password) {
     toUpdateUser.password = bcryptjs.hashSync(password);

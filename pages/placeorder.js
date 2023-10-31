@@ -89,7 +89,6 @@ const PlaceOrder = () => {
                       <Link href="/shipping">
                         <button type="button" className="btn btn-primary">Edit</button>
                       </Link>
-
                     </div>
                   </div>
 
@@ -98,14 +97,14 @@ const PlaceOrder = () => {
                         <h2 className="card-title">Order Items</h2>
                         <table className="table text-white">
                             <thead>
-                            <tr>
+                              <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Size</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Subtotal</th>
-                            </tr>
+                              </tr>
                             </thead>
                             <tbody>
                             {cartItems.map((item) => (

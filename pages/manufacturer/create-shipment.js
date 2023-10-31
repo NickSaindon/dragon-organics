@@ -6,6 +6,7 @@ import { useReducer } from 'react';
 import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../utils/error';
+import Image from "next/image";
 import NumberFormat from "react-number-format";
 
 function reducer(state, action) {
@@ -38,7 +39,7 @@ const CreateManufacturerShipment = () => {
 
     const submitHandler = async ({
       shipmentItems,
-      numberOfBoxes,
+      totalNumberOfBoxes,
       totalShipmentWeight,
       isShipped,
       isRecieved
@@ -47,7 +48,7 @@ const CreateManufacturerShipment = () => {
         dispatch({ type: 'UPDATE_REQUEST' });
         await axios.post(`/api/manufacturer/shipments`, {
           shipmentItems,
-          numberOfBoxes,
+          totalNumberOfBoxes,
           totalShipmentWeight,
           isShipped,
           isRecieved
@@ -89,15 +90,18 @@ const CreateManufacturerShipment = () => {
                     <h1 className="card-title text-center">Manufacturer Shipments</h1>
                     <ul className="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                       <li className="nav-item">
-                        <a className="nav-link active" aria-current="true" data-bs-toggle="tab" href="#dhcp">Shipments</a>
+                        <a className="nav-link active" aria-current="true" data-bs-toggle="tab" href="#create-shipment">Shipments</a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" data-bs-toggle="tab" href="#static">Instructions</a>
+                        <a className="nav-link" data-bs-toggle="tab" href="#thai-instructions">คำแนะนำ</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className="nav-link" data-bs-toggle="tab" href="#english-instructions">Instructions</a>
                       </li>
                     </ul>
                   </div>
                   <div className="card-body tab-content">
-                    <div className="tab-pane active" id="dhcp">
+                    <div className="tab-pane active" id="create-shipment">
                       <h3 className="card-title text-center">Submit Shipments</h3>
                       <form onSubmit={handleSubmit(submitHandler)} className="col-lg-6 col-md-12 col-sm-12 form-shipment justify-content-center">
                         <button 
@@ -206,7 +210,7 @@ const CreateManufacturerShipment = () => {
                                   </div>
                                   <div className="form-floating">
                                     <input
-                                      type="text"
+                                      type="number"
                                       className={`form-control ${errors.packagesPerBox ? 'is-invalid' : ''}`}
                                       id="packagesPerBox"
                                       placeholder="Number of Packages in Box" 
@@ -223,12 +227,32 @@ const CreateManufacturerShipment = () => {
                                     <label htmlFor="packagesPerBox">Number of Packages in Box</label>
                                   </div>
 
+
+                                  <div className="form-floating">
+                                    <input
+                                      type="text"
+                                      className={`form-control ${errors.numberOfProductBoxes ? 'is-invalid' : ''}`}
+                                      id="numberOfProductBoxes"
+                                      placeholder="Total Number of Product Boxes" 
+                                      autoFocus
+                                      {...register(`shipmentItems.${index}.numberOfProductBoxes`, {
+                                        required: 'Please enter total box weight',
+                                      })}
+                                    />
+                                    {errors.numberOfProductBoxes && (
+                                      <div className="invalid-feedback">
+                                        {errors.numberOfProductBoxes.message}
+                                      </div>
+                                    )}
+                                    <label htmlFor="numberOfProductBoxes">Total Number of Product Boxes</label>
+                                  </div>
+
                                   <div className="form-floating">
                                     <input
                                       type="text"
                                       className={`form-control ${errors.totalBoxWeight ? 'is-invalid' : ''}`}
                                       id="totalBoxWeight"
-                                      placeholder="Total Box Weight" 
+                                      placeholder="Total Box Weight in Kilograms" 
                                       autoFocus
                                       {...register(`shipmentItems.${index}.totalBoxWeight`, {
                                         required: 'Please enter total box weight',
@@ -239,7 +263,7 @@ const CreateManufacturerShipment = () => {
                                         {errors.totalBoxWeight.message}
                                       </div>
                                     )}
-                                    <label htmlFor="totalBoxWeight">Total Box Weight</label>
+                                    <label htmlFor="totalBoxWeight">Total Box Weight in Kilograms</label>
                                   </div>
                                   <button 
                                     type="button" 
@@ -255,28 +279,28 @@ const CreateManufacturerShipment = () => {
 
                         <div className="form-floating">
                           <input
-                            type="text"
-                            className={`form-control ${errors.numberOfBoxes ? 'is-invalid' : ''}`}
-                            id="numberOfBoxes"
-                            placeholder="Total Number of Boxes" 
+                            type="number"
+                            className={`form-control ${errors.totalNumberOfBoxes ? 'is-invalid' : ''}`}
+                            id="totalNumberOfBoxes"
+                            placeholder="Total Number of Boxes to Ship" 
                             autoFocus
-                            {...register('numberOfBoxes', {
+                            {...register('totalNumberOfBoxes', {
                               required: 'Please enter total number of Boxes',
                             })}
                           />
-                          {errors.numberOfBoxes && (
+                          {errors.totalNumberOfBoxes && (
                             <div className="invalid-feedback">
-                              {errors.numberOfBoxes.message}
+                              {errors.totalNumberOfBoxes.message}
                             </div>
                           )}
-                          <label htmlFor="numberOfBoxes">Total Number of Boxes</label>
+                          <label htmlFor="totalNumberOfBoxes">Total Number of Boxes to Ship</label>
                         </div>
                         <div className="form-floating">
                           <input
                             type="text"
                             className={`form-control ${errors.totalShipmentWeight ? 'is-invalid' : ''}`}
                             id="totalShipmentWeight"
-                            placeholder="Total Shipment Weight" 
+                            placeholder="Total Shipment Weight in Kilograms" 
                             autoFocus
                             {...register('totalShipmentWeight', {
                               required: 'Please enter total shipment weight',
@@ -287,7 +311,7 @@ const CreateManufacturerShipment = () => {
                                 {errors.totalShipmentWeight.message}
                             </div>
                           )}
-                          <label htmlFor="totalShipmentWeight">Total Shipment Weight</label>
+                          <label htmlFor="totalShipmentWeight">Total Shipment Weight in Kilograms</label>
                         </div>
                         <button className="w-100 btn btn-lg btn-outline-primary light" type="submit">
                           {loadingUpdate ? (
@@ -301,28 +325,164 @@ const CreateManufacturerShipment = () => {
                         </button>
                       </form>
                     </div>
-                    <div className="tab-pane" id="static">
-                      <h3 className="card-title text-center">Shipment Instructions</h3>
+                    <div className="tab-pane" id="thai-instructions">
+                    <h3 className="card-title text-center">คำแนะนำในการจัดส่ง</h3>
                       <p className=" card-text">
-                          Molestie a iaculis at erat pellentesque adipiscing commodo elit. Odio eu feugiat pretium nibh ipsum consequat nisl. Vitae tempus quam pellentesque 
-                          nec nam aliquam sem. Faucibus a pellentesque sit amet porttitor eget. Posuere urna nec tincidunt praesent semper feugiat. Aliquam malesuada bibendum 
-                          arcu vitae elementum. Metus vulputate eu scelerisque felis imperdiet proin fermentum. Ut diam quam nulla porttitor massa id neque. Malesuada bibendum 
-                          arcu vitae elementum curabitur vitae nunc sed velit. Aliquam id diam maecenas ultricies mi eget mauris pharetra. Nunc non blandit massa enim nec dui 
-                          nunc mattis. Non blandit massa enim nec dui nunc mattis. Est sit amet facilisis magna etiam tempor. Sed adipiscing diam donec adipiscing. Eget magna 
-                          fermentum iaculis eu non diam phasellus vestibulum lorem. Sed nisi lacus sed viverra tellus in. Platea dictumst vestibulum rhoncus est pellentesque 
-                          elit ullamcorper. Faucibus interdum posuere lorem ipsum dolor sit amet consectetur adipiscing. Nisl nisi scelerisque eu ultrices vitae auctor eu 
-                          augue. Neque convallis a cras semper auctor neque vitae tempus.
-                          <br /><br />
-                          Lobortis elementum nibh tellus molestie nunc non blandit massa. Eu volutpat odio facilisis mauris sit amet massa vitae tortor. Ullamcorper morbi 
-                          tincidunt ornare massa. Velit sed ullamcorper morbi tincidunt ornare massa. Risus quis varius quam quisque id diam. Neque convallis a cras semper 
-                          auctor neque vitae tempus quam. Nulla at volutpat diam ut venenatis tellus in metus vulputate. Augue neque gravida in fermentum et sollicitudin ac 
-                          orci phasellus. Nibh cras pulvinar mattis nunc sed blandit. Aenean euismod elementum nisi quis eleifend. Blandit volutpat maecenas volutpat blandit 
-                          aliquam etiam erat velit scelerisque. Congue nisi vitae suscipit tellus mauris a. Sed vulputate odio ut enim. Mus mauris vitae ultricies leo 
-                          integer. Elementum nibh tellus molestie nunc non. Sagittis vitae et leo duis. Placerat vestibulum lectus mauris ultrices eros in cursus turpis 
-                          massa. Elementum nibh tellus molestie nunc non blandit massa.
-                          <br /><br />
-                          Non quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor. Pellentesque eu tincidunt tortor aliquam nulla. Odio facilisis mauris sit amet massa vitae tortor. In hac habitasse platea dictumst vestibulum rhoncus est. Velit aliquet sagittis id consectetur purus. Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque. Fringilla urna porttitor rhoncus dolor purus non enim praesent elementum. Volutpat maecenas volutpat blandit aliquam etiam. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis. Commodo odio aenean sed adipiscing diam. Feugiat nibh sed pulvinar proin gravida hendrerit lectus. Enim ut sem viverra aliquet eget sit amet tellus cras. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi tristique. Rhoncus dolor purus non enim praesent. Malesuada nunc vel risus commodo viverra. Mi quis hendrerit dolor magna eget est lorem. Eget est lorem ipsum dolor. Risus in hendrerit gravida rutrum quisque. Justo laoreet sit amet cursus sit amet dictum sit. Elementum sagittis vitae et leo duis ut diam quam.
+                        นี่คือคำแนะนำเกี่ยวกับวิธีการกรอกอินพุตแต่ละรายการเพื่อสร้างใบแจ้งหนี้เชิงพาณิชย์และรายการบรรจุภัณฑ์สำหรับการจัดส่งทุกครั้ง สิ่งสำคัญคือต้องระบุผลิตภัณฑ์แต่ละรายการที่จะจัดส่งและข้อมูลให้ถูกต้อง 
+                        เมื่อเรามีข้อมูลที่จำเป็นทั้งหมดแล้ว เราจะจัดเตรียมเอกสารที่จำเป็นเหล่านี้ให้กับคุณในการจัดส่งสินค้าทั้งหมด
                       </p>
+                      <h4 className=" card-text">ขั้นแรกคลิกที่ปุ่มเพิ่มผลิตภัณฑ์</h4>
+                      <p>
+                        คุณสามารถคลิกที่ปุ่มเพิ่มผลิตภัณฑ์ได้บ่อยเท่าที่จำเป็นเพื่อเพิ่มผลิตภัณฑ์สำหรับการจัดส่ง
+                      </p>
+                      <div className="mx-auto text-center">
+                        <Image src="/images/shipping-product-card.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                      </div>
+                      <div className="my-3">
+                        <div className="row">
+                          <div className="col-6">
+                          <h4>ตัวอย่างของผลิตภัณฑ์สำหรับการจัดส่ง 1 อินพุต:</h4>
+                          <ul>
+                            <li><strong>ประเภทสินค้า:</strong> Raw Powder - Red</li>
+                            <li><strong>รายละเอียดสินค้า:</strong>  Red raw powder in 100g bags</li>
+                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> Ten 100g bags in 1kg bag</li>
+                            <li><strong>ขนาดกล่อง:</strong> 45x55x40cm</li>
+                            <li><strong>จำนวนบรรจุภัณฑ์ในกล่อง:</strong> 10</li>
+                            <li><strong>จำนวนกล่องสินค้าทั้งหมด:</strong> 5</li>
+                            <li><strong>น้ำหนักกล่องรวมเป็นกิโลกรัม:</strong>  10</li>
+                          </ul>
+                          <div className="mx-auto text-center">
+                            <Image src="/images/shipping-card-filled-out.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                          </div>
+                          </div>
+                          <div className="col-6">
+                          <h4>ตัวอย่างผลิตภัณฑ์สำหรับการจัดส่ง 2 อินพุต:</h4>
+                          <ul>
+                            <li><strong>ประเภทสินค้า:</strong> Extract Gel Caps</li>
+                            <li><strong>รายละเอียดสินค้า:</strong>  Blister packs of 10 gel caps</li>
+                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> 100 blister packs per package</li>
+                            <li><strong>ขนาดกล่อง:</strong> 40x40x40cm</li>
+                            <li><strong>จำนวนบรรจุภัณฑ์ในกล่อง:</strong> 200</li>
+                            <li><strong>จำนวนกล่องสินค้าทั้งหมด:</strong> 1</li>
+                            <li><strong>น้ำหนักกล่องรวมเป็นกิโลกรัม:</strong>  0.6</li>
+                          </ul>
+                          <div className="mx-auto text-center">
+                            <Image src="/images/shipping-card-filled-out2.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                          </div>                          
+                          </div>
+                        </div>
+                      </div>
+                      <p>อินพุตสองรายการสุดท้ายใช้สำหรับบวกจำนวนกล่องทั้งหมดและน้ำหนักรวมสำหรับผลิตภัณฑ์ทั้งหมดที่จะจัดส่ง</p>
+                      <h4>ตัวอย่างอินพุตสองตัวสุดท้าย:</h4>
+                      <ul>
+                        <li><strong>จำนวนกล่องทั้งหมดที่จะจัดส่ง:</strong> 6</li>
+                        <li><strong>น้ำหนักขนส่งรวมเป็นกิโลกรัม:</strong>  50.6 <strong>(เฉพาะตัวเลขเป็นกิโลกรัมเท่านั้น)</strong></li>
+                      </ul>
+                      <div className="mx-auto text-center">
+                        <Image src="/images/shipping-card-last-inputs.jpg" className="" width={600} height={150} alt="Computer and mobile devices"/>
+                      </div>
+                      <div className="my-3">
+                        <h4>เมื่อสร้างการจัดส่งแล้ว</h4>
+                        <p>
+                          หลังจากคลิกปุ่มส่งการจัดส่ง คุณจะถูกนำไปยังหน้าการจัดส่งของผู้ผลิตเพื่อดูการจัดส่งที่สร้างขึ้น
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/manufacturer-shipping.jpg" className="" width={600} height={200} alt="Computer and mobile devices"/>
+                        </div>
+                        <p>
+                          เมื่อจัดส่งแล้ว ในวันเดียวกับที่จัดส่งให้คลิกที่ปุ่มรายละเอียดและคลิกที่ปุ่มจัดส่งแล้วเพื่อระบุว่าสินค้าได้รับการจัดส่งแล้วและบันทึกวันที่จัดส่ง
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/shipped-product-button.jpg" className="" width={600} height={200} alt="Computer and mobile devices"/>
+                        </div>
+                        <p>
+                          เมื่อส่งการจัดส่งแล้วเมื่อคุณไปที่หน้ารายละเอียด คุณจะเห็นว่าดำเนินการสำเร็จ                        
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/shipping-success.jpg" className="" width={600} height={150} alt="Computer and mobile devices"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="tab-pane" id="english-instructions">
+                      <h3 className="card-title text-center">Shipping Instructions</h3>
+                      <p className=" card-text">
+                          These are instructions on how each input needs to be filled out to create commercial invoices and packing list for every 
+                          shipment.  It is very important that each product to be shipped is inputed and that the information is correct.  Once 
+                          we have all the neccessary information we will provide you with these neccessary documents to ship all of the products.
+                      </p>
+                      <h4 className=" card-text">First Click on the Add Product Button</h4>
+                      <p>
+                          You can click on the Add Product button as many times as needed to add products for shipments.
+                      </p>
+                      <div className="mx-auto text-center">
+                        <Image src="/images/shipping-product-card.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                      </div>
+                      <div className="my-3">
+                        <div className="row">
+                          <div className="col-6">
+                          <h4>Example of product for shipment 1 inputs:</h4>
+                          <ul>
+                            <li><strong>Product Type:</strong> Raw Powder - Red</li>
+                            <li><strong>Product Description:</strong>  Red raw powder in 100g bags</li>
+                            <li><strong>Product Weight Per Package:</strong> Ten 100g bags in 1kg bag</li>
+                            <li><strong>Box Size:</strong> 45x55x40cm</li>
+                            <li><strong>Number of Packages in Box:</strong> 10</li>
+                            <li><strong>Total Number of Product Boxes:</strong> 5</li>
+                            <li><strong>Total Box Weight in Kilograms:</strong>  10kgs</li>
+                          </ul>
+                          <div className="mx-auto text-center">
+                            <Image src="/images/shipping-card-filled-out.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                          </div>
+                          </div>
+                          <div className="col-6">
+                          <h4>Example of product for shipment 2 inputs:</h4>
+                          <ul>
+                            <li><strong>Product Type:</strong> Extract Gel Caps</li>
+                            <li><strong>Product Description:</strong>  Blister packs of 10 gel caps</li>
+                            <li><strong>Product Weight Per Package:</strong> 100 blister packs per package</li>
+                            <li><strong>Box Size:</strong> 40x40x40cm</li>
+                            <li><strong>Number of Packages in Box:</strong> 200</li>
+                            <li><strong>Total Number of Product Boxes:</strong> 1</li>
+                            <li><strong>Total Box Weight in Kilograms:</strong>  0.6kgs</li>
+                          </ul>
+                          <div className="mx-auto text-center">
+                            <Image src="/images/shipping-card-filled-out2.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
+                          </div>                          
+                          </div>
+                        </div>
+                      </div>
+                      <p>The last two inputs are for adding up the total number of boxes and total weight for all products to be shipped.</p>
+                      <h4>Example of last two inputs:</h4>
+                      <ul>
+                        <li><strong>Total Number of Boxes to Ship:</strong> 6</li>
+                        <li><strong>Total Shipment Weight in Kilograms:</strong>  50.6 <strong>(only numbers in kilograms)</strong></li>
+                      </ul>
+                      <div className="mx-auto text-center">
+                        <Image src="/images/shipping-card-last-inputs.jpg" className="" width={600} height={150} alt="Computer and mobile devices"/>
+                      </div>
+                      <div className="my-3">
+                        <h4>Once Product Shipment Has Been Created</h4>
+                        <p>
+                          After the Submit Shipment button has been clicked you will be routed to the Manufacturer Shipments page to view 
+                          the shipment that was created.
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/manufacturer-shipping.jpg" className="" width={600} height={200} alt="Computer and mobile devices"/>
+                        </div>
+                        <p>
+                          When the shipment has been sent, on the same day it was sent you will click on the details button
+                          and click on the Shipped Product button to indicate that the products have been shipped and to record the date they were shipped.
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/shipped-product-button.jpg" className="" width={600} height={200} alt="Computer and mobile devices"/>
+                        </div>
+                        <p>
+                          Once the shippment has been submitted when you go to the details page you should see that it was successful.
+                        </p>
+                        <div className="mx-auto text-center">
+                          <Image src="/images/shipping-success.jpg" className="" width={600} height={150} alt="Computer and mobile devices"/>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -79,10 +79,10 @@ const ManufacturerShipments = () => {
                           <tr key={manufacturerShipment._id}>
                             <td className="p-2 text-center align-middle">{manufacturerShipment._id.substring(20, 24)}</td>
                             <td className="p-2 text-center align-middle">{manufacturerShipment.shipmentItems.length}</td>
-                            <td className="p-2 text-center align-middle">{manufacturerShipment.numberOfBoxes}</td>
+                            <td className="p-2 text-center align-middle">{manufacturerShipment.totalNumberOfBoxes}</td>
                             <td className="p-2 text-center align-middle">
                                 {manufacturerShipment.isShipped
-                                ? `${manufacturerShipment.deliveredAt.substring(0, 10)}`
+                                ? `${manufacturerShipment.shippedAt.substring(0, 10)}`
                                 : 'not shipped'}
                             </td> 
                             <td className="p-2 text-center align-middle">

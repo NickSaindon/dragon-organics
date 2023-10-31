@@ -88,7 +88,7 @@ const AdminUsers = () => {
                 <div className="card admin-card-container">
                   <div className="card-body">
                     <div className="row py-5">
-                      <h1 className="card-title text-center text-primary">Admin Users</h1>
+                      <h1 className="card-title text-center text-primary">Customer Users</h1>
                       <table className="table text-white">
                         <thead className="border-b">
                           <tr>
@@ -96,17 +96,64 @@ const AdminUsers = () => {
                             <th className="p-3 text-center text-primary">NAME</th>
                             <th className="p-3 text-center text-primary">EMAIL</th>
                             <th className="p-3 text-center text-primary">ADMIN</th>
+                            <th className="p-3 text-center text-primary">VENDOR</th>
                             <th className="p-3 text-center text-primary">MANUFACTURER</th>
                             <th className="p-3 text-center text-primary">ACTIONS</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {users.filter(user => user.isAdmin === true).map((user) => (
+                          {users.filter(user => user.isAdmin === false && user.isManufacturer === false && user.isVendor === false).map((user) => (
                             <tr key={user._id} className="border-b">
                               <td className="p-2 text-center align-middle">{user._id.substring(20, 24)}</td>
                               <td className="p-2 text-center align-middle">{user.name}</td>
                               <td className="p-2 text-center align-middle">{user.email}</td>
                               <td className="p-2 text-center align-middle">{user.isAdmin ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">{user.isVendor ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">{user.isManufacturer ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">
+                                <Link
+                                  href={`/admin/user/${user._id}`}
+                                  type="button"
+                                  className="btn btn-primary"
+                                >
+                                  Edit
+                                </Link>
+                                &nbsp;
+                                <button
+                                  type="button"
+                                  className="btn btn-danger"
+                                  onClick={() => deleteHandler(user._id)}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="row py-5">
+                      <h1 className="card-title text-center text-primary">Vendor Users</h1>
+                      <table className="table text-white">
+                        <thead className="border-b">
+                          <tr>
+                            <th className="p-3 text-center text-primary">ID</th>
+                            <th className="p-3 text-center text-primary">NAME</th>
+                            <th className="p-3 text-center text-primary">EMAIL</th>
+                            <th className="p-3 text-center text-primary">ADMIN</th>
+                            <th className="p-3 text-center text-primary">VENDOR</th>
+                            <th className="p-3 text-center text-primary">MANUFACTURER</th>
+                            <th className="p-3 text-center text-primary">ACTIONS</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {users.filter(user => user.isVendor === true).map((user) => (
+                            <tr key={user._id} className="border-b">
+                              <td className="p-2 text-center align-middle">{user._id.substring(20, 24)}</td>
+                              <td className="p-2 text-center align-middle">{user.name}</td>
+                              <td className="p-2 text-center align-middle">{user.email}</td>
+                              <td className="p-2 text-center align-middle">{user.isAdmin ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">{user.isVendor ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">{user.isManufacturer ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">
                                 <Link
@@ -139,6 +186,7 @@ const AdminUsers = () => {
                             <th className="p-3 text-center text-primary">NAME</th>
                             <th className="p-3 text-center text-primary">EMAIL</th>
                             <th className="p-3 text-center text-primary">ADMIN</th>
+                            <th className="p-3 text-center text-primary">VENDOR</th>
                             <th className="p-3 text-center text-primary">MANUFACTURER</th>
                             <th className="p-3 text-center text-primary">ACTIONS</th>
                           </tr>
@@ -150,6 +198,7 @@ const AdminUsers = () => {
                               <td className="p-2 text-center align-middle">{user.name}</td>
                               <td className="p-2 text-center align-middle">{user.email}</td>
                               <td className="p-2 text-center align-middle">{user.isAdmin ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">{user.isVendor ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">{user.isManufacturer ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">
                                 <Link
@@ -174,7 +223,7 @@ const AdminUsers = () => {
                       </table>
                     </div>
                     <div className="row py-5">
-                      <h1 className="card-title text-center text-primary">Customer Users</h1>
+                      <h1 className="card-title text-center text-primary">Admin Users</h1>
                       <table className="table text-white">
                         <thead className="border-b">
                           <tr>
@@ -182,17 +231,19 @@ const AdminUsers = () => {
                             <th className="p-3 text-center text-primary">NAME</th>
                             <th className="p-3 text-center text-primary">EMAIL</th>
                             <th className="p-3 text-center text-primary">ADMIN</th>
+                            <th className="p-3 text-center text-primary">VENDOR</th>
                             <th className="p-3 text-center text-primary">MANUFACTURER</th>
                             <th className="p-3 text-center text-primary">ACTIONS</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {users.filter(user => user.isAdmin === false && user.isManufacturer === false).map((user) => (
+                          {users.filter(user => user.isAdmin === true).map((user) => (
                             <tr key={user._id} className="border-b">
                               <td className="p-2 text-center align-middle">{user._id.substring(20, 24)}</td>
                               <td className="p-2 text-center align-middle">{user.name}</td>
                               <td className="p-2 text-center align-middle">{user.email}</td>
                               <td className="p-2 text-center align-middle">{user.isAdmin ? 'YES' : 'NO'}</td>
+                              <td className="p-2 text-center align-middle">{user.isVendor ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">{user.isManufacturer ? 'YES' : 'NO'}</td>
                               <td className="p-2 text-center align-middle">
                                 <Link

@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
         password: { type: String, required: true },
         isAdmin: { type: Boolean, required: true, default: false },
         isManufacturer: { type: Boolean, required: true, default: false },
+        isVendor: { type: Boolean, required: true, default: false },
     }, 
     {
         timestamps: true

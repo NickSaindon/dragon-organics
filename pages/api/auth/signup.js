@@ -55,7 +55,8 @@ async function handler(req, res) {
     country,
     password: bcryptjs.hashSync(password),
     isAdmin: false,
-    isManufacturer: false
+    isManufacturer: false,
+    isVendor: false
   });
 
   const user = await newUser.save();
@@ -74,7 +75,8 @@ async function handler(req, res) {
     postalCode: user.postalCode,
     country: user.country,
     isAdmin: user.isAdmin,
-    isManufacturer: user.isManufacturer
+    isManufacturer: user.isManufacturer,
+    isVendor: user.isVendor
   });
 }
 

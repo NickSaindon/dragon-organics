@@ -22,7 +22,11 @@ export default function App({ Component, pageProps: { session, ...pageProps} }) 
         <PageTransitions route={router.asPath}>
           <PayPalScriptProvider deferLoading={true}>
             {Component.auth ? (
-              <Auth adminOnly={Component.auth.adminOnly} manufacturerOnly={Component.auth.manufacturerOnly}>
+              <Auth 
+                adminOnly={Component.auth.adminOnly} 
+                manufacturerOnly={Component.auth.manufacturerOnly}
+                vendorOnly={Component.auth.vendorOnly}
+              >
                 <Component {...pageProps} />
               </Auth>
             ) : (
@@ -35,7 +39,7 @@ export default function App({ Component, pageProps: { session, ...pageProps} }) 
   );
 }
 
-function Auth({ children, adminOnly, manufacturerOnly }) {
+function Auth({ children, adminOnly, manufacturerOnly, vendorOnly }) {
   const router = useRouter();
   const { status, data: session } = useSession({
     required: true,
@@ -50,6 +54,9 @@ function Auth({ children, adminOnly, manufacturerOnly }) {
     router.push('/unauthorized?message=admin login required');
   }
   if (manufacturerOnly && !session.user.isManufacturer) {
+    router.push('/unauthorized?message=manufacturer login required');
+  }
+  if (vendorOnly && !session.user.isVendor) {
     router.push('/unauthorized?message=vendor login required');
   }
   return children;

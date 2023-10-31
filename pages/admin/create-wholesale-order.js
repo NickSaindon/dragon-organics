@@ -38,7 +38,7 @@ const CreateWholesaleOrder = () => {
 
     const submitHandler = async ({
       wholesaleProducts,
-      numberOfBoxes,
+      totalNumberOfBoxes,
       totalShipmentWeight,
       isShipped,
       isRecieved
@@ -47,7 +47,7 @@ const CreateWholesaleOrder = () => {
         dispatch({ type: 'UPDATE_REQUEST' });
         await axios.post(`/api/manufacturer/shipments`, {
           wholesaleProducts,
-          numberOfBoxes,
+          totalNumberOfBoxes,
           totalShipmentWeight,
           isShipped,
           isRecieved
@@ -214,20 +214,20 @@ const CreateWholesaleOrder = () => {
                         <div className="form-floating">
                           <input
                             type="text"
-                            className={`form-control ${errors.numberOfBoxes ? 'is-invalid' : ''}`}
-                            id="numberOfBoxes"
+                            className={`form-control ${errors.totalNumberOfBoxes ? 'is-invalid' : ''}`}
+                            id="totalNumberOfBoxes"
                             placeholder="Total Number of Boxes" 
                             autoFocus
-                            {...register('numberOfBoxes', {
+                            {...register('totalNumberOfBoxes', {
                               required: 'Please enter total number of Boxes',
                             })}
                           />
-                          {errors.numberOfBoxes && (
+                          {errors.totalNumberOfBoxes && (
                             <div className="invalid-feedback">
-                              {errors.numberOfBoxes.message}
+                              {errors.totalNumberOfBoxes.message}
                             </div>
                           )}
-                          <label htmlFor="numberOfBoxes">Total Number of Boxes</label>
+                          <label htmlFor="totalNumberOfBoxes">Total Number of Boxes</label>
                         </div>
                         <div className="form-floating">
                           <input

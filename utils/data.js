@@ -8,14 +8,16 @@ const data = {
             birthDate: '03/1976',
             password: bcrypt.hashSync('user12345'),
             isAdmin: false,
-            isManufacturer: false
+            isManufacturer: false,
+            isVendor: false
         },
         {
             name: 'Test Admin',
             email: 'admin@example.com',
             password: bcrypt.hashSync('adminUser12345'),
             isAdmin: true,
-            isManufacturer: false
+            isManufacturer: false,
+            isVendor: false
         },
         {
             name: 'John Smith',
@@ -29,7 +31,8 @@ const data = {
             country: 'Thailand',
             password: bcrypt.hashSync('manUser12345'),
             isAdmin: false,
-            isManufacturer: true
+            isManufacturer: true,
+            isVendor: false
         }
     ],
     categories: [

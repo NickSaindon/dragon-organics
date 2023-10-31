@@ -10,7 +10,7 @@ import { getError } from '../utils/error';
 import NumberFormat from "react-number-format";
 import { ToastContainer, toast, Slide } from "react-toastify";
 
-const Register = () => {
+const RegisterVendor = () => {
   const { data: session } = useSession();
   
   const router = useRouter();
@@ -30,12 +30,18 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const submitHandler = async ({ name, email, birthDate, password }) => {
+  const submitHandler = async ({ name, email, phone, companyName, streetName, city, province, postalCode, country, password }) => {
     try {
       await axios.post('/api/auth/signup', {
         name,
         email,
-        birthDate,
+        phone,
+        companyName,
+        streetName,
+        city,
+        province,
+        postalCode,
+        country,
         password,
       });
 
@@ -100,6 +106,24 @@ const Register = () => {
               </div>
               <div className="form-floating">
                 <input
+                  type="text"
+                  className={`form-control ${errors.companyName ? 'is-invalid' : ''}`}
+                  id="companyName"
+                  placeholder="Company Name" 
+                  autoFocus
+                  {...register('companyName', {
+                    required: 'Please enter company name',
+                  })}
+                />
+                {errors.companyName && (
+                  <div className="invalid-feedback">
+                    {errors.companyName.message}
+                  </div>
+                )}
+                <label htmlFor="companyName">Company Name</label>
+              </div>
+              <div className="form-floating">
+                <input
                   type="email"
                   {...register('email', {
                     required: 'Please enter email',
@@ -121,35 +145,134 @@ const Register = () => {
               </div>
               <div className="form-floating">
                 <Controller 
-                  name="birthDate"
+                  name="phone"
                   control={control}
                   rules={{
                     required: true,
-                    pattern: /\d{2}\/\d{4}/
+                    pattern: /^\(?\b[0-9]{3}\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\b$/
                     ,
                   }}
-                  render={({ field: {onChange, birthDate, value} }) => (
+                  render={({ field: {onChange, phone, value} }) => (
                     <NumberFormat
-                      format="##/####"
-                      name={birthDate}
-                      className={`form-control ${errors.birthDate ? 'is-invalid' : ''}`}
+                      format="(###) ###-####"
+                      name={phone}
+                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
                       value={value}
-                      id="birthDate" 
-                      placeholder="Birth Date mm/yyyy" 
+                      id="phone" 
+                      placeholder="Phone Number" 
                       onChange={onChange}
                     />
                   )}
                 />
                 <div className="invalid-feedback">
-                    {errors.birthDate
-                          ? errors.birthDate.type === 'pattern'
+                    {errors.phone
+                          ? errors.phone.type === 'pattern'
                             ? 'Phone number is not completed'
                             : 'Phone number is required'
                           : ''
                     }
                 </div>
-                <label htmlFor="floatingInput">Birth Date mm/yyyy</label>
+                <label htmlFor="phone">Phone Number</label>
               </div>
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className={`form-control ${errors.streetName ? 'is-invalid' : ''}`}
+                  id="streetName"
+                  placeholder="Street Name" 
+                  autoFocus
+                  {...register('streetName', {
+                    required: 'Please enter street name',
+                  })}
+                />
+                {errors.streetName && (
+                  <div className="invalid-feedback">
+                    {errors.streetName.message}
+                  </div>
+                )}
+                <label htmlFor="streetName">Street Name</label>
+              </div>
+
+
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className={`form-control ${errors.city ? 'is-invalid' : ''}`}
+                  id="city"
+                  placeholder="City" 
+                  autoFocus
+                  {...register('city', {
+                    required: 'Please enter city',
+                  })}
+                />
+                {errors.city && (
+                  <div className="invalid-feedback">
+                    {errors.city.message}
+                  </div>
+                )}
+                <label htmlFor="city">City</label>
+              </div>
+
+
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className={`form-control ${errors.province ? 'is-invalid' : ''}`}
+                  id="province"
+                  placeholder="Province / State" 
+                  autoFocus
+                  {...register('province', {
+                    required: 'Please enter province',
+                  })}
+                />
+                {errors.province && (
+                  <div className="invalid-feedback">
+                    {errors.province.message}
+                  </div>
+                )}
+                <label htmlFor="province">Province / State</label>
+              </div>
+
+
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className={`form-control ${errors.postalCode ? 'is-invalid' : ''}`}
+                  id="postalCode"
+                  placeholder="postalCode" 
+                  autoFocus
+                  {...register('postalCode', {
+                    required: 'Please enter postal code',
+                  })}
+                />
+                {errors.postalCode && (
+                  <div className="invalid-feedback">
+                    {errors.postalCode.message}
+                  </div>
+                )}
+                <label htmlFor="postalCode">Postal Code</label>
+              </div>
+
+
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className={`form-control ${errors.country ? 'is-invalid' : ''}`}
+                  id="country"
+                  placeholder="Country" 
+                  autoFocus
+                  {...register('country', {
+                    required: 'Please enter country',
+                  })}
+                />
+                {errors.country && (
+                  <div className="invalid-feedback">
+                    {errors.country.message}
+                  </div>
+                )}
+                <label htmlFor="country">Country</label>
+              </div>
+
               <div className="form-floating">
                 <input
                   type="password"
@@ -212,4 +335,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default RegisterVendor;

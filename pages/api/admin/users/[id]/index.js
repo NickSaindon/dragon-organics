@@ -43,6 +43,7 @@ const putHandler = async (req, res) => {
     user.password = req.body.password;
     user.isAdmin = req.body.isAdmin;
     user.isManufacturer = req.body.isManufacturer;
+    user.isVendor = req.body.isVendor;
     await user.save();
     await db.disconnect();
     res.send({ message: 'User updated successfully' });

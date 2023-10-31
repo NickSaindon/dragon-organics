@@ -236,6 +236,35 @@ main {
   }
 }
 
+// Form Stylings
+.form-floating {
+  input {
+    background-color: black;
+    color: white;
+    border-radius: 0;
+  }
+  textarea {
+    background-color: black;
+    color: white;
+    border-radius: 0;
+  }
+  .form-select {
+    padding: 0 15px;
+    border-radius: 0;
+    background-color: black;
+    color: white;
+  }
+  .invalid-feedback {
+    position: absolute;
+    top: 0;
+  }
+  .form-floating:focus-within {
+    z-index: 2;
+  }
+}
+
+
+
 // Buttons
 .btn {
   border-radius: 0;

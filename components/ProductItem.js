@@ -7,6 +7,7 @@ const ProductItem = ({ product, addToCartHandler }) => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
 
+
   return (
     <div className="col col-md-6 col-lg-4 d-flex justify-content-center mx-auto">
       <div className="card shadow-sm">

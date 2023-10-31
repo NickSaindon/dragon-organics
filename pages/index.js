@@ -72,15 +72,12 @@ export default function Home() {
     });
 
     Cookies.get('isVerified') ? JSON.parse(Cookies.get('isVerified')) : setOpenModal(true);
-    
-
   }, []);
 
   const handleIsVerified = () => {
     setOpenModal(false);
     Cookies.set('isVerified', true)
   }
-
 
   return (
     <Layout 

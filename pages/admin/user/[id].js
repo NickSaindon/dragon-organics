@@ -58,6 +58,7 @@ const AdminUserEdit = ({ params }) => {
 
   let [isAdminChecked, setIsAdminChecked] = useState(false);
   let [isManufacturerChecked, setIsManufacturerChecked] = useState(false);
+  let [isVendorChecked, setIsVendorChecked] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
@@ -79,6 +80,8 @@ const AdminUserEdit = ({ params }) => {
       setValue('country', data.country);
       setIsAdminChecked(data.isAdmin);
       setIsManufacturerChecked(data.isManufacturer);
+      setIsVendorChecked(data.isVendor);
+      setValue('password', data.password)
     } catch (err) {
       dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
     }
@@ -90,7 +93,7 @@ const AdminUserEdit = ({ params }) => {
     name,
     email,
     phone,
-    birthdate,
+    birthDate,
     companyName,
     streetName,
     city,
@@ -99,6 +102,7 @@ const AdminUserEdit = ({ params }) => {
     country,
     isAdmin = isAdminChecked,
     isManufacturer = isManufacturerChecked,
+    isVendor = isVendorChecked,
     password
   }) => {
     try {
@@ -107,7 +111,7 @@ const AdminUserEdit = ({ params }) => {
         name,
         email,
         phone,
-        birthdate,
+        birthDate,
         companyName,
         streetName,
         city,
@@ -116,20 +120,13 @@ const AdminUserEdit = ({ params }) => {
         country,
         isAdmin,
         isManufacturer,
-        password: bcryptjs.hashSync(password)
+        isVendor,
+        password
       });
-      // const result = await signIn('credentials', {
-      //   isAdmin,
-      //   isManufacturer,
-      //   password,
-      // });
       dispatch({ type: 'UPDATE_SUCCESS' });
       toast.success('User updated successfully'), {
         theme: "colored"
       };
-      // if (result.error) {
-      //   toast.error(result.error);
-      // }
       router.push('/admin/users');
     } catch (err) {
       dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
@@ -234,6 +231,16 @@ const AdminUserEdit = ({ params }) => {
                       <div className="form-floating">
                         <input
                           type="text"
+                          className="form-control"
+                          placeholder="Birth Date" 
+                          autoFocus
+                          {...register('birthDate')}
+                        />
+                        <label htmlFor="birthDate">Birth Date</label>
+                      </div>
+                      <div className="form-floating">
+                        <input
+                          type="text"
                           className="form-control" 
                           placeholder="Company Name" 
                           autoFocus
@@ -295,51 +302,6 @@ const AdminUserEdit = ({ params }) => {
                         />
                         <label htmlFor="country">Country</label>
                       </div>
-                      <div className="form-floating">
-                        <input
-                          type="password"
-                          {...register('password', {
-                            required: 'Please enter password',
-                            minLength: { value: 6, message: 'password is more than 5 chars' },
-                          })}
-                          className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                          id="password"
-                          placeholder="Password"
-                          autoFocus
-                        />
-                        {errors.password && (
-                          <div className="invalid-feedback">
-                            {errors.password.message}
-                          </div>
-                        )}
-                        <label htmlFor="password">Password</label>
-                      </div>
-                      <div className="form-floating">
-                        <input
-                          className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                          type="password"
-                          id="confirmPassword"
-                          placeholder="Confirm Password" 
-                          {...register('confirmPassword', {
-                            required: 'Please enter confirm password',
-                            validate: (value) => value === getValues('password'),
-                            minLength: {
-                              value: 6,
-                              message: 'confirm password is more than 5 chars',
-                            },
-                          })}
-                        />
-                        {errors.confirmPassword && (
-                          <div className="invalid-feedback ">
-                            {errors.confirmPassword.message}
-                          </div>
-                        )}
-                        {errors.confirmPassword &&
-                          errors.confirmPassword.type === 'validate' && (
-                            <div className="invalid-feedback">Password do not match</div>
-                        )}
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                      </div>
                       <div className="row py-3 justify-content-between">
                         <div className="col-4">
                           <div className="form-check">
@@ -350,10 +312,26 @@ const AdminUserEdit = ({ params }) => {
                               checked={isManufacturerChecked}
                               name="isManufacturer"
                               id="isManufacturer"
-                              disabled={!isManufacturerChecked && isAdminChecked}
+                              disabled={!isManufacturerChecked && (isVendorChecked || isAdminChecked)}
                             />
                             <label className="form-check-label text-white" htmlFor="gridCheck">
                               Manufacturer
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <div className="form-check">
+                            <input 
+                              className="form-check-input vendor-checkbox" 
+                              type="checkbox" 
+                              onChange={(e) => {setIsVendorChecked(e.target.checked)}}
+                              checked={isVendorChecked}
+                              name="isVendor"
+                              id="isVendor"
+                              disabled={!isVendorChecked && (isManufacturerChecked || isAdminChecked)}
+                            />
+                            <label className="form-check-label text-white" htmlFor="gridCheck">
+                              Retail Vendor
                             </label>
                           </div>
                         </div>
@@ -366,10 +344,10 @@ const AdminUserEdit = ({ params }) => {
                               checked={isAdminChecked}
                               name="isAdmin"
                               id="isAdmin"
-                              disabled={!isAdminChecked & isManufacturerChecked}
+                              disabled={!isAdminChecked && (isVendorChecked || isManufacturerChecked)}
                             />
                             <label className="form-check-label text-white" htmlFor="gridCheck">
-                              Admin {console.log(isAdminChecked)}
+                              Admin
                             </label>
                           </div> 
                         </div>
