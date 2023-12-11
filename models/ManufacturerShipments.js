@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import moment from 'moment-timezone';
 
-const dateThailand = moment.tz(Date.now(), "Asia/Bangkok");
-const dateEST = moment.tz(Date.now(), "America/New_York");
 
 const manufacturerShipmentSchema = new mongoose.Schema(
   {
@@ -22,8 +19,8 @@ const manufacturerShipmentSchema = new mongoose.Schema(
     totalShipmentWeight: { type: Number, required: true },
     isShipped: { type: Boolean, required: true, default: false },
     isRecieved: { type: Boolean, required: true, default: false },
-    shippedAt: { type: Date, default: dateThailand},
-    recievedAt: { type: Date, default: dateEST }
+    shippedAt: { type: Date},
+    recievedAt: { type: Date }
   },
   {
     timestamps: true,

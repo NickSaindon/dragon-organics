@@ -261,9 +261,43 @@ main {
   .form-floating:focus-within {
     z-index: 2;
   }
+  .form-check-input {
+    border: white;
+  }
 }
 
+.react-datepicker {
+  border-radius: 0;
+}
+.react-datepicker__month-container {
+  color: white;
+  background-color: black;
+}
 
+.react-datepicker__header {
+  color: white;
+  background-color: black;
+  border-bottom: 1px solid white;
+}
+
+.react-datepicker__day-name {
+  color: white;
+}
+
+.react-datepicker__current-month {
+  color: white;
+}
+
+.react-datepicker__day {
+  color: white;
+  &:hover {
+    background-color: $primary;
+  }
+}
+
+.react-datepicker__day--selected {
+  background-color: $primary;
+}
 
 // Buttons
 .btn {
@@ -618,9 +652,6 @@ main {
       text-align: center;
     }
   }
-  .do-qaulity-gmp {
-
-  }
   .process-section {
     padding-bottom: 100px;
     .process-images {
@@ -897,6 +928,18 @@ main {
   }
 }
 
+// Place Order
+.place-order-container {
+  .discount-form {
+    .form-floating {
+      input {
+        background-color: #1A1A1A;
+        color: white;
+      }
+    }
+  }
+}
+
 // Contact Form
 .contact-container {
   padding-top: 70px;
@@ -1004,7 +1047,6 @@ main {
 
 // Admin
 .admin-container {
-  margin-top: 70px;
   padding: 100px 0;
   .card-title {
     padding: 15px 0;
@@ -1042,8 +1084,8 @@ main {
       input {
         color: white;
         background-color: #1A1A1A;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+        border-radius: 0;
+        border-color: white;
         &#leafType {
           margin-bottom: 25px;
         }

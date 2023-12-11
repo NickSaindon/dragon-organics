@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import "react-datetime/css/react-datetime.css";
 import '../styles/globals.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-quill/dist/quill.snow.css';

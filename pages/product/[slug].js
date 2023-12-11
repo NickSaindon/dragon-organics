@@ -35,7 +35,10 @@ const ProductDetails = (props) => {
   };
 
   return (
-    <Layout title={product?.name}>
+    <Layout 
+      title={`${product?.name} ${product?.color} ${product?.size}`}
+      description={`Discover the essence of Thailand in Dragon Organics ${product?.name} ${product?.color}'s. Elevate your well-being with this pure and potent botanical delight.`}
+    >
       <ToastContainer 
         position="top-center" 
         draggable={false} 
@@ -115,23 +118,18 @@ const ProductDetails = (props) => {
               <div className="col-lg-5 col-md-12 col-sm-12">
                 <div className="row">
                   <div className="col-lg-12 col-md-6 col-sm-12 text-white">
-                    <h2>{product.name}</h2>
-                    <h3>{product.type}</h3>
+                    <h2>{product.name} {product.color}</h2>
+                    <h5>Type</h5>
+                    <p>{product.leafType}</p>
                     <h5>Description</h5>
                     <p>{product.description}</p>
                     <h5>Size</h5>
                     <p>{product.size}</p>
-                    <p>{product.leafName}</p>
                     <h5>Disclaimer</h5>
                     <p>
-                      Our products are the highest quality (GAP/GMP).  They have not been evaluated by the FDA.  Only for use as botanical specimen.  The information given is for 
+                      Our products are the highest quality (GAP/GMP). The information given is for 
                       academic purpose only and not intended to diagnose, treat, cure or prevent disease.
                     </p>
-                    {/* <Rating 
-                      rating={product.rating} 
-                      numReviews={product.numReviews}
-                    />
-                    <p>{product.rating} of {product.numReviews} reviews</p> */}
                     <div className="row">
                           <div className="col-6">
                             <h5><b>Price:</b></h5>

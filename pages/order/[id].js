@@ -144,15 +144,21 @@ function OrderScreen() {
           details
         );
         dispatch({ type: 'PAY_SUCCESS', payload: data });
-        toast.success('Order is paid successgully');
+        toast.success('Order is paid successfully', {
+          theme: 'colored'
+        });
       } catch (err) {
         dispatch({ type: 'PAY_FAIL', payload: getError(err) });
-        toast.error(getError(err));
+        toast.error(getError(err), {
+          theme: 'colored'
+        });
       }
     });
   }
   function onError(err) {
-    toast.error(getError(err));
+    toast.error(getError(err), {
+      theme: 'colored'
+    });
   }
 
   async function deliverOrderHandler() {
@@ -250,8 +256,8 @@ function OrderScreen() {
                         {orderItems.map((item) => (
                           <tr key={item._id}>
                             <td>
-                              <Link href={`/product/${item.slug}`} passHref>
-                                  <Image src={item.imageOne} width={80} height={60} alt="..." />
+                              <Link href={`/product/${item.slug}`}>
+                                  <Image src={item.imageOne} width={80} height={60} alt={`Image of ${item.name} ${item.size}`} />
                               </Link>
                             </td>
                             <td className="align-middle">{item.name} {item.color}</td>

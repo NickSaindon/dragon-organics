@@ -3,11 +3,9 @@ import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
-import NumberFormat from 'react-number-format';
-import bcryptjs from 'bcryptjs';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -49,10 +47,8 @@ const AdminUserEdit = ({ params }) => {
   
   const {
     register,
-    control,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors }
   } = useForm();
 
@@ -66,7 +62,6 @@ const AdminUserEdit = ({ params }) => {
     try {
       dispatch({ type: 'FETCH_REQUEST' });
       const { data } = await axios.get(`/api/admin/users/${userId}`);
-
       dispatch({ type: 'FETCH_SUCCESS' });
       setValue('name', data.name);
       setValue('email', data.email);
@@ -149,7 +144,7 @@ const AdminUserEdit = ({ params }) => {
         />
         <div className="container-fluid ">
           <div className="row">
-            <div className="col-lg-3">
+            <div className="col-lg-3 mb-3">
               <SideNav />
             </div>
             <div className="col-lg-9">
@@ -167,7 +162,7 @@ const AdminUserEdit = ({ params }) => {
                   ) : (
                     <form 
                       onSubmit={handleSubmit(submitHandler)}
-                      className="col-lg-6 col-md-12 col-sm-12 form-user-edit justify-content-center" 
+                      className="col-lg-10 col-md-12 col-sm-12 form-user-edit justify-content-center" 
                       noValidate
                     >
                       <div className="form-floating">
@@ -264,12 +259,12 @@ const AdminUserEdit = ({ params }) => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Province" 
+                          placeholder="Province / State" 
                           id="province"
                           autoFocus
                           {...register('province')}
                         />
-                        <label htmlFor="province">Province</label>
+                        <label htmlFor="province">Province / State</label>
                       </div>
 
                       <div className="form-floating">
@@ -351,7 +346,7 @@ const AdminUserEdit = ({ params }) => {
                             <span className="visually-hidden">Loading...</span>
                           </>
                         ) : (
-                          "Edit"
+                          "Edit User"
                         )}
                       </button>
                     </form>

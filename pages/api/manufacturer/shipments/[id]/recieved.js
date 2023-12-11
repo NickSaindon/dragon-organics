@@ -12,11 +12,11 @@ const handler = async (req, res) => {
   if (shipment) {
     shipment.isRecieved = true;
     shipment.recievedAt = Date.now();
-    const shippedProduct = await shipment.save();
+    const shippedOrder = await shipment.save();
     await db.disconnect();
     res.send({
       message: 'shipment delivered successfully',
-      shipment: shippedProduct,
+      shipment: shippedOrder,
     });
   } else {
     await db.disconnect();

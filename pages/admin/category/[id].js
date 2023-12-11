@@ -1,10 +1,9 @@
 import axios from 'axios';
 import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
 
@@ -48,7 +47,6 @@ const AdminCategoryEdit = ({ params }) => {
   
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
     setValue,
@@ -92,10 +90,14 @@ const AdminCategoryEdit = ({ params }) => {
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageField, data.secure_url);
 
-      toast.success('File uploaded successfully');
+      toast.success('File uploaded successfully', {
+        theme: 'colored'
+      });
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
   
@@ -114,23 +116,35 @@ const AdminCategoryEdit = ({ params }) => {
         categoryText
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
-      toast.success('Category updated successfully');
+      toast.success('Category updated successfully', {
+        theme: 'colored'
+      });
       router.push('/admin/categories');
     } catch (err) {
       dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
   return (
     <Layout title={`Edit Product ${categoryId}`}>
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="admin-container bg-black">
         <div className="container-fluid ">
           <div className="row">
-            <div className="col-lg-3">
+            <div className="col-lg-3 mb-3">
               <SideNav />
             </div>
-            <div className="col-lg-9">
+            <div className="col-lg-9 col-md-12 col-sm-12">
               <div className="card admin-card-container">
                 <div className="card-body">
                   <h1 className="card-title text-center text-primary">{`Edit Category ${categoryId}`}</h1>
@@ -145,7 +159,7 @@ const AdminCategoryEdit = ({ params }) => {
                     ) : (
                     <form 
                       onSubmit={handleSubmit(submitHandler)}
-                      className="col-lg-6 col-md-12 col-sm-12 form-edit justify-content-center" 
+                      className="col-lg-10 col-md-12 col-sm-12 form-edit justify-content-center" 
                       noValidate
                     >
                       <div className="form-floating">
@@ -235,7 +249,7 @@ const AdminCategoryEdit = ({ params }) => {
                             <span className="visually-hidden">Loading...</span>
                           </>
                         ) : (
-                          "Edit"
+                          "Edit Category"
                         )}
                       </button>
                     </form>

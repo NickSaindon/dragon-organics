@@ -22,7 +22,7 @@ const News = (props) => {
   return (
     <Layout 
       title="Dragon Organics | News"
-      description="Findout about the latest products with Dragon Organics and the many wonderful Thai botanicals.">
+      description="Explore the Dragon Organics blog - a gateway to insights on Thai Kratom and Blue Lotus. Dive into the world of holistic botanical wisdom.">
       <div className="news-container bg-black">
         <div className="page-header">
           <div className="py-lg-5 container header-container">
@@ -41,7 +41,7 @@ const News = (props) => {
           <div className="col-md-6" key={news._id}>
             <div className="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative news-card">
               <div className="col p-4 d-flex flex-column position-static text-white">
-                <h3 className="mb-0 text-primary"><b>Featured post</b></h3>
+                <h3 className="mb-0 text-primary"><b>{news.title}</b></h3>
                 <div className="mb-1">{moment(new Date(news.createdAt)).format('MM/DD/YYYY')}</div>
                 <p className="card-text mb-auto">{news.description}</p>
                 <Link href={`/news/${news.slug}`} legacyBehavior>

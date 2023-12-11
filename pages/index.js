@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <Layout 
       title="Dragon Organics | Home" 
-      description="Dragon Organics is an online and retail seller of quality Thai botanicals.">
+      description="Discover authentic Thai Kratom and Blue Lotus at Dragon Organics. We are your trusted partner for premium botanicals, available online and wholesale.">
       <AgeVerification 
         open={openModal}
         onClose={handleIsVerified}

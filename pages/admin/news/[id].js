@@ -18,200 +18,215 @@ const QuillNoSSRWrapper = dynamic(
   { ssr: false }
 );
 
-  // Quill Modules
-  const modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],
-      ['blockquote', 'code-block'],
-    
-      [{ 'header': 1 }, { 'header': 2 }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
-    
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'font': [] }],
-      [{ 'align': [] }],
-      ['link', 'image', 'video'],
-      ['clean'],
-    ],
-    clipboard: {
-      // toggle to add extra line breaks when pasting HTML:
-      matchVisual: true,
-    }
-  };
+// Quill Modules
+const modules = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote', 'code-block'],
   
-  // Quill format
-  const formats = [
-    'bold', 
-    'italic', 
-    'underline', 
-    'strike',
-    'blockquote',
-    'background',
-    'code-block',
-    'header',
-    'list',
-    'bullet',
-    'script',
-    'indent',
-    'direction',
-    'size',
-    'color',
-    'font',
-    'align',
-    'link',
-    'image',
-    'video',
-  ];
+    [{ 'header': 1 }, { 'header': 2 }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+  
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'font': [] }],
+    [{ 'align': [] }],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: true,
+  }
+};
+  
+// Quill format
+const formats = [
+  'bold', 
+  'italic', 
+  'underline', 
+  'strike',
+  'blockquote',
+  'background',
+  'code-block',
+  'header',
+  'list',
+  'bullet',
+  'script',
+  'indent',
+  'direction',
+  'size',
+  'color',
+  'font',
+  'align',
+  'link',
+  'image',
+  'video',
+];
 
 function reducer(state, action) {
-    switch (action.type) {
-      case 'FETCH_REQUEST':
-        return { ...state, loading: true, error: '' };
-      case 'FETCH_SUCCESS':
-        return { ...state, loading: false, error: '' };
-      case 'FETCH_FAIL':
-        return { ...state, loading: false, error: action.payload };
-      case 'UPDATE_REQUEST':
-        return { ...state, loadingUpdate: true, errorUpdate: '' };
-      case 'UPDATE_SUCCESS':
-        return { ...state, loadingUpdate: false, errorUpdate: '' };
-      case 'UPDATE_FAIL':
-        return { ...state, loadingUpdate: false, errorUpdate: action.payload };
-      case 'UPLOAD_REQUEST':
-        return { ...state, loadingUpload: true, errorUpload: '' };
-      case 'UPLOAD_SUCCESS':
-        return {
-          ...state,
-          loadingUpload: false,
-          errorUpload: '',
-        };
-      case 'UPLOAD_FAIL':
-        return { ...state, loadingUpload: false, errorUpload: action.payload };
-  
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true, error: '' };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, error: '' };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    case 'UPDATE_REQUEST':
+      return { ...state, loadingUpdate: true, errorUpdate: '' };
+    case 'UPDATE_SUCCESS':
+      return { ...state, loadingUpdate: false, errorUpdate: '' };
+    case 'UPDATE_FAIL':
+      return { ...state, loadingUpdate: false, errorUpdate: action.payload };
+    case 'UPLOAD_REQUEST':
+      return { ...state, loadingUpload: true, errorUpload: '' };
+    case 'UPLOAD_SUCCESS':
+      return {
+        ...state,
+        loadingUpload: false,
+        errorUpload: '',
+      };
+    case 'UPLOAD_FAIL':
+      return { ...state, loadingUpload: false, errorUpload: action.payload };
+
+    default:
+      return state;
   }
+}
     
 const AdminNewsEdit = ({ params }) => {
-    const newsId = params.id;
-    const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
+  const newsId = params.id;
+  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
+  useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
 
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-        setValue,
-      } = useForm();
+  const {
+      register,
+      control,
+      handleSubmit,
+      formState: { errors },
+      setValue,
+    } = useForm();
 
-    const [isPublished, setIsPublished] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            dispatch({ type: 'FETCH_REQUEST' });
-            const { data } = await axios.get(`/api/admin/news/${newsId}`);
-            dispatch({ type: 'FETCH_SUCCESS' });
-            setValue('title', data.title);
-            setValue('slug', data.slug);
-            setValue('description', data.description);
-            setValue('author', data.author);
-            setValue('article', data.article);
-            setIsPublished(data.published);
-            setValue('headerImage', data.headerImage);
-          } catch (err) {
-            dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-          }
-        };
-    
-        fetchData();
-      }, [newsId, setValue]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch({ type: 'FETCH_REQUEST' });
+        const { data } = await axios.get(`/api/admin/news/${newsId}`);
+        dispatch({ type: 'FETCH_SUCCESS' });
+        setValue('title', data.title);
+        setValue('slug', data.slug);
+        setValue('description', data.description);
+        setValue('author', data.author);
+        setValue('article', data.article);
+        setIsPublished(data.published);
+        setValue('headerImage', data.headerImage);
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+      }
+    };
 
-    const router = useRouter();
+    fetchData();
+  }, [newsId, setValue]);
 
-    const uploadHandler = async (e, imageHeader = 'headerImage') => {
-        const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-        try {
-          dispatch({ type: 'UPLOAD_REQUEST' });
-          const {
-            data: { signature, timestamp },
-          } = await axios('/api/admin/cloudinary-sign');
-    
-          const file = e.target.files[0];
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('signature', signature);
-          formData.append('timestamp', timestamp);
-          formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-          const { data } = await axios.post(url, formData);
-          dispatch({ type: 'UPLOAD_SUCCESS' });
-          setValue(imageHeader, data.secure_url);
-    
-          toast.success('File uploaded successfully');
-        } catch (err) {
-          dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-          toast.error(getError(err));
-        }
-      };
+  const router = useRouter();
 
-    const submitHandler = async ({
-        title,
-        tags,
-        description,
-        author,
-        article,
-        published = isPublished,
-        headerImage,
-        slug
-      }) => {
-        try {
-          dispatch({ type: 'UPDATE_REQUEST' });
-          await axios.put(`/api/admin/news/${newsId}`, {
-            title,
-            tags,
-            description,
-            author,
-            article,
-            published,
-            headerImage,
-            slug
-          });
-          dispatch({ type: 'UPDATE_SUCCESS' });
-          toast.success('Product updated successfully');
-          router.push('/admin/news');
-        } catch (err) {
-          dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-          toast.error(getError(err));
-        }
-      };
+  const uploadHandler = async (e, imageHeader = 'headerImage') => {
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    try {
+      dispatch({ type: 'UPLOAD_REQUEST' });
+      const {
+        data: { signature, timestamp },
+      } = await axios('/api/admin/cloudinary-sign');
 
-    return (
-      <Layout title={`Edit Article ${newsId}`}>
-        <div className="admin-container bg-black">
-          <div className="container-fluid ">
-            <div className="row">
-              <div className="col-lg-3">
-                <SideNav />
-              </div>
-              <div className="col-lg-9">
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      const { data } = await axios.post(url, formData);
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+      setValue(imageHeader, data.secure_url);
 
+      toast.success('File uploaded successfully', {
+        theme: 'colored'
+      });
+    } catch (err) {
+      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
+    }
+  };
+
+  const submitHandler = async ({
+    title,
+    tags,
+    description,
+    author,
+    article,
+    published = isPublished,
+    headerImage,
+    slug
+    }) => {
+      try {
+        dispatch({ type: 'UPDATE_REQUEST' });
+        await axios.put(`/api/admin/news/${newsId}`, {
+          title,
+          tags,
+          description,
+          author,
+          article,
+          published,
+          headerImage,
+          slug
+        });
+        dispatch({ type: 'UPDATE_SUCCESS' });
+        toast.success('Blog article updated successfully', { 
+          theme: 'colored' 
+        });
+        router.push('/admin/news');
+      } catch (err) {
+        dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
+        toast.error(getError(err), {
+          theme: 'colored'
+        });
+      }
+    };
+
+  return (
+    <Layout title={`Edit Article ${newsId}`}>
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
+      <div className="admin-container bg-black">
+        <div className="container-fluid ">
+          <div className="row">
+            <div className="col-lg-3 mb-3">
+              <SideNav />
+            </div>
+            <div className="col-lg-9 col-md-12 col-sm-12">
               <div className="card admin-card-container">
                 <div className="card-body">
                   <h1 className="card-title text-center text-primary">{`Edit Article ${newsId}`}</h1>
                   <form 
                     onSubmit={handleSubmit(submitHandler)}
-                    className="col-lg-6 col-md-12 col-sm-12 form-edit justify-content-center" 
+                    className="col-lg-10 col-md-12 col-sm-12 form-edit justify-content-center" 
                     noValidate
                   >
                     <div className="form-floating">
@@ -335,7 +350,6 @@ const AdminNewsEdit = ({ params }) => {
                               Publish {console.log(isPublished)}
                             </label>
                           </div>
-
                     <button className="w-100 btn btn-lg btn-primary" type="submit">
                         {loadingUpdate ? (
                           <>
@@ -343,18 +357,18 @@ const AdminNewsEdit = ({ params }) => {
                             <span className="visually-hidden">Loading...</span>
                           </>
                         ) : (
-                          "Edit"
+                          "Edit News"
                         )}
                       </button>
                   </form>
                 </div>
               </div>
             </div>
-            </div>
           </div>
         </div>
-      </Layout>
-    )
+      </div>
+    </Layout>
+  )
 }
 
 export async function getServerSideProps({ params }) {

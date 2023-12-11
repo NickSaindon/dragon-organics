@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 import { getError } from '../../utils/error';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -42,7 +42,7 @@ const AdminCategories = () => {
       dispatch,
   ] = useReducer(reducer, {
       loading: true,
-      products: [],
+      categories: [],
       error: '',
     });
 
@@ -54,11 +54,15 @@ const AdminCategories = () => {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(`/api/admin/categories`);
       dispatch({ type: 'CREATE_SUCCESS' });
-      toast.success('Categories created successfully');
+      toast.success('Categories created successfully', {
+        theme: 'colored'
+      });
       router.push(`/admin/category/${data.categories._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
     
@@ -88,19 +92,31 @@ const AdminCategories = () => {
       dispatch({ type: 'DELETE_REQUEST' });
       await axios.delete(`/api/admin/categories/${categoryId}`);
       dispatch({ type: 'DELETE_SUCCESS' });
-      toast.success('Category deleted successfully');
+      toast.success('Category deleted successfully', {
+        theme: 'colored'
+      });
     } catch (err) {
       dispatch({ type: 'DELETE_FAIL' });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
   return (
     <Layout title="Admin Categories">
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="admin-container bg-black text-white">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-2">
+            <div className="col-lg-2 mb-3">
               <SideNav />
             </div>
             <div className="col-lg-10">
@@ -115,58 +131,67 @@ const AdminCategories = () => {
               ) : (
                 <div className="card admin-card-container">
                   <div className="card-body">
-                    <button 
-                      className="btn btn-lg btn-outline-primary float-end light product-btn" 
-                      type="submit"
-                      onClick={createHandler}
-                    >
-                      {loadingCreate ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-                          <span className="visually-hidden">Loading...</span>
-                        </>
-                      ) : (
-                        "Create Category"
-                      )}
-                    </button>
-                    <h1 className="card-title text-center text-primary">Admin Categories</h1>
+                    <div className="row justify-content-end">
+                      <div className="col-6">
+                        <button 
+                          className="btn btn-lg btn-outline-primary float-end light product-btn" 
+                          type="submit"
+                          onClick={createHandler}
+                        >
+                          {loadingCreate ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                              <span className="visually-hidden">Loading...</span>
+                            </>
+                          ) : (
+                            "Create Category"
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <h1 className="card-title text-center text-primary">Categories</h1>
+                    {loadingDelete && <div class="spinner-border text-secondary" role="status">
+                      <span class="visually-hidden">Deleting Category...</span>
+                    </div>}
                     <div className="row gx-5">
-                      <table className="table text-white">
-                        <thead className="border-b">
-                          <tr>
-                            <th className="p-3 text-center text-primary">ID</th>
-                            <th className="p-3 text-center text-primary">NAME</th>
-                            <th className="p-3 text-center text-primary">SLUG</th>
-                            <th className="p-3 text-center text-primary">ACTIONS</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {categories.map((category) => (
-                            <tr key={category._id} className="border-b">
-                              <td className="p-2 text-center align-middle">{category._id.substring(20, 24)}</td>
-                              <td className="p-2 text-center align-middle">{category.name}</td>
-                              <td className="p-2 text-center align-middle">{category.slug}</td>
-                              <td className="p-2 text-center align-middle">
-                                <Link
-                                  href={`/admin/category/${category._id}`}
-                                  type="button"
-                                  className="btn btn-primary"
-                                >
-                                  Edit
-                                </Link>
-                                &nbsp;
-                                <button 
-                                  onClick={() => deleteHandler(category._id)}
-                                  type="button" 
-                                  className="btn btn-danger"
-                                >
-                                  Delete
-                                </button>
-                              </td>
+                      <div className="table-responsive">
+                        <table className="table text-white">
+                          <thead className="border-b">
+                            <tr>
+                              <th className="p-3 text-center text-primary">ID</th>
+                              <th className="p-3 text-center text-primary">NAME</th>
+                              <th className="p-3 text-center text-primary">SLUG</th>
+                              <th className="p-3 text-center text-primary">ACTIONS</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {categories.map((category) => (
+                              <tr key={category._id} className="border-b">
+                                <td className="p-2 text-center align-middle">{category._id.substring(20, 24)}</td>
+                                <td className="p-2 text-center align-middle">{category.name}</td>
+                                <td className="p-2 text-center align-middle">{category.slug}</td>
+                                <td className="p-2 text-center align-middle">
+                                  <Link
+                                    href={`/admin/category/${category._id}`}
+                                    type="button"
+                                    className="btn btn-primary my-1"
+                                  >
+                                    Edit
+                                  </Link>
+                                  &nbsp;
+                                  <button 
+                                    onClick={() => deleteHandler(category._id)}
+                                    type="button" 
+                                    className="btn btn-danger my-1"
+                                  >
+                                    Delete
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -126,14 +126,14 @@ const ShipmentDetails = ({ params }) => {
                 </div>
               ) : (
               <>
-                <h1 className="card-title text-center text-primary">Manufacturer Shipping Details {manufacturerShipmentId}</h1>
+              <h1 className="card-title text-center text-primary">Manufacturer Shipping Details {manufacturerShipmentId}</h1>
               <div className="row my-4">
                 <div className="col-6">
                   <div className="card vendor-card-container">
                     <h1 className="card-title text-center text-primary">Shipping</h1>
                     <div className="card-body">
                       {isShipped ? (
-                        <span className="badge bg-success w-100 py-3 my-3">Shipped at {moment(new Date(shippedAt)).format('MM/DD/YYYY')}</span>
+                        <span className="badge bg-success w-100 py-3 my-3">Shipped on {moment.tz(new Date(shippedAt), "Asia/Bangkok").format('lll')} from Thailand</span>
                       ) : (
                         <span className="badge bg-danger w-100 py-3 my-3">Not Shipped</span>
                       )}
@@ -163,7 +163,7 @@ const ShipmentDetails = ({ params }) => {
                     <h1 className="card-title text-center text-primary">Recieved</h1>
                     <div className="card-body">
                       {isRecieved ? (
-                        <span className="badge bg-success w-100 py-3 my-3">Recieved at {moment(new Date(recievedAt)).format('MM/DD/YYYY')}</span>
+                        <span className="badge bg-success w-100 py-3 my-3">Recieved at {moment.tz(new Date(recievedAt), "America/New_York").format('lll')} in Atlanta GA</span>
                       ) : (
                         <span className="badge bg-danger w-100 py-3 my-3">Not Recieved</span>
                       )}

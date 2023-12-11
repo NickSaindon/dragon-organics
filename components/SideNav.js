@@ -27,6 +27,9 @@ const SideNav = () => {
           <Link href="/admin/news" className="nav-link">
             News
           </Link>
+          <Link href="/admin/discount-codes" className="nav-link">
+            Discount Codes
+          </Link>
           <Link href="/admin/create-wholesale-order" className="nav-link">
             Create Wholesale Order
           </Link>

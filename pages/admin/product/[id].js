@@ -1,10 +1,9 @@
 import axios from 'axios';
 import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
 
@@ -69,7 +68,6 @@ const AdminProductEdit = ({ params }) => {
         setValue('imageTwo', data.imageTwo);
         setValue('imageThree', data.imageThree);
         setValue('imageFour', data.imageFour);
-        setValue('category', data.category);
         setValue('size', data.size);
         setValue('countInStock', data.countInStock);
         setValue('region', data.region);
@@ -107,7 +105,9 @@ const AdminProductEdit = ({ params }) => {
       toast.success('File uploaded successfully');
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
@@ -132,7 +132,9 @@ const AdminProductEdit = ({ params }) => {
       toast.success('File uploaded successfully');
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
@@ -157,7 +159,9 @@ const AdminProductEdit = ({ params }) => {
       toast.success('File uploaded successfully');
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
@@ -179,10 +183,14 @@ const AdminProductEdit = ({ params }) => {
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageFieldFour, data.secure_url);
 
-      toast.success('File uploaded successfully');
+      toast.success('File uploaded successfully', {
+        theme: 'colored'
+      });
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
   
@@ -223,16 +231,28 @@ const AdminProductEdit = ({ params }) => {
         description
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
-      toast.success('Product updated successfully');
+      toast.success('Product updated successfully', {
+        theme: 'colored'
+      });
       router.push('/admin/products');
     } catch (err) {
       dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
   return (
     <Layout title={`Edit Product ${productId}`}>
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="admin-container bg-black">
         <div className="container-fluid ">
           <div className="row">
@@ -254,7 +274,7 @@ const AdminProductEdit = ({ params }) => {
                     ) : (
                     <form 
                       onSubmit={handleSubmit(submitHandler)}
-                      className="col-lg-6 col-md-12 col-sm-12 form-edit justify-content-center" 
+                      className="col-lg-10 col-md-12 col-sm-12 form-edit justify-content-center" 
                       noValidate
                     >
                       <div className="form-floating">
@@ -516,7 +536,7 @@ const AdminProductEdit = ({ params }) => {
                             <span className="visually-hidden">Loading...</span>
                           </>
                         ) : (
-                          "Edit"
+                          "Edit Product"
                         )}
                       </button>
                     </form>

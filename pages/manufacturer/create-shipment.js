@@ -24,53 +24,52 @@ function reducer(state, action) {
 }
 
 const CreateManufacturerShipment = () => {
-  const [{ loadingUpdate }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
-    const router = useRouter();
+  const [{ loadingUpdate }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
 
+  const router = useRouter();
   const { register, control, handleSubmit, formState: { errors }, reset } = useForm({});
-    const { fields, append, remove } = useFieldArray({
-      control,
-      name: 'shipmentItems',
-    });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'shipmentItems',
+  });
 
-    const submitHandler = async ({
-      shipmentItems,
-      totalNumberOfBoxes,
-      totalShipmentWeight,
-      isShipped,
-      isRecieved
-    }) => {
-      try {
-        dispatch({ type: 'UPDATE_REQUEST' });
-        await axios.post(`/api/manufacturer/shipments`, {
-          shipmentItems,
-          totalNumberOfBoxes,
-          totalShipmentWeight,
-          isShipped,
-          isRecieved
-        });
-        dispatch({ type: 'UPDATE_SUCCESS' });
-        reset();
-        toast.success("Shipment created successfully", {
-          theme: "colored"
-        });
-        router.push('/manufacturer/manufacturer-shipments');
-      } catch (err) {
-        dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
-        toast.error(getError(err), {
-          theme: "colored"
-        });
-      }
-    };
+  const submitHandler = async ({
+    shipmentItems,
+    totalNumberOfBoxes,
+    totalShipmentWeight,
+    isShipped,
+    isRecieved
+  }) => {
+    try {
+      dispatch({ type: 'UPDATE_REQUEST' });
+      await axios.post(`/api/manufacturer/shipments`, {
+        shipmentItems,
+        totalNumberOfBoxes,
+        totalShipmentWeight,
+        isShipped,
+        isRecieved
+      });
+      dispatch({ type: 'UPDATE_SUCCESS' });
+      reset();
+      toast.success("Shipment created successfully", {
+        theme: "colored"
+      });
+      router.push('/manufacturer/manufacturer-shipments');
+    } catch (err) {
+      dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
+      toast.error(getError(err), {
+        theme: "colored"
+      });
+    }
+  };
     
   return (
     <Layout>
       <div className="vendor-container bg-black text-white">
-      <ToastContainer 
+        <ToastContainer 
           position="top-center" 
           draggable={false} 
           transition={Slide} 
@@ -226,8 +225,6 @@ const CreateManufacturerShipment = () => {
                                     )}
                                     <label htmlFor="packagesPerBox">Number of Packages in Box</label>
                                   </div>
-
-
                                   <div className="form-floating">
                                     <input
                                       type="text"
@@ -276,7 +273,6 @@ const CreateManufacturerShipment = () => {
                               </div>
                               )
                             })}
-
                         <div className="form-floating">
                           <input
                             type="number"
@@ -343,13 +339,13 @@ const CreateManufacturerShipment = () => {
                           <div className="col-6">
                           <h4>ตัวอย่างของผลิตภัณฑ์สำหรับการจัดส่ง 1 อินพุต:</h4>
                           <ul>
-                            <li><strong>ประเภทสินค้า:</strong> Raw Powder - Red</li>
-                            <li><strong>รายละเอียดสินค้า:</strong>  Red raw powder in 100g bags</li>
-                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> Ten 100g bags in 1kg bag</li>
+                            <li><strong>ประเภทสินค้า:</strong> Raw Powder - Red (ผงดิบ-สีแดง)</li>
+                            <li><strong>รายละเอียดสินค้า:</strong>  Red raw powder in 100g bags (ผงดิบสีแดงในถุง 100 กรัม)</li>
+                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> Ten 100g bags in 1kg bag (สิบถุง 100 กรัม บรรจุ 1 กก)</li>
                             <li><strong>ขนาดกล่อง:</strong> 45x55x40cm</li>
                             <li><strong>จำนวนบรรจุภัณฑ์ในกล่อง:</strong> 10</li>
                             <li><strong>จำนวนกล่องสินค้าทั้งหมด:</strong> 5</li>
-                            <li><strong>น้ำหนักกล่องรวมเป็นกิโลกรัม:</strong>  10</li>
+                            <li><strong>น้ำหนักกล่องรวมเป็นกิโลกรัม:</strong> 10</li>
                           </ul>
                           <div className="mx-auto text-center">
                             <Image src="/images/shipping-card-filled-out.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
@@ -358,9 +354,9 @@ const CreateManufacturerShipment = () => {
                           <div className="col-6">
                           <h4>ตัวอย่างผลิตภัณฑ์สำหรับการจัดส่ง 2 อินพุต:</h4>
                           <ul>
-                            <li><strong>ประเภทสินค้า:</strong> Extract Gel Caps</li>
-                            <li><strong>รายละเอียดสินค้า:</strong>  Blister packs of 10 gel caps</li>
-                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> 100 blister packs per package</li>
+                            <li><strong>ประเภทสินค้า:</strong> Extract Gel Caps (สารสกัดจากเจลแคป)</li>
+                            <li><strong>รายละเอียดสินค้า:</strong>  Blister packs of 10 gel caps (แพ็คตุ่ม 10 เจลแคป)</li>
+                            <li><strong>น้ำหนักสินค้าต่อแพ็คเกจ:</strong> 100 blister packs per package (บรรจุแผงละ 100 แพ็ค)</li>
                             <li><strong>ขนาดกล่อง:</strong> 40x40x40cm</li>
                             <li><strong>จำนวนบรรจุภัณฑ์ในกล่อง:</strong> 200</li>
                             <li><strong>จำนวนกล่องสินค้าทั้งหมด:</strong> 1</li>
@@ -424,11 +420,11 @@ const CreateManufacturerShipment = () => {
                           <ul>
                             <li><strong>Product Type:</strong> Raw Powder - Red</li>
                             <li><strong>Product Description:</strong>  Red raw powder in 100g bags</li>
-                            <li><strong>Product Weight Per Package:</strong> Ten 100g bags in 1kg bag</li>
+                            <li><strong>Product Weight Per Package:</strong> Ten 100g bags in 1kg package</li>
                             <li><strong>Box Size:</strong> 45x55x40cm</li>
                             <li><strong>Number of Packages in Box:</strong> 10</li>
                             <li><strong>Total Number of Product Boxes:</strong> 5</li>
-                            <li><strong>Total Box Weight in Kilograms:</strong>  10kgs</li>
+                            <li><strong>Total Box Weight in Kilograms:</strong>  10</li>
                           </ul>
                           <div className="mx-auto text-center">
                             <Image src="/images/shipping-card-filled-out.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>
@@ -443,7 +439,7 @@ const CreateManufacturerShipment = () => {
                             <li><strong>Box Size:</strong> 40x40x40cm</li>
                             <li><strong>Number of Packages in Box:</strong> 200</li>
                             <li><strong>Total Number of Product Boxes:</strong> 1</li>
-                            <li><strong>Total Box Weight in Kilograms:</strong>  0.6kgs</li>
+                            <li><strong>Total Box Weight in Kilograms:</strong> 0.6</li>
                           </ul>
                           <div className="mx-auto text-center">
                             <Image src="/images/shipping-card-filled-out2.jpg" className="" width={600} height={450} alt="Computer and mobile devices"/>

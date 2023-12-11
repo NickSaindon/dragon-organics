@@ -59,7 +59,7 @@ const AdminOrders = () => {
               ) : (
                 <div className="card admin-card-container">
                   <div className="card-body">
-                    <h1 className="card-title text-center text-primary">Admin Shipment Supplies</h1>
+                    <h1 className="card-title text-center text-primary">Shipment Supplies</h1>
                     <div className="row gx-5">
                       <table className="table text-white">
                         <thead className="border-b">

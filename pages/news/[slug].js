@@ -10,6 +10,8 @@ const NewsPost = (props) => {
 
   return (
     <Layout 
+      title={news.title}
+      description={news.description}
     >
       <div className="blog-post-container bg-black">
         <div className="container">

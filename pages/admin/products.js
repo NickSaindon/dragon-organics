@@ -54,11 +54,15 @@ const AdminProducts = () => {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(`/api/admin/products`);
       dispatch({ type: 'CREATE_SUCCESS' });
-      toast.success('Product created successfully');
+      toast.success('Product created successfully', {
+        theme: 'colored'
+      });
       router.push(`/admin/product/${data.product._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
     
@@ -88,22 +92,34 @@ const AdminProducts = () => {
       dispatch({ type: 'DELETE_REQUEST' });
       await axios.delete(`/api/admin/products/${productId}`);
       dispatch({ type: 'DELETE_SUCCESS' });
-      toast.success('Product deleted successfully');
+      toast.success('Product deleted successfully', {
+        theme: 'colored'
+      });
     } catch (err) {
       dispatch({ type: 'DELETE_FAIL' });
-      toast.error(getError(err));
+      toast.error(getError(err), {
+        theme: 'colored'
+      });
     }
   };
 
   return (
     <Layout title="Admin Products">
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="admin-container bg-black">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-2">
+            <div className="col-lg-3 col-md-12 col-sm-12 mb-3">
               <SideNav />
             </div>
-            <div className="col-lg-10">
+            <div className="col-lg-9 col-md-12 col-sm-12">
               {loading ? (
                 <div className="spinner-border customer-spinner text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
@@ -115,66 +131,75 @@ const AdminProducts = () => {
               ) : (
                 <div className="card admin-card-container">
                   <div className="card-body">
-                  <button 
-                      className="btn btn-lg btn-outline-primary float-end light product-btn" 
-                      type="submit"
-                      onClick={createHandler}
-                    >
-                      {loadingCreate ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-                          <span className="visually-hidden">Loading...</span>
-                        </>
-                      ) : (
-                        "Create Product"
-                      )}
-                    </button>
-                    <h1 className="card-title text-center text-primary">Admin Products</h1>
-
+                    <div className="row justify-content-end">
+                      <div className="col-6">
+                        <button 
+                          className="btn btn-lg btn-outline-primary float-end light" 
+                          type="submit"
+                          onClick={createHandler}
+                        >
+                          {loadingCreate ? (
+                            <>
+                              <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                              <span className="visually-hidden">Loading...</span>
+                            </>
+                          ) : (
+                            "Create Product"
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <h1 className="card-title text-center text-primary">Products</h1>
                     <div className="row gx-5">
-
-                      <table className="table text-white">
-                        <thead className="border-b">
+                      <div className="table-responsive">
+                        <table className="table text-white">
+                          <thead className="border-b">
                             <tr>
                               <th className="p-3 text-center text-primary">ID</th>
                               <th className="p-3 text-center text-primary">NAME</th>
                               <th className="p-3 text-center text-primary">PRICE</th>
                               <th className="p-3 text-center text-primary">SIZE</th>
                               <th className="p-3 text-center text-primary">COUNT</th>
-                              <th className="p-3 text-center text-primary">RATING</th>
                               <th className="p-3 text-center text-primary">ACTIONS</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                          {products.sort((a, b) => a._id.localeCompare(b._id)).map((product) => (
-                            <tr key={product._id} className="border-b">
-                              <td className="p-2 text-center align-middle">{product._id.substring(20, 24)}</td>
-                              <td className="p-2 text-center align-middle">{product.name} {product.color}</td>
-                              <td className="p-2 text-center align-middle">${product.price.toFixed(2)}</td>
-                              <td className="p-2 text-center align-middle">{product.size}</td>
-                              <td className="p-2 text-center align-middle">{product.countInStock}</td>
-                              <td className="p-2 text-center align-middle">{product.rating}</td>
-                              <td className="p-2 text-center align-middle">
-                                <Link
-                                  href={`/admin/product/${product._id}`}
-                                  type="button"
-                                  className="btn btn-primary"
-                                >
-                                  Edit
-                                </Link>
-                                &nbsp;
-                                <button 
-                                  onClick={() => deleteHandler(product._id)}
-                                  type="button" 
-                                  className="btn btn-danger"
-                                >
-                                  Delete
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {products.map((product) => (
+                              <tr key={product._id} className="border-b">
+                                <td className="p-2 text-center align-middle">{product._id.substring(20, 24)}</td>
+                                <td className="p-2 text-center align-middle">{product.name} {product.color}</td>
+                                <td className="p-2 text-center align-middle">${product.price.toFixed(2)}</td>
+                                <td className="p-2 text-center align-middle">{product.size}</td>
+                                <td className="p-2 text-center align-middle">{product.countInStock}</td>
+                                <td className="p-2 text-center align-middle">
+                                  <Link
+                                    href={`/admin/product/${product._id}`}
+                                    type="button"
+                                    className="btn btn-primary my-1"
+                                  >
+                                    Edit
+                                  </Link>
+                                  &nbsp;
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger my-1"
+                                    onClick={() => deleteHandler(user._id)}
+                                  >
+                                    {loadingDelete ? (
+                                      <>
+                                        <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                                        <span className="visually-hidden">Loading...</span>
+                                      </>
+                                    ) : (
+                                      "Delete"
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>

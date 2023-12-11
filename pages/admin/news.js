@@ -101,7 +101,7 @@ const AdminNews = () => {
       <div className="admin-container bg-black">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-2">
+            <div className="col-lg-2 mb-3">
               <SideNav />
             </div>
             <div className="col-lg-10">
@@ -116,62 +116,75 @@ const AdminNews = () => {
               ) : (
               <div className="card admin-card-container">
                 <div className="card-body">
-                <button 
-                    className="btn btn-lg btn-outline-primary float-end light product-btn" 
-                    type="submit"
-                    onClick={createHandler}
-                >
-                    {loadingCreate ? (
-                    <>
-                        <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-                        <span className="visually-hidden">Loading...</span>
-                    </>
-                    ) : (
-                    "Create Article"
-                    )}
-                </button>
+                  <div className="row justify-content-end">
+                    <div className="col-6">
+                      <button 
+                          className="btn btn-lg btn-outline-primary float-end light" 
+                          type="submit"
+                          onClick={createHandler}
+                      >
+                          {loadingCreate ? (
+                          <>
+                              <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                              <span className="visually-hidden">Loading...</span>
+                          </>
+                          ) : (
+                          "Create Article"
+                          )}
+                      </button>
+                    </div>
+                  </div>
                   <h1 className="card-title text-center text-primary">News Articles</h1>
                   <div className="row gx-5">
-                    <table className="table text-white">
-                      <thead className="border-b">
-                        <tr>
-                          <th className="p-3 text-center text-primary">ID</th>
-                          <th className="p-3 text-center text-primary">TITLE</th>
-                          <th className="p-3 text-center text-primary">DATE</th>
-                          <th className="p-3 text-center text-primary">AUTHOR</th>
-                          <th className="p-3 text-center text-primary">PUBLISHED</th>
-                          <th className="p-3 text-center text-primary">ACTIONS</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {news.map((article) => (
-                        <tr key={article._id} className="border-b">
-                        <td className="p-2 text-center align-middle">{article._id.substring(20, 24)}</td>
-                        <td className="p-2 text-center align-middle">{article.title}</td>
-                        <td className="p-2 text-center align-middle">{moment(article.createdAt).format('MM/DD/YYYY')}</td>
-                        <td className="p-2 text-center align-middle">{article.author}</td>
-                        <td className="p-2 text-center align-middle">{article.published ? 'Yes' : 'No'}</td>
-                        <td className="p-2 text-center align-middle">
+                    <div className="table-responsive">
+                      <table className="table text-white">
+                        <thead className="border-b">
+                          <tr>
+                            <th className="p-3 text-center text-primary">ID</th>
+                            <th className="p-3 text-center text-primary">TITLE</th>
+                            <th className="p-3 text-center text-primary">DATE</th>
+                            <th className="p-3 text-center text-primary">AUTHOR</th>
+                            <th className="p-3 text-center text-primary">PUBLISHED</th>
+                            <th className="p-3 text-center text-primary">ACTIONS</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {news.map((article) => (
+                            <tr key={article._id} className="border-b">
+                              <td className="p-2 text-center align-middle">{article._id.substring(20, 24)}</td>
+                              <td className="p-2 text-center align-middle">{article.title}</td>
+                              <td className="p-2 text-center align-middle">{moment(article.createdAt).format('MM/DD/YYYY')}</td>
+                              <td className="p-2 text-center align-middle">{article.author}</td>
+                              <td className="p-2 text-center align-middle">{article.published ? 'Yes' : 'No'}</td>
+                              <td className="p-2 text-center align-middle">
                                 <Link
                                   href={`/admin/news/${article._id}`}
                                   type="button"
-                                  className="btn btn-primary"
+                                  className="btn btn-primary my-1"
                                 >
                                   Edit
                                 </Link>
                                 &nbsp;
-                                <button 
-                                  onClick={() => deleteHandler(article._id)}
-                                  type="button" 
-                                  className="btn btn-danger"
+                                <button
+                                  type="button"
+                                  className="btn btn-danger my-1"
+                                  onClick={() => deleteHandler(user._id)}
                                 >
-                                  Delete
+                                  {loadingDelete ? (
+                                    <>
+                                      <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                                      <span className="visually-hidden">Loading...</span>
+                                    </>
+                                  ) : (
+                                    "Delete"
+                                  )}
                                 </button>
                               </td>
-                        </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

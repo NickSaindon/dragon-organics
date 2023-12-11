@@ -4,7 +4,7 @@ const ShippingPolicy = () => {
   return (
     <Layout 
       title="Dragon Organics | Shipping Policy"
-      description="Shipping policies and customer support for shipped products"
+      description="Learn what to expect from shipping and delivery when buying kratom from Dragon Organics. See our shipping times, costs, and restrictions."
     >
       <div className="policy-container bg-black text-white">
         <div className="container">

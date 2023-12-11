@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Layout from '../components/Layout';
-import Image from "next/image";
-import { Controller, useForm } from 'react-hook-form';
-import { getError } from '../utils/error';
 import { useRouter } from 'next/router';
-import { useReducer } from 'react';
+import { useReducer, useState, useEffect } from 'react';
+import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { ToastContainer, toast, Slide } from "react-toastify";
+import { getError } from '../utils/error';
+import Image from "next/image";
+import VendorPricingOptions from "../utils/vendorPricingOptions";
 import gsap from 'gsap';
 
 function reducer(state, action) {
@@ -29,6 +30,8 @@ const VendorPricing = () => {
     error: '',
   });
   const router = useRouter();
+  const [vendorPricing, setVendorPricing] = useState("");
+  const vendorPriceOption = VendorPricingOptions.vendorPricing;
 
       useEffect(() => {
         gsap.timeline()
@@ -40,21 +43,31 @@ const VendorPricing = () => {
 
       const {
         handleSubmit,
-        register,
         control,
         formState: { errors },
+        setValue,
       } = useForm();
 
+      const submitHandler = async ({amount}) => {
+        const percentageHandler = () => {
+          if (amount === "5000") {
+            return 0.30
+          } else if (amount === "10000") {
+            return 0.50;
+          } else if (amount === "25000") {
+            return 0.65;
+          } else if (amount === "50000") {
+            return 0.70;
+          } else {
+            return 0.80;
+          }
+        }
 
-
-      const submitHandler = async ({
-        amount
-      }) => {
         try {
           dispatch({ type: 'UPDATE_REQUEST' });
           await axios.post(`/api/vendor`, {
-            amount, 
-            percentage: amount === "5000" ? 0.30 : 0.50 
+            amount,
+            percentage: percentageHandler()
           });
           dispatch({ type: 'UPDATE_SUCCESS' });
           toast.success("Shipment created successfully", {
@@ -105,29 +118,45 @@ const VendorPricing = () => {
                 Select from our tier MSRP for our Dragon Organics product and start selecting how much Dragon Organics you want to sell today. 
               </p>
               <div className="form-floating">
-                <select 
-                    defaultValue='DEFAULT'
-                    className={`form-select ${errors.state ? 'is-invalid' : ''}`} 
-                    {...register('amount', {
-                      required: 'Please select an amount',
-                    })}
-                >
-                    <option disabled value="DEFAULT">Select An Amount</option>
-                    <option value="5000">$5,000 for 30% off</option>
-                    <option value="10000">$10,000 for 50% off</option>
-                    <option value="25000">$25,000 for 65% off</option>
-                    <option value="50000">$50,000 for 70% off</option>
-                    <option value="100000">$100,000 for 80% off</option>
-                  </select>
-                {errors.amount && (
+                  <Controller
+                    name="amount"
+                    control={control}
+                    rules={{
+                      required: true,
+                    }}
+                    render={({ field }) => (
+                      <select 
+                        defaultValue='DEFAULT'
+                        className={`form-select ${errors.amount ? 'is-invalid' : ''}`} 
+                        onChange={(e) => setVendorPricing(e.target.value)}
+                        value={vendorPricing}
+                        {...field}
+                      >
+                        <option disabled value="DEFAULT">Select an Amount</option>
+                        {vendorPriceOption.map((vendorPricing) => (
+                          <option key={vendorPricing.value} value={vendorPricing.value}>{vendorPricing.label}</option>
+                        ))}
+                      </select>
+                    )}
+                  />
                   <div className="invalid-feedback">
-                    {errors.amount.message}
+                    {
+                      errors.state
+                      ? 'Amount is required'
+                      : ''
+                    }
                   </div>
-                )}
-              </div>
-              <button className="w-100 btn btn-lg btn-outline-primary my-5 light" type="submit">
-                Create An Account
-              </button>
+                </div>
+                <button className="w-100 btn btn-lg btn-outline-primary light" type="submit">
+                  {loadingUpdate ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                      <span className="visually-hidden">Loading...</span>
+                    </>
+                  ) : (
+                    "Create An Account"
+                  )}
+                </button>
             </form>
           </div>
         </main>

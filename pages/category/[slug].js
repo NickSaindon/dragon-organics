@@ -32,9 +32,9 @@ const Categories = (props) => {
 
     return (
         <Layout 
-        title={category?.name}
-        description="Remedy Exports is a Thai based manufacture and export company that works with clients to procure the best Thai Kratom.  We handle the end-to-end process to supply quality Kratom that is safe from any 
-        metals, bacteria, and that is grown naturally without the usage of any non-organic pesticides or fertilizers.">
+          title={category?.name}
+          description={`Indulge in Dragon Organics ${category?.name} collection from Thailand. Elevate your experience with pure, potent botanicals. Explore now!`}
+        >
             <ToastContainer 
               position="top-center" 
               draggable={false} 

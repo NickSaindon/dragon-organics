@@ -1,6 +1,7 @@
 import { getToken } from 'next-auth/jwt';
-import Categories from '../../../../models/Categories';
+import Discount from '../../../../models/Discounts';
 import db from '../../../../utils/db';
+import moment from 'moment';
 
 const handler = async (req, res) => {
   const user = await getToken({ req });
@@ -15,26 +16,28 @@ const handler = async (req, res) => {
     return res.status(400).send({ message: 'Method not allowed' });
   }
 };
-
 const postHandler = async (req, res) => {
   await db.connect();
-  const newCategories = new Categories({
-    name: 'Category Name',
-    slug: 'sample-category-' + Math.random(),
-    categoryImage: '/images/do-raw-powder-bags.jpg',
-    categoryText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  const newDiscount = new Discount({
+    campaignName: 'Affiliate Campaign',
+    discountReason: 'Drive traffic to website through affiliates',
+    discountCode: (Math.random() + 1).toString(36).substring(6),
+    discountAmount: 0.10,
+    numOfDiscounts: 1,
+    expires: moment(new Date).add(5, 'days'),
+    isValid: false,
   });
 
-  const categories = await newCategories.save();
+  const discount = await newDiscount.save();
   await db.disconnect();
-  res.send({ message: 'Product created successfully', categories });
+  res.send({ message: 'Discount created successfully', discount });
 };
 
 const getHandler = async (req, res) => {
   await db.connect();
-  const categories = await Categories.find({});
+  const discounts = await Discount.find({});
   await db.disconnect();
-  res.send(categories);
+  res.send(discounts);
 };
 
 export default handler;

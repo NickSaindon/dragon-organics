@@ -25,7 +25,7 @@ const Shipping = () => {
     setValue('fullName', shippingAddress.fullName);
     setValue('address', shippingAddress.address);
     setValue('city', shippingAddress.city);
-    setValue('city', shippingAddress.state);
+    setValue('state', shippingAddress.state);
     setValue('zipCode', shippingAddress.zipCode);
   }, [setValue, shippingAddress]);
 

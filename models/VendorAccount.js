@@ -13,6 +13,6 @@ const vendorAccountSchema = new mongoose.Schema(
   }
 );
 
-const VendorAccount = mongoose.models.VendorAccount || mongoose.model('ManufacturerShipments', vendorAccountSchema);
+const VendorAccount = mongoose.models.VendorAccount || mongoose.model('VendorAccount', vendorAccountSchema);
 
 export default VendorAccount;

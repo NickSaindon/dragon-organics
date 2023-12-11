@@ -49,7 +49,7 @@ const Contact = () => {
   return (
     <Layout 
       title="Dragon Organics | Contact"
-      description="Contact us today and findout more about our quality Thai botanical products.">
+      description="Connect with Dragon Organics for authentic Thai Kratom and Blue Lotus. Reach out for inquiries and elevate your botanical experience.">
       <div className="contact-container bg-black">
         <ToastContainer 
           position="top-center" 

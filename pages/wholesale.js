@@ -49,7 +49,7 @@ const Wholesale = () => {
   return (
     <Layout 
       title="Dragon Organics | Wholesale"
-      description="Join the Dragon Organics family as a wholesale partner and enjoy exclusive pricing on our top-selling.  Don't wait and start selling our quality products in your store today!"
+      description="Unlock wholesale opportunities for premium Thai Kratom and Blue Lotus with Dragon Organics. Elevate your business with our botanical treasures."
     >
       <div className="contact-container bg-black">
         <ToastContainer 

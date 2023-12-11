@@ -1,13 +1,27 @@
+import axios from 'axios';
 import { signOut, useSession } from 'next-auth/react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useReducer } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Store } from '../utils/Store';
-import data from '../utils/data';
+// import data from '../utils/data';
 import DropdownLink from './DropdownLinks';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true, error: '' };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, categories: action.payload, error: '' };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+    state;
+  }
+}
 
 function Navbar() {
   const { status, data: session } = useSession();
@@ -15,6 +29,8 @@ function Navbar() {
   const { cart } = state;
   const router = useRouter();
   const [ cartItemsCount, setCartItemsCount ] = useState(0);
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(true)
 
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -23,8 +39,17 @@ function Navbar() {
   };
 
   useEffect(() => {
+    fetch('/api/categories')
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data);
+      setLoading(false);
+    })
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems])
+
+  if (isLoading) return <p>Loading...</p>
+  if (!data) return <p>No Category Data</p>
  
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
@@ -47,7 +72,7 @@ function Navbar() {
                 Products
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              {data.categories.map((category) => (
+              {data.map((category) => (
                 <li key={category.slug}>
                   <Link href={`/category/${category.slug}`} className="dropdown-item">{category.name}</Link>
                 </li>
@@ -169,6 +194,14 @@ function Navbar() {
                                 href="/admin/news"
                               >
                                 News
+                              </DropdownLink>
+                            </li>
+                            <li>
+                              <DropdownLink
+                                className="dropdown-item"
+                                href="/admin/discount-codes"
+                              >
+                                Discount Codes
                               </DropdownLink>
                             </li>
                             <li>
