@@ -117,10 +117,10 @@ const AdminDiscoutCodes = () => {
       <div className="admin-container bg-black text-white">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-2 col-md-12 my-3">
+            <div className="col-lg-3 col-md-12 col-sm-12 my-3">
               <SideNav />
             </div>
-            <div className="col-lg-10 col-md-12">
+            <div className="col-lg-9 col-md-12 col-sm-12">
               {loading ? (
                 <div className="spinner-border customer-spinner text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
@@ -153,10 +153,11 @@ const AdminDiscoutCodes = () => {
                       <span class="visually-hidden">Deleting Discount Code...</span>
                     </div>}
                     <div className="row gx-5">
-                      <table className="table text-white">
-                        <thead className="border-b">
-                          <tr>
-                          <th className="p-3 text-center text-primary">ID</th>
+                      <div className="table-responsive">
+                        <table className="table text-white">
+                          <thead className="border-b">
+                            <tr>
+                              <th className="p-3 text-center text-primary">ID</th>
                               <th className="p-3 text-center text-primary">NAME</th>
                               <th className="p-3 text-center text-primary">REASON</th>
                               <th className="p-3 text-center text-primary">CODE</th>
@@ -165,40 +166,48 @@ const AdminDiscoutCodes = () => {
                               <th className="p-3 text-center text-primary">EXPIRES</th>
                               <th className="p-3 text-center text-primary">VALID</th>
                               <th className="p-3 text-center text-primary">ACTIONS</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {discounts.map((discount) => (
-                            <tr key={discount._id} className="border-b">
-                              <td className="p-2 text-center align-middle">{discount._id.substring(20, 24)}</td>
-                              <td className="p-2 text-center align-middle">{discount.campaignName}</td>
-                              <td className="p-2 text-center align-middle">{discount.discountReason}</td>
-                              <td className="p-2 text-center align-middle">{discount.discountCode}</td>
-                              <td className="p-2 text-center align-middle">{discount.discountAmount.toFixed(2)}</td>
-                              <td className="p-2 text-center align-middle">{discount.numOfDiscounts}</td>
-                              <td className="p-2 text-center align-middle">{moment(new Date(discount.expires)).format('MM/DD/YYYY')}</td>
-                              <td className="p-2 text-center align-middle">{discount.isValid ? 'YES' : 'NO'}</td>
-                              <td className="p-2 text-center align-middle">
-                                <Link
-                                  href={`/admin/discount/${discount._id}`}
-                                  type="button"
-                                  className="btn btn-primary"
-                                >
-                                  Edit
-                                </Link>
-                                &nbsp;
-                                <button 
-                                  onClick={() => deleteHandler(discount._id)}
-                                  type="button" 
-                                  className="btn btn-danger"
-                                >
-                                  Delete
-                                </button>
-                              </td>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {discounts.map((discount) => (
+                              <tr key={discount._id} className="border-b">
+                                <td className="p-2 text-center align-middle">{discount._id.substring(20, 24)}</td>
+                                <td className="p-2 text-center align-middle">{discount.campaignName}</td>
+                                <td className="p-2 text-center align-middle">{discount.discountReason}</td>
+                                <td className="p-2 text-center align-middle">{discount.discountCode}</td>
+                                <td className="p-2 text-center align-middle">{discount.discountAmount.toFixed(2)}</td>
+                                <td className="p-2 text-center align-middle">{discount.numOfDiscounts}</td>
+                                <td className="p-2 text-center align-middle">{moment(new Date(discount.expires)).format('MM/DD/YYYY')}</td>
+                                <td className="p-2 text-center align-middle">{discount.isValid ? 'YES' : 'NO'}</td>
+                                <td className="p-2 text-center align-middle">
+                                  <Link
+                                    href={`/admin/discount/${discount._id}`}
+                                    type="button"
+                                    className="btn btn-primary my-1"
+                                  >
+                                    Edit
+                                  </Link>
+                                  &nbsp;
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger my-1"
+                                    onClick={() => deleteHandler(discount._id)}
+                                  >
+                                    {loadingDelete ? (
+                                      <>
+                                        <span className="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                                        <span className="visually-hidden">Loading...</span>
+                                      </>
+                                    ) : (
+                                      "Delete"
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>

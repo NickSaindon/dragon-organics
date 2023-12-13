@@ -25,6 +25,21 @@ a {
   color: white;
 }
 
+// Custom Loader
+.loading-container {
+  position: fixed;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  img {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 40%;
+    margin: 0 auto;
+  }
+}
+
 // Age Verification Modal
 .overlay {
   background-color: rgba(0,0,0,0.5);

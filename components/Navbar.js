@@ -7,7 +7,6 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Store } from '../utils/Store';
-// import data from '../utils/data';
 import DropdownLink from './DropdownLinks';
 
 function reducer(state, action) {
@@ -29,8 +28,14 @@ function Navbar() {
   const { cart } = state;
   const router = useRouter();
   const [ cartItemsCount, setCartItemsCount ] = useState(0);
-  const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(true)
+  const [
+    { loading, error, categories },
+      dispatchCat,
+  ] = useReducer(reducer, {
+      loading: true,
+      categories: [],
+      error: '',
+    });
 
   const logoutClickHandler = () => {
     Cookies.remove('cart');
@@ -39,17 +44,20 @@ function Navbar() {
   };
 
   useEffect(() => {
-    fetch('/api/categories')
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data);
-      setLoading(false);
-    })
+    const fetchData = async () => {
+      try {
+        dispatchCat({ type: 'FETCH_REQUEST' });
+        const { data } = await axios.get(`/api/categories`);
+        dispatchCat({ type: 'FETCH_SUCCESS', payload: data });
+      } catch (err) {
+        dispatchCat({ type: 'FETCH_FAIL', payload: getError(err) });
+      }
+    };
+
+    fetchData();
+
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems])
-
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No Category Data</p>
  
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-dark">
@@ -72,11 +80,23 @@ function Navbar() {
                 Products
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              {data.map((category) => (
-                <li key={category.slug}>
-                  <Link href={`/category/${category.slug}`} className="dropdown-item">{category.name}</Link>
-                </li>
-              ))}
+                {loading ? (
+                  <div className="spinner-border customer-spinner text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>      
+                ) : error ? (
+                  <div className="alert alert-danger" role="alert">
+                    {error}
+                  </div>
+                ) : (
+                  <>
+                    {categories.map((category) => (
+                      <li key={category.slug}>
+                        <Link href={`/category/${category.slug}`} className="dropdown-item">{category.name}</Link>
+                      </li>
+                    ))}
+                  </>
+                )}
               </ul>
             </li>
             <li className="nav-item">

@@ -9,6 +9,7 @@ import PageTransitions from '../components/PageTransitions';
 import { useRouter } from 'next/router';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { SessionProvider, useSession } from 'next-auth/react';
+import Image from "next/image";
 
 export default function App({ Component, pageProps: { session, ...pageProps} }) {
   const router = useRouter();
@@ -49,7 +50,7 @@ function Auth({ children, adminOnly, manufacturerOnly, vendorOnly }) {
     }
   });
   if ( status === 'loading') {
-    return <div>Loading...</div>;
+    return <div className="loading-container"><Image src="/images/Loading.gif" width={300} height={300} alt="Loading image"/></div>;
   }
   if (adminOnly && !session.user.isAdmin) {
     router.push('/unauthorized?message=admin login required');

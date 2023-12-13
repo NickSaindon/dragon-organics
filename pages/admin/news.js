@@ -55,11 +55,15 @@ const AdminNews = () => {
         dispatch({ type: 'CREATE_REQUEST' });
         const { data } = await axios.post(`/api/admin/news`);
         dispatch({ type: 'CREATE_SUCCESS' });
-        toast.success('Article created successfully');
+        toast.success('Article created successfully', {
+          theme: 'colored'
+        });
         router.push(`/admin/news/${data.news._id}`);
       } catch (err) {
         dispatch({ type: 'CREATE_FAIL' });
-        toast.error(getError(err));
+        toast.error(getError(err), {
+          theme: 'colored'
+        });
       }
     };
       
@@ -89,22 +93,34 @@ const AdminNews = () => {
         dispatch({ type: 'DELETE_REQUEST' });
         await axios.delete(`/api/admin/news/${newsId}`);
         dispatch({ type: 'DELETE_SUCCESS' });
-        toast.success('Product deleted successfully');
+        toast.success('Article deleted successfully', {
+          theme: 'colored'
+        });
       } catch (err) {
         dispatch({ type: 'DELETE_FAIL' });
-        toast.error(getError(err));
+        toast.error(getError(err), {
+          theme: 'colored'
+        });
       }
     };
 
   return (
     <Layout>
+      <ToastContainer 
+        position="top-center" 
+        draggable={false} 
+        transition={Slide} 
+        autoClose={5000}
+        hideProgressBar={true}
+        className="toast-alert"
+      />
       <div className="admin-container bg-black">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-2 mb-3">
+            <div className="col-lg-3 col-md-12 col-sm-12 mb-3">
               <SideNav />
             </div>
-            <div className="col-lg-10">
+            <div className="col-lg-9 col-md-12 col-sm-12">
             {loading ? (
                 <div className="spinner-border customer-spinner text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
@@ -168,7 +184,7 @@ const AdminNews = () => {
                                 <button
                                   type="button"
                                   className="btn btn-danger my-1"
-                                  onClick={() => deleteHandler(user._id)}
+                                  onClick={() => deleteHandler(article._id)}
                                 >
                                   {loadingDelete ? (
                                     <>

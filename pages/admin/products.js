@@ -183,7 +183,7 @@ const AdminProducts = () => {
                                   <button
                                     type="button"
                                     className="btn btn-danger my-1"
-                                    onClick={() => deleteHandler(user._id)}
+                                    onClick={() => deleteHandler(product._id)}
                                   >
                                     {loadingDelete ? (
                                       <>

@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Script from 'next/script';
 
 function Layout({ title, description, children}) {
 
@@ -10,18 +11,33 @@ function Layout({ title, description, children}) {
       <Head>
         <title>{title ? `${title}` : 'Dragon Organics'}</title>
         {description && <meta name="description" content={description}></meta>}
-        <script 
+        <Script 
           strategy="afterInteractive" 
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} />
-        <script id="google-analytics" strategy="afterInteractive">
+        {/* <script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
   
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
           `}
-        </script>
+        </script> */}
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+  
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+            `,
+          }}
+        />
       </Head>
       <Navbar />
         <div>
