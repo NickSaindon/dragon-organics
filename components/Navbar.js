@@ -90,7 +90,7 @@ function Navbar() {
                   </div>
                 ) : (
                   <>
-                    {categories.map((category) => (
+                    {categories.sort((a, b) => a._id.localeCompare(b._id)).map((category) => (
                       <li key={category.slug}>
                         <Link href={`/category/${category.slug}`} className="dropdown-item">{category.name}</Link>
                       </li>

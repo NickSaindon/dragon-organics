@@ -282,7 +282,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="name"
-                          autoFocus
+                          placeholder="Name"
                           {...register('name', {
                             required: 'Please enter name',
                           })}
@@ -299,6 +299,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="slug"
+                          placeholder="Slug"
                           {...register('slug', {
                             required: 'Please enter slug',
                           })}
@@ -313,6 +314,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="category"
+                          placeholder="Category"
                           {...register('category', {
                             required: 'Please enter category',
                           })}
@@ -327,9 +329,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="color"
-                          {...register('color', {
-                            required: 'Please enter color',
-                          })}
+                          {...register('color')}
                         />
                         <label htmlFor="color">Color</label>
                       </div>
@@ -338,6 +338,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="size"
+                          placeholder="Size"
                           {...register('size', {
                             required: 'Please enter size',
                           })}
@@ -352,6 +353,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="price"
+                          placeholder="Price"
                           {...register('price', {
                             required: 'Please enter price',
                           })}
@@ -366,8 +368,9 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="countInStock"
+                          placeholder="Count In Stock"
                           {...register('countInStock', {
-                            required: 'Please enter countInStock',
+                            required: 'Please enter count in stock',
                           })}
                         />
                         {errors.countInStock && (
@@ -382,6 +385,7 @@ const AdminProductEdit = ({ params }) => {
                           row="5"
                           className="form-control"
                           id="description"
+                          placeholder="Description"
                           {...register('description', {
                             required: 'Please enter description',
                           })}
@@ -398,6 +402,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="imageOne"
+                          placeholder="Image One"
                           {...register('imageOne', {
                             required: 'Please enter image',
                           })}
@@ -420,6 +425,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="imageTwo"
+                          placeholder="Image Two"
                           {...register('imageTwo', {
                             required: 'Please enter image',
                           })}
@@ -442,6 +448,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="imageThree"
+                          placeholder="Image Three"
                           {...register('imageThree', {
                             required: 'Please enter image',
                           })}
@@ -464,6 +471,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="imageFour"
+                          placeholder="Image Four"
                           {...register('imageFour', {
                             required: 'Please enter image',
                           })}
@@ -486,6 +494,7 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="region"
+                          placeholder="Region"
                           {...register('region', {
                             required: 'Please enter region',
                           })}
@@ -502,9 +511,8 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="leafName"
-                          {...register('leafName', {
-                            required: 'Please enter leaf name',
-                          })}
+                          placeholder="Leaf Name"
+                          {...register('leafName')}
                         />
                         {errors.leafName && (
                           <div className="invalid-feedback">
@@ -518,9 +526,8 @@ const AdminProductEdit = ({ params }) => {
                           type="text"
                           className="form-control"
                           id="leafType"
-                          {...register('leafType', {
-                            required: 'Please enter leaf type',
-                          })}
+                          placeholder="Leaf Type"
+                          {...register('leafType')}
                         />
                         {errors.leafType && (
                           <div className="invalid-feedback">
