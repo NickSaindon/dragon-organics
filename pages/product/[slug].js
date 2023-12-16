@@ -36,8 +36,8 @@ const ProductDetails = (props) => {
 
   return (
     <Layout 
-      title={`${product?.name} ${product?.color} ${product?.size}`}
-      description={`Discover the essence of Thailand in Dragon Organics ${product?.name} ${product?.color}'s. Elevate your well-being with this pure and potent botanical delight.`}
+      title={`Dragon Organics | ${product?.name} ${product?.color} ${product?.size}`}
+      description={`Discover the essence of Thailand in Dragon Organics ${product?.name} ${product?.color}. Elevate your well-being with this pure and potent botanical delight.`}
     >
       <ToastContainer 
         position="top-center" 

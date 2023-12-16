@@ -32,7 +32,7 @@ const Categories = (props) => {
 
     return (
         <Layout 
-          title={category?.name}
+          title={`Dragon Organics | ${category?.name}`}
           description={`Indulge in Dragon Organics ${category?.name} collection from Thailand. Elevate your experience with pure, potent botanicals. Explore now!`}
         >
             <ToastContainer 
@@ -49,7 +49,7 @@ const Categories = (props) => {
             <div className="py-5 container">
               <div className="row py-lg-5">
                 <div className="col-md-12 col-lg-6 mx-auto ">
-                  <h1 className={`fw-light ${category?.name === 'Blue Lotus' ? "text-blue" : "text-primay"}`}>{category?.name}</h1>
+                  <h1 className={`fw-light ${category?.name === 'Blue Lotus' ? "text-blue" : "text-primary"}`}>{category?.name}</h1>
                   <p className="lead text-white">
                     {category?.categoryText}
                   </p>
