@@ -2,8 +2,9 @@ import axios from 'axios';
 import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from "next/image";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
 
@@ -51,6 +52,8 @@ const AdminCategoryEdit = ({ params }) => {
     formState: { errors },
     setValue,
   } = useForm();
+
+  const [isCategoryImage, setIsCategoryImage] = useState('');
   
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +65,7 @@ const AdminCategoryEdit = ({ params }) => {
         setValue('slug', data.slug);
         setValue('categoryImage', data.categoryImage);
         setValue('categoryText', data.categoryText);
+        setIsCategoryImage(data.categoryImage);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -195,6 +199,7 @@ const AdminCategoryEdit = ({ params }) => {
                         )}
                         <label htmlFor="slug">Slug</label>
                       </div>
+                      {isCategoryImage && ( <Image src={isCategoryImage} className="mt-4" width={150} height={90} alt="Category header image" /> )}
                       <div className="form-floating">
                         <input
                           type="text"

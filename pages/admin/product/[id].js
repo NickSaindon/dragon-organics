@@ -2,8 +2,9 @@ import axios from 'axios';
 import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
 import { useRouter } from 'next/router';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from "next/image";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
 
@@ -52,6 +53,11 @@ const AdminProductEdit = ({ params }) => {
     formState: { errors },
     setValue,
   } = useForm();
+
+  const [isImageOne, setIsImageOne] = useState('');
+  const [isImageTwo, setIsImageTwo] = useState('');
+  const [isImageThree, setIsImageThree] = useState('');
+  const [isImageFour, setIsImageFour] = useState('');
   
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +80,10 @@ const AdminProductEdit = ({ params }) => {
         setValue('leafName', data.leafName);
         setValue('leafType', data.leafType);
         setValue('description', data.description);
+        setIsImageOne(data.imageOne);
+        setIsImageTwo(data.imageTwo);
+        setIsImageThree(data.imageThree);
+        setIsImageFour(data.imageFour);
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -397,6 +407,7 @@ const AdminProductEdit = ({ params }) => {
                         )}
                         <label htmlFor="description">Description</label>
                       </div>
+                      {isImageOne && ( <Image src={isImageOne} className="mt-4" width={125} height={90} alt="Product Image One" /> )}
                       <div className="form-floating">
                         <input
                           type="text"
@@ -420,6 +431,7 @@ const AdminProductEdit = ({ params }) => {
                           />
                         </div>
                       </div>
+                      {isImageTwo && ( <Image src={isImageTwo} width={125} height={90} alt="Product Image Two" /> )}
                       <div className="form-floating">
                         <input
                           type="text"
@@ -443,6 +455,7 @@ const AdminProductEdit = ({ params }) => {
                           />
                         </div>
                       </div>
+                      {isImageThree && ( <Image src={isImageThree} width={125} height={90} alt="Product Image Three" /> )}
                       <div className="form-floating">
                         <input
                           type="text"
@@ -466,6 +479,7 @@ const AdminProductEdit = ({ params }) => {
                           />
                         </div>
                       </div>
+                      {isImageFour && ( <Image src={isImageFour} width={125} height={90} alt="Product Image Four" /> )}
                       <div className="form-floating">
                         <input
                           type="text"

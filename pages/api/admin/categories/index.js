@@ -21,7 +21,7 @@ const postHandler = async (req, res) => {
   const newCategories = new Categories({
     name: 'Category Name',
     slug: 'sample-category-' + Math.random(),
-    categoryImage: '/images/do-raw-powder-bags.jpg',
+    categoryImage: '/images/category-header-size.jpg',
     categoryText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   });
 

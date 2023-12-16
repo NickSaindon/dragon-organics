@@ -38,7 +38,7 @@ const News = (props) => {
         <div className="container news-card-container">
         <div className="row mb-2">
         {news.filter(news => news.published === true).map((news) => (
-          <div className="col-md-6" key={news._id}>
+          <div className="col-md-6 d-flex align-items-stretch" key={news._id}>
             <div className="row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative news-card">
               <div className="col p-4 d-flex flex-column position-static text-white">
                 <h3 className="mb-0 text-primary"><b>{news.title}</b></h3>

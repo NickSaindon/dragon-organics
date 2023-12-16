@@ -57,6 +57,16 @@ export default function Home() {
     .from(".home-extract-category button", {y: 100, opacity:0, ease: 1, duration: 0.3})
 
     gsap.timeline({scrollTrigger:{
+      trigger:".home-raw-powder-category",
+      start:"top 50%",
+      toggleActions:"restart none none reset",
+    }})
+    .from(".home-blue-lotus-category h2", {y:-100, opacity:0, ease: 1, duration: 0.3})
+    .from(".home-blue-lotus-category p", {opacity:0, ease: 1, duration: 0.5})
+    .from(".home-blue-lotus-category button", {y:100, opacity:0, ease: 1, duration: 0.3})
+    .from(".home-blue-lotus-category img", {opacity:0, ease: 1, duration: 0.5})
+
+    gsap.timeline({scrollTrigger:{
       trigger:".parallax-container",
       start:"top 65%",
       toggleActions:"restart none none reset",

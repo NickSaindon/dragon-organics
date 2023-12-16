@@ -7,6 +7,8 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Store } from '../utils/Store';
+import { getError } from '../utils/error';
+
 import DropdownLink from './DropdownLinks';
 
 function reducer(state, action) {
