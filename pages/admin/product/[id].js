@@ -95,7 +95,7 @@ const AdminProductEdit = ({ params }) => {
   const router = useRouter();
   
   const uploadHandler = async (e, imageFieldOne = 'imageOne') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
@@ -107,12 +107,14 @@ const AdminProductEdit = ({ params }) => {
       formData.append('file', file);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('api_key', process.env.CLOUDINARY_API_KEY);
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageFieldOne, data.secure_url);
 
-      toast.success('File uploaded successfully');
+      toast.success('File uploaded successfully', {
+        theme: 'colored'
+      });
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       toast.error(getError(err), {
@@ -122,7 +124,7 @@ const AdminProductEdit = ({ params }) => {
   };
 
   const uploadImageTwoHandler = async (e, imageFieldTwo = 'imageTwo') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
@@ -134,7 +136,7 @@ const AdminProductEdit = ({ params }) => {
       formData.append('file', file);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('api_key', process.env.CLOUDINARY_API_KEY);
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageFieldTwo, data.secure_url);
@@ -149,7 +151,7 @@ const AdminProductEdit = ({ params }) => {
   };
 
   const uploadImageThreeHandler = async (e, imageFieldThree = 'imageThree') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
@@ -161,7 +163,7 @@ const AdminProductEdit = ({ params }) => {
       formData.append('file', file);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('api_key', process.env.CLOUDINARY_API_KEY);
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageFieldThree, data.secure_url);
@@ -176,7 +178,7 @@ const AdminProductEdit = ({ params }) => {
   };
 
   const uploadImageFourHandler = async (e, imageFieldFour = 'imageFour') => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
@@ -188,7 +190,7 @@ const AdminProductEdit = ({ params }) => {
       formData.append('file', file);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('api_key', process.env.CLOUDINARY_API_KEY);
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setValue(imageFieldFour, data.secure_url);
