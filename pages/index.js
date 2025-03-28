@@ -204,7 +204,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="home-blue-lotus-category py-5 bg-black">
+        {/* <div className="home-blue-lotus-category py-5 bg-black">
           <div className="container-xl">
             <div className="row g-4 py-5">
               <div className="col-sm-12 col-md-12 col-lg-6 home-blue-lotus-text text-white">
@@ -234,7 +234,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="parallax-container">
           <div className="parallax-wrapper">
             <h1>Best Quality Kratom<br></br>You Can Find</h1>

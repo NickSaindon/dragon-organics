@@ -6,10 +6,12 @@ import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import CheckoutWizard from '@/components/CheckoutWizard';
+import Link from 'next/link';
 
 const Shipping = () => {
   const {
     handleSubmit,
+    register,
     control,
     formState: { errors },
     setValue,
@@ -22,24 +24,28 @@ const Shipping = () => {
   const { shippingAddress } = cart;
 
   useEffect(() => {
-    setValue('fullName', shippingAddress.fullName);
+    setValue('firstName', shippingAddress.firstName);
+    setValue('lastName', shippingAddress.lastName);
+    setValue('email', shippingAddress.email);
     setValue('address', shippingAddress.address);
     setValue('city', shippingAddress.city);
     setValue('state', shippingAddress.state);
     setValue('zipCode', shippingAddress.zipCode);
   }, [setValue, shippingAddress]);
 
-  const submitHandler = ({ fullName, address, city, state, zipCode }) => {
+  const submitHandler = ({ firstName, lastName, email, address, city, state, zipCode }) => {
     dispatch({
       type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, state, zipCode },
+      payload: { firstName, lastName, email, address, city, state, zipCode },
     });
     Cookies.set(
       'cart', 
       JSON.stringify({
         ...cart,
         shippingAddress: {
-          fullName,
+          firstName,
+          lastName,
+          email,
           address,
           city,
           state,
@@ -64,6 +70,7 @@ const Shipping = () => {
                  If your State is on this list you will not be able to select your State from the list of States in our form.
               </p>
             </div>
+            <h5><b className="text-white">Have an accout? <Link className="text-primary" href="/signin">Sign in</Link></b></h5>
           </div>
         </div>
         <main className="form-shipping">
@@ -72,7 +79,7 @@ const Shipping = () => {
               <form onSubmit={handleSubmit(submitHandler)} className="col-lg-6 col-md-12 col-sm-12">
                 <div className="form-floating">
                   <Controller
-                    name="fullName"
+                    name="firstName"
                     control={control}
                     defaultValue=""
                     rules={{
@@ -82,8 +89,8 @@ const Shipping = () => {
                     render={({ field }) => (
                       <input 
                         type="text" 
-                        className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
-                        id="fullName" 
+                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                        id="firstName" 
                         placeholder="Full Name" 
                         {...field}
                       />
@@ -91,14 +98,65 @@ const Shipping = () => {
                   />
                   <div className="invalid-feedback">
                     {
-                      errors.fullName
-                      ? errors.fullName.type === 'minLength'
-                      ? 'Full Name length is more than 1'
-                      : 'Full Name is required'
+                      errors.firstName
+                      ? errors.firstName.type === 'minLength'
+                      ? 'First Name length is more than 1'
+                      : 'First Name is required'
                       : ''
                     }
                   </div>
-                  <label htmlFor="name">Full Name</label>
+                  <label htmlFor="firstName">First Name</label>
+                </div>
+                <div className="form-floating">
+                  <Controller
+                    name="lastName"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                      required: true,
+                      minLength: 2,
+                    }}
+                    render={({ field }) => (
+                      <input 
+                        type="text" 
+                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                        id="lastName" 
+                        placeholder="Last Name" 
+                        {...field}
+                      />
+                    )}
+                  />
+                  <div className="invalid-feedback">
+                    {
+                      errors.lastName
+                      ? errors.lastName.type === 'minLength'
+                      ? 'Last Name length is more than 1'
+                      : 'Last Name is required'
+                      : ''
+                    }
+                  </div>
+                  <label htmlFor="lastName">Last Name</label>
+                </div>
+                <div className="form-floating">
+                  <input
+                    type="email"
+                    {...register('email', {
+                      required: 'Please enter email',
+                      pattern: {
+                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                        message: 'Please enter valid email',
+                      },
+                    })}
+                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    id="email"
+                    placeholder="Email"
+                  />
+                  {errors.email && (
+                    <div className="invalid-feedback">
+                      {errors.email.message}
+                    </div>
+                  )}
+                  <label htmlFor="name">Email</label>
                 </div>
                 <div className="form-floating">
                   <Controller
@@ -233,5 +291,3 @@ const Shipping = () => {
 }
 
 export default Shipping;
-
-Shipping.auth = true;

@@ -8,6 +8,8 @@ import { Store } from '../../utils/Store';
 import Rating from '../../components/Rating';
 import axios from 'axios';
 import { ToastContainer, toast, Slide } from "react-toastify";
+import parse from 'html-react-parser';
+
 
 const ProductDetails = (props) => {
   const { state, dispatch } = useContext(Store);
@@ -117,14 +119,48 @@ const ProductDetails = (props) => {
 
               <div className="col-lg-5 col-md-12 col-sm-12">
                 <div className="row">
-                  <div className="col-lg-12 col-md-6 col-sm-12 text-white">
+                  <div className="col-lg-12 col-md-12 col-sm-12 text-white">
                     <h2>{product.name} {product.color}</h2>
-                    <h5>Type</h5>
-                    <p>{product.leafType}</p>
-                    <h5>Description</h5>
-                    <p>{product.description}</p>
-                    <h5>Size</h5>
-                    <p>{product.size}</p>
+
+                    <h5>Size: {product.size} </h5>
+                    <div className="accordion my-3" id="accordionExample">
+                      <div className="accordion-item">
+                        <h2 className="accordion-header" id="headingOne">
+                          <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Product Details
+                          </button>
+                        </h2>
+                        <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                          <div className="accordion-body">
+                            {product.description}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="accordion-item">
+                        <h2 className="accordion-header" id="headingTwo">
+                          <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Ingredients
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                          <div className="accordion-body">
+                            {product.ingredients}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="accordion-item">
+                        <h2 className="accordion-header" id="headingThree">
+                          <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Directions for Usage
+                          </button>
+                        </h2>
+                        <div id="collapseThree" className="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                          <div className="accordion-body">
+                             {parse(product.usage)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <h5>Disclaimer</h5>
                     <p>
                       Our products are the highest quality (GAP/GMP). The information given is for 
@@ -137,7 +173,12 @@ const ProductDetails = (props) => {
                           </div>
                           <div className="col-6 text-end">
                             <h5>${product.price}</h5>
-                            <div className="text-mute">{product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</div>
+                            <div className={`stock-count fw-bold ${product.countInStock > 0 ? 'text-primary' : 'text-danger'}`}>
+                              <span>
+                                <div className={`${product.countInStock > 0 ? 'pulsating-circle-green' : 'pulsating-circle-red'}`}></div>
+                                {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <div className="d-grid gap-2">

@@ -10,6 +10,8 @@ const productSchema = new mongoose.Schema(
         imageThree: {  type: String, required: true },
         imageFour: {  type: String, required: true },
         color: { type: String, required: false },
+        ingredients: { type: String, required: false },
+        usage: { type: String, required: false },
         region: { type: String, required: true },
         leafName: { type: String, required: false },
         leafType: { type: String, required: false },
@@ -19,7 +21,8 @@ const productSchema = new mongoose.Schema(
         numReviews: { type: Number, required: true, default: 0 },
         countInStock: { type: Number, required: true, default: 0 },
         description: { type: String, required: true },
-        featured: { type: String, required: true, default: false },
+        featured: { type: Boolean, required: true, default: false },
+        posted: { type: Boolean, required: true, default: false }
     }, 
     {
         timestamps: true

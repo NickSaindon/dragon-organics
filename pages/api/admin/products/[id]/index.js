@@ -43,11 +43,15 @@ const putHandler = async (req, res) => {
     product.imageTwo = req.body.imageTwo;
     product.imageThree = req.body.imageThree;
     product.imageFour = req.body.imageFour;
+    product.usage = req.body.usage;
+    product.ingredients = req.body.ingredients;
     product.leafName = req.body.leafName;
     product.leafType = req.body.leafType;
     product.countInStock = req.body.countInStock;
     product.region = req.body.region;
     product.description = req.body.description;
+    product.featured = req.body.featured;
+    product.posted = req.body.posted;
     await product.save();
     await db.disconnect();
     res.send({ message: 'Product updated successfully' });

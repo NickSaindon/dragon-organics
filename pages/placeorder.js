@@ -5,18 +5,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { getError } from '../utils/error';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import CheckoutWizard from '../components/CheckoutWizard';
 import moment from 'moment';
+import NumberFormat from "react-number-format";
 
 const PlaceOrder = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems, shippingAddress } = cart;
+  const [isAddress, setIsAddress] = useState(true)
 
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
@@ -33,6 +35,7 @@ const PlaceOrder = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -131,12 +134,15 @@ const PlaceOrder = () => {
               </div>
             ) : (
               <div className="row">
+
+
                 <div className="col-lg-8">
                   <div className="card shipping-card">
                     <div className="card-body">
                       <h2 className="card-title">Shipping Address</h2>
                       <p>
-                        <b>{shippingAddress.fullName}</b><br/>
+                        <b>{shippingAddress.firstName} {shippingAddress.lastName}</b><br/>
+                        <b>{shippingAddress.email}</b><br/>
                         {shippingAddress.address}<br/>
                         {shippingAddress.city},{' '}
                         {shippingAddress.state},{' '}
@@ -184,64 +190,301 @@ const PlaceOrder = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-4">
-              <div className="card summary-card">
-                <div className="card-body">
-                    <h2 className="card-title">Order Summary</h2>
-                    <div className="summary d-flex justify-content-between">
+
+
+
+              <div className="col-lg-4">
+              <div className="row">
+                <div className="col">
+                  <div className="card summary-card">
+                    <div className="card-body">
+                      <h2 className="card-title">Order Summary</h2>
+                      <div className="summary d-flex justify-content-between">
                         <h6>Items:</h6>
                         <span className="text-white">${discount ? itemsDiscountTotal.toFixed(2) : itemsPrice.toFixed(2)}</span>
-                    </div>
-                    <div className=" summary d-flex justify-content-between">
+                      </div>
+                      <div className=" summary d-flex justify-content-between">
                         <h6>Tax:</h6>
                         <span className="text-white">${taxPrice.toFixed(2)}</span>
-                    </div>
-                    <div className=" summary d-flex justify-content-between">
+                      </div>
+                      <div className=" summary d-flex justify-content-between">
                         <h6>Shipping:</h6>
                         <span className="text-white">${shippingPrice.toFixed(2)}</span>
-                    </div>
-                    <div className="summary-total d-flex justify-content-between">
+                      </div>
+                      <div className="summary-total d-flex justify-content-between">
                         <h5>Total:</h5>
                         <span>${discount ? totalPriceWithDiscount.toFixed(2) : totalPrice.toFixed(2)}</span>
-                    </div>
-                    <button
-                    disabled={loading}
-                    onClick={placeOrderHandler}
-                    className="w-100 btn btn-lg btn-outline-primary light"
-                  >
-                    {loading ? 'Loading...' : 'Place Order'}
-                  </button>
-                  <form 
-                      onSubmit={handleSubmit(submitHandler)}
-                      className="col-lg-6 col-md-12 col-sm-12 discount-form w-100 justify-content-center" 
-                      noValidate
-                    >
-                      <div className="form-floating">
-                        <input
-                          type="text"
-                          className="form-control my-3"
-                          id="discountCode"
-                          placeholder='Discount Code'
-                          autoFocus
-                          {...register('discountCode', {
-                            required: 'Please enter discount code',
-                          })}
-                        />
-                        {errors.discountCode && (
-                          <div className="invalid-feedback">
-                            {errors.discountCode.message}
-                          </div>
-                        )}
-                        <label htmlFor="discountCode">Discount Code</label>
                       </div>
-                      <button className="w-100 btn btn-lg btn-primary" type="submit">
-                        Submit Discount
-                      </button>
-                  </form>
+                      <form 
+                        onSubmit={handleSubmit(submitHandler)}
+                        className="col-lg-6 col-md-12 col-sm-12 discount-form w-100 justify-content-center" 
+                        noValidate
+                      >
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control my-3"
+                            id="discountCode"
+                            placeholder='Discount Code'
+                            autoFocus
+                            {...register('discountCode', {
+                              required: 'Please enter discount code',
+                            })}
+                          />
+                          {errors.discountCode && (
+                            <div className="invalid-feedback">
+                              {errors.discountCode.message}
+                            </div>
+                          )}
+                          <label htmlFor="discountCode">Discount Code</label>
+                        </div>
+                        <button className="w-100 btn btn-lg btn-primary" type="submit">
+                          Submit Discount
+                        </button>
+                    </form>
+                  </div>
+                </div>
                 </div>
               </div>
-            </div>
+
+              <div className="row">
+                <div className="col">
+                <div className="card summary-card">
+                  <div className="card-body">
+                    <h2 className="card-title">Credit Card</h2>
+                    <div className="d-flex justify-content-between">
+                      <Image src="/images/icons/visa_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/mastercard_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/discover_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/amex_card_icon.png" className="mt-2" width={48} height={30} alt="..." />
+                    </div>
+                    <form onSubmit={handleSubmit(submitHandler)} className="col-lg-12 col-md-12 col-sm-12 form-credit-card justify-content-center">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="ccnumber"
+                        placeholder="Card Number" 
+                        {...register('ccnumber', {
+                          required: 'Please enter card number',
+                        })}
+                      />
+                      {errors.ccnumber && (
+                        <div className="invalid-feedback">
+                          {errors.ccnumber.message}
+                        </div>
+                      )}
+                      <label htmlFor="ccnumber">Card Number</label>
+                    </div>
+                    <div className="form-floating">
+                                <Controller 
+                                  name="ccexp"
+                                  control={control}
+                                  rules={{
+                                    required: true,
+                                    pattern: /\d{2}\/\d{2}/
+                                  }}
+                                  render={({ field: {onChange, ccexp, value} }) => (
+                                    <NumberFormat
+                                      format="##/##"
+                                      name={ccexp}
+                                      className={`form-control ${errors.ccexp ? 'is-invalid' : ''}`}
+                                      value={value}
+                                      id="ccexp" 
+                                      placeholder="Expn Date MMYY" 
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                                <div className="invalid-feedback">
+                                    {errors.ccexp
+                                          ? errors.ccexp.type === 'pattern'
+                                            ? 'Expiration date is not completed'
+                                            : 'Expiration date is required'
+                                          : ''
+                                    }
+                                </div>
+                                <label htmlFor="floatingInput">Expn Date MMYY</label>
+                              </div>
+                              <div className="form-floating">
+                                <Controller 
+                                  name="cvv"
+                                  control={control}
+                                  rules={{
+                                    required: true,
+                                    pattern: /\d{3}/
+                                    ,
+                                  }}
+                                  render={({ field: {onChange, cvv, value} }) => (
+                                    <NumberFormat
+                                      format="###"
+                                      name={cvv}
+                                      className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
+                                      value={value}
+                                      id="cvv" 
+                                      placeholder="CVV" 
+                                      onChange={onChange}
+                                    />
+                                  )}
+                                />
+                                <div className="invalid-feedback">
+                                    {errors.cvv
+                                          ? errors.cvv.type === 'pattern'
+                                            ? 'cvv is not completed'
+                                            : 'cvv is required'
+                                          : ''
+                                    }
+                                </div>
+                                <label htmlFor="cvv">CVV</label>
+                              </div>
+                              <div className="form-floating">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="first_name"
+                                  placeholder="First Name" 
+                                  {...register('first_name', {
+                                    required: 'Please enter cardholder first name',
+                                  })}
+                                />
+                                {errors.first_name && (
+                                  <div className="invalid-feedback">
+                                    {errors.first_name.message}
+                                  </div>
+                                )}
+                                <label htmlFor="first_name">First Name</label>
+                              </div>
+                              <div className="form-floating">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="last_name"
+                                  placeholder="Last Name" 
+                                  {...register('last_name', {
+                                    required: 'Please enter cardholder last name',
+                                  })}
+                                />
+                                {errors.last_name && (
+                                  <div className="invalid-feedback">
+                                    {errors.last_name.message}
+                                  </div>
+                                )}
+                                <label htmlFor="last_name">Last Name</label>
+                              </div>
+
+
+                              <div className="row pt-3">
+                                <div className="col">
+                                <div className="form-check">
+                                  <input 
+                                    className="form-check-input" 
+                                    type="checkbox" 
+                                    name="isBillingAddress"
+                                    onChange={(e) => setIsAddress(e.target.checked)}
+                                    checked={isAddress}
+                                    id="isBillingAddress"
+                                  />
+                                  <label className="form-check-label" htmlFor="gridCheck">
+                                    Use shipping address as billing address
+                                  </label>
+                                </div> 
+                                </div>
+                                {!isAddress && (
+                                  <div className="mt-4">
+                                    <h5>Billing Address</h5>
+                                    <div className="row">
+                                      <div className="col">
+                                      <div className="form-floating">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="address1"
+                                      placeholder="Address" 
+                                      {...register('address1', {
+                                        required: 'Please enter cardholder last name',
+                                      })}
+                                    />
+                                    {errors.address1 && (
+                                      <div className="invalid-feedback">
+                                        {errors.address1.message}
+                                      </div>
+                                    )}
+                                    <label htmlFor="address1">Address</label>
+                                  </div>
+
+                                  <div className="form-floating">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="city"
+                                      placeholder="City" 
+                                      {...register('city', {
+                                        required: 'Please enter city',
+                                      })}
+                                    />
+                                    {errors.city && (
+                                      <div className="invalid-feedback">
+                                        {errors.city.message}
+                                      </div>
+                                    )}
+                                    <label htmlFor="city">City</label>
+                                  </div>
+
+
+                                  <div className="form-floating">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="state"
+                                      placeholder="State" 
+                                      {...register('state', {
+                                        required: 'Please enter a state',
+                                      })}
+                                    />
+                                    {errors.state && (
+                                      <div className="invalid-feedback">
+                                        {errors.state.message}
+                                      </div>
+                                    )}
+                                    <label htmlFor="state">State</label>
+                                  </div>
+
+                                  <div className="form-floating">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="zip"
+                                      placeholder="Zip" 
+                                      {...register('zip', {
+                                        required: 'Please enter cvv number',
+                                      })}
+                                    />
+                                    {errors.zip && (
+                                      <div className="invalid-feedback">
+                                        {errors.zip.message}
+                                      </div>
+                                    )}
+                                    <label htmlFor="zip">Zip</label>
+                                  </div>
+
+
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+
+                    </form>
+                  </div>
+                </div>
+                </div>
               </div>
+
+
+
+            </div>
+            </div>
             )}
         </div>
       </div>
@@ -249,5 +492,4 @@ const PlaceOrder = () => {
   );
 };
 
-PlaceOrder.auth = true;
 export default PlaceOrder;

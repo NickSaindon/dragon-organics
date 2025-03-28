@@ -3,10 +3,71 @@ import Layout from '../../../components/Layout';
 import SideNav from '../../../components/SideNav';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Image from "next/image";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { getError } from '../../../utils/error';
+import dynamic from 'next/dynamic';
+
+const QuillNoSSRWrapper = dynamic(
+  async () => {
+    const { default: RQ } = await import('react-quill');
+    // eslint-disable-next-line react/display-name
+    return ({ forwardedRef, ...props }) => <RQ ref={forwardedRef} {...props} />;
+  },
+  { ssr: false }
+);
+
+// Quill Modules
+const modules = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote', 'code-block'],
+  
+    [{ 'header': 1 }, { 'header': 2 }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+  
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+    [{ 'color': [] }, { 'background': [] }],
+    [{ 'font': [] }],
+    [{ 'align': [] }],
+    ['link', 'image', 'video'],
+    ['clean'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: true,
+  }
+};
+  
+// Quill format
+const formats = [
+  'bold', 
+  'italic', 
+  'underline', 
+  'strike',
+  'blockquote',
+  'background',
+  'code-block',
+  'header',
+  'list',
+  'bullet',
+  'script',
+  'indent',
+  'direction',
+  'size',
+  'color',
+  'font',
+  'align',
+  'link',
+  'image',
+  'video',
+];
 
 function reducer(state, action) {
   switch (action.type) {
@@ -54,6 +115,8 @@ const AdminProductEdit = ({ params }) => {
     setValue,
   } = useForm();
 
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isPosted, setIsPosted] = useState(false);
   const [isImageOne, setIsImageOne] = useState('');
   const [isImageTwo, setIsImageTwo] = useState('');
   const [isImageThree, setIsImageThree] = useState('');
@@ -75,11 +138,15 @@ const AdminProductEdit = ({ params }) => {
         setValue('imageThree', data.imageThree);
         setValue('imageFour', data.imageFour);
         setValue('size', data.size);
+        setValue('usage', data.usage);
+        setValue('ingredients', data.ingredients);
         setValue('countInStock', data.countInStock);
         setValue('region', data.region);
         setValue('leafName', data.leafName);
         setValue('leafType', data.leafType);
         setValue('description', data.description);
+        setIsFeatured(data.featured);
+        setIsPosted(data.posted);
         setIsImageOne(data.imageOne);
         setIsImageTwo(data.imageTwo);
         setIsImageThree(data.imageThree);
@@ -217,11 +284,15 @@ const AdminProductEdit = ({ params }) => {
     imageTwo,
     imageThree,
     imageFour,
+    usage,
+    ingredients,
     countInStock,
     region,
     leafName,
     leafType,
-    description
+    description,
+    featured = isFeatured,
+    posted = isPosted
   }) => {
     try {
       dispatch({ type: 'UPDATE_REQUEST' });
@@ -236,11 +307,15 @@ const AdminProductEdit = ({ params }) => {
         imageTwo,
         imageThree,
         imageFour,
+        usage,
+        ingredients,
         countInStock,
         region,
         leafName,
         leafType,
-        description
+        description,
+        featured,
+        posted
       });
       dispatch({ type: 'UPDATE_SUCCESS' });
       toast.success('Product updated successfully', {
@@ -360,6 +435,46 @@ const AdminProductEdit = ({ params }) => {
                         )}
                         <label htmlFor="size">Size</label>
                       </div>
+
+                      <div className="form-floating">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="ingredients"
+                          placeholder="Ingredients"
+                          {...register('ingredients', {
+                            required: 'Please enter ingredients',
+                          })}
+                        />
+                        {errors.ingredients && (
+                          <div className="invalid-feedback">{errors.ingredients.message}</div>
+                        )}
+                        <label htmlFor="ingredients">Ingredients</label>
+                      </div>
+
+                      <div className="form-floating">
+                        <Controller
+                          name="usage"
+                          control={control}
+                          defaultValue=""
+                          rules={{
+                            required: true,
+                          }}
+                          render={({ field }) => (
+                          <QuillNoSSRWrapper
+                            modules={modules}
+                            formats={formats}
+                            theme="snow"
+                            {...field}
+                          />
+                        )}
+                      />
+                      <div className="invalid-feedback">
+                        { errors.article ? 'Article is required' : '' }
+                      </div>
+                    </div>
+
+
                       <div className="form-floating">
                         <input
                           type="text"
@@ -551,6 +666,38 @@ const AdminProductEdit = ({ params }) => {
                           </div>
                         )}
                         <label htmlFor="leafType">Leaf Type</label>
+                      </div>
+                      <div className="row py-3 justify-content-between">
+                        <div className="col-4">
+                          <div className="form-check my-3">
+                            <input 
+                              className="form-check-input" 
+                              type="checkbox" 
+                              onChange={(e) => {setIsFeatured(e.target.checked)}}
+                              checked={isFeatured}
+                              name="featured"
+                              id="featured"
+                            />
+                            <label className="form-check-label" htmlFor="featured">
+                              Featured
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <div className="form-check my-3 float-end">
+                            <input 
+                              className="form-check-input" 
+                              type="checkbox" 
+                              onChange={(e) => {setIsPosted(e.target.checked)}}
+                              checked={isPosted}
+                              name="posted"
+                              id="posted"
+                            />
+                            <label className="form-check-label" htmlFor="posted">
+                              Posted
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       <button className="w-100 btn btn-lg btn-primary" type="submit">
                         {loadingUpdate ? (
