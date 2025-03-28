@@ -204,37 +204,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* <div className="home-blue-lotus-category py-5 bg-black">
-          <div className="container-xl">
-            <div className="row g-4 py-5">
-              <div className="col-sm-12 col-md-12 col-lg-6 home-blue-lotus-text text-white">
-                <h2 className="fs-2 text-center">Blue Lotus</h2>
-                <p>
-                  Embark on a journey of sensory delight with Dragon Organics Blue Lotus, a revered botanical treasure sourced from the lush landscapes of Thailand. Cultivated 
-                  amidst the fertile soils and serene waters of this Southeast Asian kingdom, Dragon Organics brings you a product that transcends mere botanical allure—it 
-                  encapsulates a rich tapestry of cultural heritage and spiritual significance.
-                  <br /><br />
-                  Harvested with meticulous care from the heart of Thailand, Dragon Organics Blue Lotus embodies a tradition deeply rooted in the country's history. This exquisite flower, known 
-                  for its association with tranquility and spiritual awakening, has been carefully nurtured to preserve its pristine qualities. Dragon Organics is committed to delivering a 
-                  product that reflects the authenticity of its Thai origins, ensuring that each petal carries the essence of the region's cultural and botanical wealth.
-                  <br /><br />
-                  As you indulge in Dragon Organics Blue Lotus, you are not merely savoring a botanical infusion; you are partaking in an age-old tradition that spans civilizations. The 
-                  delicate, aromatic notes of the Blue Lotus unfold in each sip, offering a moment of respite and connection to the serene landscapes from which it originates. Immerse 
-                  yourself in the legacy of Dragon Organics Blue Lotus, and let this exquisite elixir transport you to the tranquil realms of Thailand, where nature, culture, and 
-                  spirituality harmoniously converge.
-                </p>
-                  <div className="w-100 py-4 text-center">
-                    <Link href="/category/blue-lotus">
-                      <button type="button" className="btn btn-3 btn-outline-primary btn-lg light">Shop Now</button>
-                    </Link>
-                  </div>              
-                </div>
-              <div className="col-sm-12 col-md-12 col-lg-6">
-                <Image src="/images/blue-lotus-home.jpg" className="w-100 h-100" width={600} height={600} alt="Computer and mobile devices"/>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className="parallax-container">
           <div className="parallax-wrapper">
             <h1>Best Quality Kratom<br></br>You Can Find</h1>
