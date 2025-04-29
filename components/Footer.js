@@ -11,8 +11,11 @@ const Footer = () => {
               <Image src="/images/do-logo-title-under.png" width={125} height={174} alt="Computer and mobile devices"/>
             </div>
             <p>
-              Must be of legal age to purchase these products. The manufacturer and distributors of these products assume 
-              no liability for the misuse or misrepresentation of these products. Keep out of reach of children and pets. Avoid 
+              Must be of legal age of 21 to purchase these products. The manufacturer and distributors of these products assume 
+              no liability for the misuse or misrepresentation of these products.  These statements have not been 
+              evaluted by the U.S. Food and Drug Administration.  This product is not intended to diagnose, treat, cure or 
+              prevent any disease.  The U.S. Food and Drug Administration has not yet approved this product for 
+              human consumption. Keep out of reach of children and pets. Avoid 
               contact with eyes. We do not ship to the following US states, counties, and cities where kratom is banned: Alabama, 
               Arkansas, Indiana, Rhode Island, Vermont, Wisconsin, Sarasota County (FL), Union County (NC), Denver (CO), and San Diego (CA).
             </p>
@@ -60,6 +63,11 @@ const Footer = () => {
                 <li>
                   <Link href="/terms-of-service">
                     Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/labs">
+                    Lab Test
                   </Link>
                 </li>
               </ul> 
@@ -112,6 +120,12 @@ const Footer = () => {
                   <p>Email Us At:</p>
                   <p className="text-primary">dragonorganics.tm@gmail.com</p>
                 </div>
+                <div className="d-flex justify-content-between py-3">
+                      <Image src="/images/icons/visa_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/mastercard_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/discover_icon.png" width={45} height={45} alt="..." />
+                      <Image src="/images/icons/amex_card_icon.png" className="mt-2" width={48} height={30} alt="..." />
+                    </div>
               </div>
             </div>
           </div>

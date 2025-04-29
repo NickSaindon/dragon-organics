@@ -1,12 +1,12 @@
-import { useRouter } from 'next/router';
-import Layout from '../components/Layout';
-import { useState, useContext, useEffect } from 'react';
+import { useRouter } from "next/router";
+import Layout from "../components/Layout";
+import { useState, useContext, useEffect } from "react";
 import StateOptions from "../utils/stateOptions";
-import { Store } from '../utils/Store';
-import Cookies from 'js-cookie';
-import { Controller, useForm } from 'react-hook-form';
-import CheckoutWizard from '@/components/CheckoutWizard';
-import Link from 'next/link';
+import { Store } from "../utils/Store";
+import Cookies from "js-cookie";
+import { Controller, useForm } from "react-hook-form";
+import CheckoutWizard from "@/components/CheckoutWizard";
+import Link from "next/link";
 
 const Shipping = () => {
   const {
@@ -24,22 +24,30 @@ const Shipping = () => {
   const { shippingAddress } = cart;
 
   useEffect(() => {
-    setValue('firstName', shippingAddress.firstName);
-    setValue('lastName', shippingAddress.lastName);
-    setValue('email', shippingAddress.email);
-    setValue('address', shippingAddress.address);
-    setValue('city', shippingAddress.city);
-    setValue('state', shippingAddress.state);
-    setValue('zipCode', shippingAddress.zipCode);
+    setValue("firstName", shippingAddress.firstName);
+    setValue("lastName", shippingAddress.lastName);
+    setValue("email", shippingAddress.email);
+    setValue("address", shippingAddress.address);
+    setValue("city", shippingAddress.city);
+    setValue("state", shippingAddress.state);
+    setValue("zipCode", shippingAddress.zipCode);
   }, [setValue, shippingAddress]);
 
-  const submitHandler = ({ firstName, lastName, email, address, city, state, zipCode }) => {
+  const submitHandler = ({
+    firstName,
+    lastName,
+    email,
+    address,
+    city,
+    state,
+    zipCode,
+  }) => {
     dispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
+      type: "SAVE_SHIPPING_ADDRESS",
       payload: { firstName, lastName, email, address, city, state, zipCode },
     });
     Cookies.set(
-      'cart', 
+      "cart",
       JSON.stringify({
         ...cart,
         shippingAddress: {
@@ -49,12 +57,12 @@ const Shipping = () => {
           address,
           city,
           state,
-          zipCode
-        }
+          zipCode,
+        },
       })
     );
 
-    router.push('/placeorder');
+    router.push("/placeorder");
   };
 
   return (
@@ -65,18 +73,32 @@ const Shipping = () => {
           <div className="row">
             <div className="col-lg-6 offset-lg-3 col-md-10 offset-md-1 text-white">
               <h1> Shipping Information</h1>
-              <p>* We do not ship to the following US states, counties, and cities where kratom is banned: Alabama, 
-                 Arkansas, Indiana, Rhode Island, Vermont, Wisconsin, Sarasota County (FL), Union County (NC), Denver (CO), and San Diego (CA).
-                 If your State is on this list you will not be able to select your State from the list of States in our form.
+              <p>
+                * We do not ship to the following US states, counties, and
+                cities where kratom is banned: Alabama, Arkansas, Indiana, Rhode
+                Island, Vermont, Wisconsin, Sarasota County (FL), Union County
+                (NC), Denver (CO), and San Diego (CA). If your State is on this
+                list you will not be able to select your State from the list of
+                States in our form.
               </p>
             </div>
-            <h5><b className="text-white">Have an accout? <Link className="text-primary" href="/signin">Sign in</Link></b></h5>
+            <h5>
+              <b className="text-white">
+                Have an accout?{" "}
+                <Link className="text-primary" href="/signin">
+                  Sign in
+                </Link>
+              </b>
+            </h5>
           </div>
         </div>
         <main className="form-shipping">
           <div className="container">
             <div className="row justify-content-md-center">
-              <form onSubmit={handleSubmit(submitHandler)} className="col-lg-6 col-md-12 col-sm-12">
+              <form
+                onSubmit={handleSubmit(submitHandler)}
+                className="col-lg-6 col-md-12 col-sm-12"
+              >
                 <div className="form-floating">
                   <Controller
                     name="firstName"
@@ -87,23 +109,23 @@ const Shipping = () => {
                       minLength: 2,
                     }}
                     render={({ field }) => (
-                      <input 
-                        type="text" 
-                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                        id="firstName" 
-                        placeholder="Full Name" 
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.firstName ? "is-invalid" : ""
+                        }`}
+                        id="firstName"
+                        placeholder="Full Name"
                         {...field}
                       />
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.firstName
-                      ? errors.firstName.type === 'minLength'
-                      ? 'First Name length is more than 1'
-                      : 'First Name is required'
-                      : ''
-                    }
+                    {errors.firstName
+                      ? errors.firstName.type === "minLength"
+                        ? "First Name length is more than 1"
+                        : "First Name is required"
+                      : ""}
                   </div>
                   <label htmlFor="firstName">First Name</label>
                 </div>
@@ -117,37 +139,40 @@ const Shipping = () => {
                       minLength: 2,
                     }}
                     render={({ field }) => (
-                      <input 
-                        type="text" 
-                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                        id="lastName" 
-                        placeholder="Last Name" 
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.lastName ? "is-invalid" : ""
+                        }`}
+                        id="lastName"
+                        placeholder="Last Name"
                         {...field}
                       />
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.lastName
-                      ? errors.lastName.type === 'minLength'
-                      ? 'Last Name length is more than 1'
-                      : 'Last Name is required'
-                      : ''
-                    }
+                    {errors.lastName
+                      ? errors.lastName.type === "minLength"
+                        ? "Last Name length is more than 1"
+                        : "Last Name is required"
+                      : ""}
                   </div>
                   <label htmlFor="lastName">Last Name</label>
                 </div>
                 <div className="form-floating">
                   <input
                     type="email"
-                    {...register('email', {
-                      required: 'Please enter email',
+                    {...register("email", {
+                      required: "Please enter email",
                       pattern: {
-                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                        message: 'Please enter valid email',
+                        value:
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                        message: "Please enter valid email",
                       },
                     })}
-                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    className={`form-control ${
+                      errors.email ? "is-invalid" : ""
+                    }`}
                     id="email"
                     placeholder="Email"
                   />
@@ -168,23 +193,23 @@ const Shipping = () => {
                       minLength: 2,
                     }}
                     render={({ field }) => (
-                      <input 
-                        type="text" 
-                        className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                        id="address" 
-                        placeholder="Address" 
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.address ? "is-invalid" : ""
+                        }`}
+                        id="address"
+                        placeholder="Address"
                         {...field}
                       />
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.address
-                      ? errors.address.type === 'minLength'
-                      ? 'Address length is more than 1'
-                      : 'Address is required'
-                      : ''
-                    }
+                    {errors.address
+                      ? errors.address.type === "minLength"
+                        ? "Address length is more than 1"
+                        : "Address is required"
+                      : ""}
                   </div>
                   <label htmlFor="address">Address</label>
                 </div>
@@ -198,23 +223,23 @@ const Shipping = () => {
                       minLength: 2,
                     }}
                     render={({ field }) => (
-                      <input 
-                        type="text" 
-                        className={`form-control ${errors.city ? 'is-invalid' : ''}`}
-                        id="city" 
-                        placeholder="City" 
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.city ? "is-invalid" : ""
+                        }`}
+                        id="city"
+                        placeholder="City"
                         {...field}
                       />
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.city
-                      ? errors.city.type === 'minLength'
-                      ? 'City length is more than 1'
-                      : 'City is required'
-                      : ''
-                    }
+                    {errors.city
+                      ? errors.city.type === "minLength"
+                        ? "City length is more than 1"
+                        : "City is required"
+                      : ""}
                   </div>
                   <label htmlFor="city">City</label>
                 </div>
@@ -226,26 +251,28 @@ const Shipping = () => {
                       required: true,
                     }}
                     render={({ field }) => (
-                      <select 
-                        defaultValue='DEFAULT'
-                        className={`form-select ${errors.state ? 'is-invalid' : ''}`} 
+                      <select
+                        defaultValue="DEFAULT"
+                        className={`form-select ${
+                          errors.state ? "is-invalid" : ""
+                        }`}
                         onChange={(e) => setStates(e.target.value)}
                         value={states}
                         {...field}
                       >
-                        <option disabled value="DEFAULT">Select a State</option>
+                        <option disabled value="DEFAULT">
+                          Select a State
+                        </option>
                         {stateOption.map((state) => (
-                          <option key={state.value} value={state.value}>{state.label}</option>
+                          <option key={state.value} value={state.value}>
+                            {state.label}
+                          </option>
                         ))}
                       </select>
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.state
-                      ? 'State is required'
-                      : ''
-                    }
+                    {errors.state ? "State is required" : ""}
                   </div>
                 </div>
                 <div className="form-floating">
@@ -256,29 +283,40 @@ const Shipping = () => {
                     rules={{
                       required: true,
                       minLength: 2,
+                      validate: (value) => {
+                        const blockedZipRegex =
+                          /^(34(2(23|24|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|49|51|66|72|74|75|76|77|84|85|86|87|88|89|90|91|92|93|95))|919\d{2}|920\d{2}|921\d{2}|802\d{2}|80014|80022|80033|80110|80123|80640|80642|62052|28079|28103|28104|28105|28107|28108|28110|28111|28112|28173)$/;
+
+                        return (
+                          !blockedZipRegex.test(value) ||
+                          "We do not ship to this ZIP code."
+                        );
+                      },
                     }}
                     render={({ field }) => (
-                      <input 
-                        type="text" 
-                        className={`form-control ${errors.zipCode ? 'is-invalid' : ''}`}
-                        id="zipCode" 
-                        placeholder="Zip Code" 
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.zipCode ? "is-invalid" : ""
+                        }`}
+                        id="zipCode"
+                        placeholder="Zip Code"
                         {...field}
                       />
                     )}
                   />
                   <div className="invalid-feedback">
-                    {
-                      errors.zipCode
-                        ? errors.zipCode.type === 'minLength'
-                          ? 'Zip Code length is more than 1'
-                          : 'Zip Code is required'
-                        : ''
-                    }
+                    {errors.zipCode?.message ||
+                      (errors.zipCode?.type === "minLength"
+                        ? "Zip Code length is more than 1"
+                        : "Zip Code is required")}
                   </div>
                   <label htmlFor="address">Zip Code</label>
                 </div>
-                <button className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 me-sm-3" type="submit">
+                <button
+                  className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 me-sm-3"
+                  type="submit"
+                >
                   Continue
                 </button>
               </form>
@@ -287,7 +325,7 @@ const Shipping = () => {
         </main>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
 export default Shipping;

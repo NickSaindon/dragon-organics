@@ -2,20 +2,12 @@
 const StateOptions = {
     states: [
         {
-          label: "Alabama",
-          value: "AL",
-        },
-        {
           label: "Alaska",
           value: "AK",
         },
         {
           label: "Arizona",
           value: "AZ",
-        },
-        {
-          label: "Arkansas",
-          value: "AR",
         },
         {
           label: "California",
@@ -32,10 +24,6 @@ const StateOptions = {
         {
           label: "Delaware",
           value: "DE",
-        },
-        {
-          label: "District of Columbia",
-          value: "DC",
         },
         {
           label: "Florida",
@@ -158,10 +146,6 @@ const StateOptions = {
           value: "PA",
         },
         {
-          label: "Rhode Island",
-          value: "RI",
-        },
-        {
           label: "South Carolina",
           value: "SC",
         },
@@ -182,10 +166,6 @@ const StateOptions = {
           value: "UT",
         },
         {
-          label: "Vermont",
-          value: "VT",
-        },
-        {
           label: "Virginia",
           value: "VA",
         },
@@ -196,11 +176,7 @@ const StateOptions = {
         {
           label: "West Virginia",
           value: "WV",
-        },
-        {
-          label: "Wisconsin",
-          value: "WI",
-        },        
+        },      
         {
           label: "Wyoming",
           value: "WY",
