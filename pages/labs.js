@@ -60,54 +60,6 @@ const Labs = () => {
             <Col md={4} className="mb-4">
               <Card
                 onClick={() =>
-                  handleOpen("/images/pdf/lab-test-01-23-2025-red.jpg")
-                }
-                style={{ cursor: "pointer" }}
-              >
-                <Card.Img
-                  variant="top"
-                  src="/images/pdf/lab-test-01-23-2025-red.jpg"
-                />
-                <Card.Body>
-                  <Card.Text>Red Vien 01/23/2025</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card
-                onClick={() =>
-                  handleOpen("/images/pdf/lab-test-01-23-2025-green.jpg")
-                }
-                style={{ cursor: "pointer" }}
-              >
-                <Card.Img
-                  variant="top"
-                  src="/images/pdf/lab-test-01-23-2025-green.jpg"
-                />
-                <Card.Body>
-                  <Card.Text>Green Vien 01/23/2025</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card
-                onClick={() =>
-                  handleOpen("/images/pdf/lab-test-01-23-2025-white.jpg")
-                }
-                style={{ cursor: "pointer" }}
-              >
-                <Card.Img
-                  variant="top"
-                  src="/images/pdf/lab-test-01-23-2025-white.jpg"
-                />
-                <Card.Body>
-                  <Card.Text>White Vien 01/23/2025</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card
-                onClick={() =>
                   handleOpen("/images/pdf/lab-test-01-09-2025-white.jpg")
                 }
                 style={{ cursor: "pointer" }}
@@ -118,38 +70,6 @@ const Labs = () => {
                 />
                 <Card.Body>
                   <Card.Text>White Vien 01/23/2025</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card
-                onClick={() =>
-                  handleOpen("/images/pdf/lab-test-12-09-2024-red.jpg")
-                }
-                style={{ cursor: "pointer" }}
-              >
-                <Card.Img
-                  variant="top"
-                  src="/images/pdf/lab-test-12-09-2024-red.jpg"
-                />
-                <Card.Body>
-                  <Card.Text>Red Vien 12/09/2024</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md={4} className="mb-4">
-              <Card
-                onClick={() =>
-                  handleOpen("/images/pdf/lab-test-12-09-2024-white.jpg")
-                }
-                style={{ cursor: "pointer" }}
-              >
-                <Card.Img
-                  variant="top"
-                  src="/images/pdf/lab-test-12-09-2024-white.jpg"
-                />
-                <Card.Body>
-                  <Card.Text>White Vien 12/09/2024</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
