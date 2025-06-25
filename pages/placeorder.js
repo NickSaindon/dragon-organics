@@ -12,6 +12,8 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import CheckoutWizard from "../components/CheckoutWizard";
 import moment from "moment";
 import NumberFormat from "react-number-format";
+import OrderCard from "@/components/OrderCard";
+import ShippingCard from "@/components/ShippingCard";
 
 const PlaceOrder = () => {
   const router = useRouter();
@@ -148,73 +150,8 @@ const PlaceOrder = () => {
           ) : (
             <div className="row">
               <div className="col-lg-8">
-                <div className="card shipping-card">
-                  <div className="card-body">
-                    <h2 className="card-title">Shipping Address</h2>
-                    <p>
-                      <b>
-                        {shippingAddress.firstName} {shippingAddress.lastName}
-                      </b>
-                      <br />
-                      <b>{shippingAddress.email}</b>
-                      <br />
-                      {shippingAddress.address}
-                      <br />
-                      {shippingAddress.city}, {shippingAddress.state},{" "}
-                      {shippingAddress.zipCode}
-                    </p>
-                    <Link href="/shipping">
-                      <button type="button" className="btn btn-primary">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="card order-card">
-                  <div className="card-body">
-                    <h2 className="card-title">Order Items</h2>
-                    <table className="table text-white">
-                      <thead>
-                        <tr>
-                          <th scope="col">Image</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Size</th>
-                          <th scope="col">Quantity</th>
-                          <th scope="col">Price</th>
-                          <th scope="col">Subtotal</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {cartItems.map((item) => (
-                          <tr key={item._id}>
-                            <td>
-                              <Link href={`/product/${item.slug}`} passHref>
-                                <Image
-                                  src={item.imageOne}
-                                  width={80}
-                                  height={60}
-                                  alt="..."
-                                />
-                              </Link>
-                            </td>
-                            <td className="align-middle">
-                              {item.name} {item.color}
-                            </td>
-                            <td className="align-middle">{item.size}</td>
-                            <td className="align-middle">{item.quantity}</td>
-                            <td className="align-middle">
-                              ${item.price.toFixed(2)}
-                            </td>
-                            <td className="align-middle">
-                              ${item.quantity * item.price}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <ShippingCard shippingAddress={shippingAddress} />
+                <OrderCard cartItems={cartItems} />
               </div>
 
               <div className="col-lg-4">
@@ -320,10 +257,7 @@ const PlaceOrder = () => {
                             alt="..."
                           />
                         </div>
-                        <form
-                          onSubmit={handleSubmit(submitHandler)}
-                          className="col-lg-12 col-md-12 col-sm-12 form-credit-card justify-content-center"
-                        >
+                        <form className="col-lg-12 col-md-12 col-sm-12 form-credit-card justify-content-center">
                           <div className="form-floating">
                             <input
                               type="text"
