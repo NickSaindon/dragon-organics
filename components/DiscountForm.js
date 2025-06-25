@@ -1,69 +1,62 @@
-import { useContext, useState, useEffect } from "react";
-import Layout from "../components/Layout";
-import { Store } from "../utils/Store";
-import Link from "next/link";
-import Image from "next/image";
+// import { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useForm, Controller } from "react-hook-form";
-import { getError } from "../utils/error";
+import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import moment from "moment";
+import { toast } from "react-toastify";
+import { set } from "mongoose";
 
-const DiscountForm = () => {
-  const [discounts, setDiscounts] = useState(null);
-
+const DiscountForm = ({ onDiscountApplied }) => {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
 
-  useEffect(() => {
-    fetch("/api/discounts")
-      .then((res) => res.json())
-      .then((discounts) => {
-        setDiscounts(discounts);
-        setLoading(false);
-      });
-  }, []);
+  const submitHandler = async (data, setDiscountCode) => {
+    try {
+      const { data: discounts } = await axios.get("api/discounts");
 
-  const submitHandler = async (data) => {
-    let discountObj = discounts.find(
-      (o) => o.discountCode === data.discountCode
-    );
-    let expiredDate = moment(new Date(discountObj.expires)).format(
-      "MM/DD/YYYY"
-    );
-    let todaysDate = moment(new Date()).format("MM/DD/YYYY");
-    if (
-      discountObj.isValid === true &&
-      discountObj.numOfDiscounts > 0 &&
-      expiredDate > todaysDate
-    ) {
-      const { data } = await axios.put(`/api/discounts/${discountObj._id}`, {
-        campaignName: discountObj.campaignName,
-        discountReason: discountObj.discountReason,
-        discountCode: discountObj.discountCode,
-        discountAmount: discountObj.discountAmount,
-        numOfDiscounts: discountObj.numOfDiscounts - 1,
-        expires: discountObj.expires,
-        isValid: discountObj.isValid,
-      });
-      Cookies.set("discount", JSON.stringify(discountObj));
-      reset();
-      toast.success(
-        "Discount code has been applied. Please place your order now.",
-        {
-          theme: "colored",
-        }
+      const discountObj = discounts.find(
+        (o) => o.discountCode === data.discountCode
       );
-    } else {
-      toast.error("Invalid discount code or campign is over", {
-        theme: "colored",
-      });
+
+      if (!discountObj) {
+        toast.error("Invalid discount code", { theme: "colored" });
+        return;
+      }
+
+      const expiredDate = moment(new Date(discountObj.expires)).format(
+        "MM/DD/YYYY"
+      );
+      const todaysDate = moment(new Date()).format("MM/DD/YYYY");
+
+      if (
+        discountObj.isValid &&
+        discountObj.numOfDiscounts > 0 &&
+        expiredDate > todaysDate
+      ) {
+        await axios.put(`/api/discounts/${discountObj._id}`, {
+          ...discountObj,
+          numOfDiscounts: discountObj.numOfDiscounts - 1,
+        });
+        Cookies.set("discount", JSON.stringify(discountObj));
+        reset();
+        toast.success(
+          "Discount code has been applied. Please place your order now.",
+          {
+            theme: "colored",
+          }
+        );
+        onDiscountApplied(discountObj);
+      } else {
+        toast.error("Invalid discount code or campign is over", {
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      toast.error("Error applying discount code", { theme: "colored" });
     }
   };
 
@@ -93,7 +86,11 @@ const DiscountForm = () => {
         )}
         <label htmlFor="discountCode">Discount Code</label>
       </div>
-      <button className="w-100 btn btn-lg btn-primary" type="submit">
+      <button
+        className="w-100 btn btn-lg btn-primary"
+        type="submit"
+        disabled={!!discount}
+      >
         Submit Discount
       </button>
     </form>
