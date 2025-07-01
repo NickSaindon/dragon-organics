@@ -84,6 +84,30 @@ const PlaceOrder = () => {
             theme: "colored",
           }
         );
+
+        const orderData = {
+          orderItems: cartItems,
+          shippingAddress,
+          itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
+          shippingPrice,
+          taxPrice,
+          totalPrice: discount ? totalPriceWithDiscount : totalPrice,
+        };
+
+        const orderResponse = await axios.post("/api/order", { orderData });
+
+        if (orderResponse.status === 200) {
+          await axios.post("/api/receipt", {
+            orderData: orderResponse.data,
+            orderId: orderResponse.data._id,
+          });
+
+          router.push(`/order-success?orderId=${orderResponse.data._id}`);
+        } else {
+          toast.error(
+            "Something went wrong with the order infomation but your payment was received."
+          );
+        }
       } else {
         console.log(`Transaction failed: ${chargeResponse.data.error}`);
         toast.error(`Transaction failed: ${chargeResponse.data.error}`, {

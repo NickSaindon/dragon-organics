@@ -131,7 +131,7 @@ export default async (req, res) => {
     <body>
       <div class="container">
       <div class="header">
-        <img src="https://github.com/NickSaindon/dragon-organics/blob/main/public/images/do-logo-title-under.png?raw=true" alt="Dragon Organics" width="70" height="120" border="0" style="border: none; display: block; text-align: center; -ms-interpolation-mode: bicubic;">
+        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751348888/do-logo-title-under_rfjkya.png" alt="Dragon Organics Logo" width="70" height="120" border="0" style="border: none; display: block; text-align: center; -ms-interpolation-mode: bicubic;">
         <h2>Order Receipt</h2>
       </div>
         <div class="order-details">
