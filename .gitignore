@@ -37,3 +37,5 @@ yarn-error.log*
 
 #seed
 pages/api/seed.js
+
+certificates

@@ -237,6 +237,7 @@ const Contact = () => {
                   </div>
                   <label htmlFor="message">Message</label>
                 </div>
+
                 <button
                   className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 py-3 me-sm-3 light"
                   type="submit"

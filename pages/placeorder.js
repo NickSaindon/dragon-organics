@@ -55,33 +55,49 @@ const PlaceOrder = () => {
     itemsDiscountTotal + shippingPrice + taxPrice
   );
 
-  const placeOrderHandler = async () => {
+  const placeOrderHandler = async (data) => {
     try {
       setLoading(true);
-      const { data } = await axios.post("/api/orders", {
-        orderItems: cartItems,
-        shippingAddress,
-        itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice: discount ? totalPriceWithDiscount : totalPrice,
+
+      const chargeResponse = await axios.post("/api/charge", {
+        cardNumber: data.ccnumber,
+        expirationDate: data.ccexp,
+        cardCode: data.cvv,
+        amount: discount ? totalPriceWithDiscount : totalPrice,
+        billingAddress: isAddress
+          ? shippingAddress
+          : {
+              firstName: data.first_name,
+              lastName: data.last_name,
+              address: data.address1,
+              city: data.first_name,
+              state: data.state,
+              zip: data.zip,
+              country: "USA",
+            },
       });
-      setLoading(false);
-      dispatch({ type: "CART_CLEAR_ITEMS" });
-      Cookies.set(
-        "cart",
-        JSON.stringify({
-          ...cart,
-          cartItems: [],
-        })
-      );
-      Cookies.remove("discount");
-      router.push(`/order/${data._id}`);
+
+      if (chargeResponse.status === 200) {
+        toast.success(
+          `Transaction successful: ${chargeResponse.data.message}`,
+          {
+            theme: "colored",
+          }
+        );
+      } else {
+        console.log(`Transaction failed: ${chargeResponse.data.error}`);
+        toast.error(`Transaction failed: ${chargeResponse.data.error}`, {
+          theme: "colored",
+        });
+      }
     } catch (err) {
       setLoading(false);
-      toast.error(getError(err), {
-        theme: "colored",
-      });
+      toast.error(
+        "The transaction failed: Please check that all credit card info was enter correctly",
+        {
+          theme: "colored",
+        }
+      );
     }
   };
 

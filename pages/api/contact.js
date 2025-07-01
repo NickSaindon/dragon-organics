@@ -1,12 +1,11 @@
-import nodemailer from 'nodemailer';
-
+import nodemailer from "nodemailer";
 
 export default async (req, res) => {
-  require('dotenv').config()
+  require("dotenv").config();
   const { name, email, phone, message } = req.body;
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
@@ -43,14 +42,14 @@ export default async (req, res) => {
                   <tbody>
                     <tr>
                       <td align="center">
-                        <table id="intro" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-image: url(https://github.com/NickSaindon/dragon-organics/blob/main/public/images/home-header.jpg?raw=true); background-size: auto 102%; background-position: center center; background-repeat: no-repeat; background-color: #000000">
+                        <table id="intro" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" align="center" style="width: 100%; padding: 0; margin: 0; background-image: url(https://res.cloudinary.com/do3ywogxk/image/upload/v1751348662/home-header_zsldte.jpg); background-size: auto 102%; background-position: center center; background-repeat: no-repeat; background-color: #000000">
                           <tbody >
                             <tr><td colspan="3" height="20"></td></tr>
                             <tr>
                               <td width="90" style="width: 9%;"></td>
                               <td align="center">
                                 <div border="0" style="border: none; height: 60px;">
-                                  <img src="https://github.com/NickSaindon/dragon-organics/blob/main/public/images/do-logo-title-under.png?raw=true" alt="Dragon Organics" width="154" height="200" border="0" style="border: none; display: block; -ms-interpolation-mode: bicubic;">
+                                  <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751348888/do-logo-title-under_rfjkya.png" alt="Dragon Organics Logo" width="154" height="200" border="0" style="border: none; display: block; -ms-interpolation-mode: bicubic;">
                                 </div>
                               </td>
                               <td width="90" style="width: 9%;"></td>
@@ -63,7 +62,7 @@ export default async (req, res) => {
                             </tr>
                             <tr>
                               <td colspan="3" height="20" valign="bottom" align="center">
-                                <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-1.png?raw=true" alt="line" border="0" width="464" height="5" style="border: none; outline: none; max-width: 464px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751349128/line-1_xohj8a.png" alt="line" border="0" width="464" height="5" style="border: none; outline: none; max-width: 464px; width: 100%; -ms-interpolation-mode: bicubic;" >
                               </td>
                             </tr>
                             <tr>
@@ -120,7 +119,7 @@ export default async (req, res) => {
                                     <tr><td colspan="3" height="10"></td></tr>					
                                     <tr>
                                       <td colspan="3" height="5" valign="top" align="center">
-                                        <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751349211/line-2_feyrpa.png" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
                                       </td>
                                     </tr>						
                                   </tbody>
@@ -145,7 +144,7 @@ export default async (req, res) => {
                                     <tr><td colspan="3" height="10"></td></tr>					
                                     <tr>
                                       <td colspan="3" height="5" valign="top" align="center">
-                                        <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751349211/line-2_feyrpa.png" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
                                       </td>
                                     </tr>					
                                   </tbody>
@@ -170,7 +169,7 @@ export default async (req, res) => {
                                     <tr><td colspan="3" height="10"></td></tr>					
                                     <tr>
                                       <td colspan="3" height="5" valign="top" align="center">
-                                        <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751349211/line-2_feyrpa.png" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
                                       </td>
                                     </tr>					
                                   </tbody>
@@ -204,7 +203,7 @@ export default async (req, res) => {
                                     <tr><td colspan="3" height="10"></td></tr>					
                                     <tr>
                                       <td colspan="3" height="5" valign="top" align="center">
-                                        <img src="https://github.com/lime7/responsive-html-template/blob/master/index/line-2.png?raw=true" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
+                                        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751349211/line-2_feyrpa.png" alt="line" border="0" width="960" height="5" style="border: none; outline: none; max-width: 960px; width: 100%; -ms-interpolation-mode: bicubic;" >
                                       </td>
                                     </tr>						
                                   </tbody>
@@ -240,10 +239,10 @@ export default async (req, res) => {
       `,
     });
 
-    console.log('Message Sent');
+    console.log("Message Sent");
   } catch (err) {
     console.log(err);
   }
 
   res.status(200).json(req.body);
-}
+};
