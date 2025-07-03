@@ -8,6 +8,17 @@ export default async function handler(req, res) {
   const { cardNumber, expirationDate, cardCode, amount, billingAddress } =
     req.body;
 
+  // Validate required fields
+  if (
+    !cardNumber ||
+    !expirationDate ||
+    !cardCode ||
+    !amount ||
+    !billingAddress
+  ) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
   const merchantAuthentication = new APIContracts.MerchantAuthenticationType();
   merchantAuthentication.setName(process.env.API_LOGIN_ID);
   merchantAuthentication.setTransactionKey(process.env.API_TRANSACTION_KEY);
@@ -35,6 +46,7 @@ export default async function handler(req, res) {
   );
   transactionRequest.setPayment(paymentType);
   transactionRequest.setAmount(amount);
+  transactionRequest.setCurrencyCode("USD");
   transactionRequest.setBillTo(billTo);
 
   const createRequest = new APIContracts.CreateTransactionRequest();
@@ -47,31 +59,44 @@ export default async function handler(req, res) {
 
   try {
     await controller.execute();
-    const response = new APIContracts.CreateTransactionResponse(
-      controller.getResponse()
-    );
+    const apiResponse = controller.getResponse();
+
+    console.log("apiResponse", apiResponse);
+
+    if (!apiResponse) {
+      return res.status(500).json({
+        error: "Transaction failed",
+        details: "Null response from API",
+      });
+    }
+
+    const response = new APIContracts.CreateTransactionResponse(apiResponse);
 
     if (
       response.getMessages().getResultCode() === APIContracts.MessageTypeEnum.OK
     ) {
       const transactionResponse = response.getTransactionResponse();
-      if (transactionResponse.getMessages()) {
+      if (transactionResponse && transactionResponse.getMessages()) {
         return res.status(200).json({
           transactionId: transactionResponse.getTransId(),
           message: transactionResponse
             .getMessages()
-            .getMessages()[0]
+            .getMessage()[0]
             .getDescription(),
         });
       } else {
-        return res.status(400).json({
-          error: transactionResponse.getErrors().getError()[0].getErrorText(),
-        });
+        const errorText =
+          transactionResponse?.getErrors()?.getError()[0]?.getErrorText() ||
+          "Unknown error";
+        return res
+          .status(400)
+          .json({ error: "Transaction failed", details: errorText });
       }
     } else {
-      return res.status(400).json({
-        error: response.getMessages().getMessage()[0].getText(),
-      });
+      const errorText = response.getMessages().getMessage()[0].getText();
+      return res
+        .status(400)
+        .json({ error: "Transaction failed", details: errorText });
     }
   } catch (error) {
     return res

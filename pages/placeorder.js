@@ -116,12 +116,17 @@ const PlaceOrder = () => {
       }
     } catch (err) {
       setLoading(false);
-      toast.error(
-        "The transaction failed: Please check that all credit card info was enter correctly",
-        {
-          theme: "colored",
-        }
-      );
+
+      const errorMessage =
+        err?.response?.data?.error ||
+        err?.message ||
+        "An unexpected error occurred";
+
+      console.error("Order placement error:", err); // Full trace in dev tools
+
+      toast.error(`The transaction failed: ${errorMessage}`, {
+        theme: "colored",
+      });
     }
   };
 
@@ -253,20 +258,20 @@ const PlaceOrder = () => {
                               control={control}
                               rules={{
                                 required: true,
-                                pattern: /\d{2}\/\d{2}/,
+                                pattern: /^\d{4}-\d{2}$/,
                               }}
                               render={({
                                 field: { onChange, ccexp, value },
                               }) => (
                                 <NumberFormat
-                                  format="##/##"
+                                  format="####-##"
                                   name={ccexp}
                                   className={`form-control ${
                                     errors.ccexp ? "is-invalid" : ""
                                   }`}
                                   value={value}
                                   id="ccexp"
-                                  placeholder="Expn Date MMYY"
+                                  placeholder="Expn Date YYYY-MM"
                                   onChange={onChange}
                                 />
                               )}
@@ -279,7 +284,7 @@ const PlaceOrder = () => {
                                 : ""}
                             </div>
                             <label htmlFor="floatingInput">
-                              Expn Date MMYY
+                              Expn Date YYYY-MM
                             </label>
                           </div>
                           <div className="form-floating">
