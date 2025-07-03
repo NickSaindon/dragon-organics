@@ -56,78 +56,69 @@ const PlaceOrder = () => {
   );
 
   const placeOrderHandler = async (data) => {
-    try {
-      setLoading(true);
-
-      const chargeResponse = await axios.post("/api/charge", {
-        cardNumber: data.ccnumber,
-        expirationDate: data.ccexp,
-        cardCode: data.cvv,
-        amount: discount ? totalPriceWithDiscount : totalPrice,
-        billingAddress: isAddress
-          ? shippingAddress
-          : {
-              firstName: data.first_name,
-              lastName: data.last_name,
-              address: data.address1,
-              city: data.first_name,
-              state: data.state,
-              zip: data.zip,
-              country: "USA",
-            },
-      });
-
-      if (chargeResponse.status === 200) {
-        toast.success(
-          `Transaction successful: ${chargeResponse.data.message}`,
-          {
-            theme: "colored",
-          }
-        );
-
-        const orderData = {
-          orderItems: cartItems,
-          shippingAddress,
-          itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
-          shippingPrice,
-          taxPrice,
-          totalPrice: discount ? totalPriceWithDiscount : totalPrice,
-        };
-
-        const orderResponse = await axios.post("/api/order", { orderData });
-
-        if (orderResponse.status === 200) {
-          await axios.post("/api/receipt", {
-            orderData: orderResponse.data,
-            orderId: orderResponse.data._id,
-          });
-
-          router.push(`/order-success?orderId=${orderResponse.data._id}`);
-        } else {
-          toast.error(
-            "Something went wrong with the order infomation but your payment was received."
-          );
-        }
-      } else {
-        console.log(`Transaction failed: ${chargeResponse.data.error}`);
-        toast.error(`Transaction failed: ${chargeResponse.data.error}`, {
-          theme: "colored",
-        });
-      }
-    } catch (err) {
-      setLoading(false);
-
-      const errorMessage =
-        err?.response?.data?.error ||
-        err?.message ||
-        "An unexpected error occurred";
-
-      console.error("Order placement error:", err); // Full trace in dev tools
-
-      toast.error(`The transaction failed: ${errorMessage}`, {
-        theme: "colored",
-      });
-    }
+    // try {
+    //   setLoading(true);
+    //   const chargeResponse = await axios.post("/api/charge", {
+    //     cardNumber: data.ccnumber,
+    //     expirationDate: data.ccexp,
+    //     cardCode: data.cvv,
+    //     amount: discount ? totalPriceWithDiscount : totalPrice,
+    //     billingAddress: isAddress
+    //       ? shippingAddress
+    //       : {
+    //           firstName: data.first_name,
+    //           lastName: data.last_name,
+    //           address: data.address1,
+    //           city: data.first_name,
+    //           state: data.state,
+    //           zip: data.zip,
+    //           country: "USA",
+    //         },
+    //   });
+    //   if (chargeResponse.status === 200) {
+    //     toast.success(
+    //       `Transaction successful: ${chargeResponse.data.message}`,
+    //       {
+    //         theme: "colored",
+    //       }
+    //     );
+    //     const orderData = {
+    //       orderItems: cartItems,
+    //       shippingAddress,
+    //       itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
+    //       shippingPrice,
+    //       taxPrice,
+    //       totalPrice: discount ? totalPriceWithDiscount : totalPrice,
+    //     };
+    //     const orderResponse = await axios.post("/api/order", { orderData });
+    //     if (orderResponse.status === 200) {
+    //       await axios.post("/api/receipt", {
+    //         orderData: orderResponse.data,
+    //         orderId: orderResponse.data._id,
+    //       });
+    //       router.push(`/order-success?orderId=${orderResponse.data._id}`);
+    //     } else {
+    //       toast.error(
+    //         "Something went wrong with the order infomation but your payment was received."
+    //       );
+    //     }
+    //   } else {
+    //     console.log(`Transaction failed: ${chargeResponse.data.error}`);
+    //     toast.error(`Transaction failed: ${chargeResponse.data.error}`, {
+    //       theme: "colored",
+    //     });
+    //   }
+    // } catch (err) {
+    //   setLoading(false);
+    //   const errorMessage =
+    //     err?.response?.data?.error ||
+    //     err?.message ||
+    //     "An unexpected error occurred";
+    //   console.error("Order placement error:", err); // Full trace in dev tools
+    //   toast.error(`The transaction failed: ${errorMessage}`, {
+    //     theme: "colored",
+    //   });
+    // }
   };
 
   return (
