@@ -1157,6 +1157,21 @@ main {
   }
 }
 
+// Order Success Page
+.order-sucess-container {
+  background-color: #1a1a1a;
+  .card {
+    background-color: #1a1a1a;
+    .card-body {
+      h2,
+      h4,
+      p {
+        color: #ffffff;
+      }
+    }
+  }
+}
+
 // Contact Form
 .contact-container {
   padding-top: 70px;

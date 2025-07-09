@@ -32,7 +32,7 @@ const OrderSuccess = () => {
 
   return (
     <Layout title={`Successful Order`}>
-      <div className="place-order-container page-contain py-5">
+      <div className="order-sucess-container page-contain py-5">
         <ToastContainer
           position="top-center"
           draggable={false}

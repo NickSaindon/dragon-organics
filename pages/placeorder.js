@@ -27,7 +27,7 @@ const PlaceOrder = () => {
 
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
-  ); // 123.4567 => 123.46
+  );
 
   const shippingPrice = itemsPrice > 200 ? 0 : 15;
   const taxPrice = round2(itemsPrice * 0.15);
@@ -56,69 +56,96 @@ const PlaceOrder = () => {
   );
 
   const placeOrderHandler = async (data) => {
-    // try {
-    //   setLoading(true);
-    //   const chargeResponse = await axios.post("/api/charge", {
-    //     cardNumber: data.ccnumber,
-    //     expirationDate: data.ccexp,
-    //     cardCode: data.cvv,
-    //     amount: discount ? totalPriceWithDiscount : totalPrice,
-    //     billingAddress: isAddress
-    //       ? shippingAddress
-    //       : {
-    //           firstName: data.first_name,
-    //           lastName: data.last_name,
-    //           address: data.address1,
-    //           city: data.first_name,
-    //           state: data.state,
-    //           zip: data.zip,
-    //           country: "USA",
-    //         },
-    //   });
-    //   if (chargeResponse.status === 200) {
-    //     toast.success(
-    //       `Transaction successful: ${chargeResponse.data.message}`,
-    //       {
-    //         theme: "colored",
-    //       }
-    //     );
-    //     const orderData = {
-    //       orderItems: cartItems,
-    //       shippingAddress,
-    //       itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
-    //       shippingPrice,
-    //       taxPrice,
-    //       totalPrice: discount ? totalPriceWithDiscount : totalPrice,
-    //     };
-    //     const orderResponse = await axios.post("/api/order", { orderData });
-    //     if (orderResponse.status === 200) {
-    //       await axios.post("/api/receipt", {
-    //         orderData: orderResponse.data,
-    //         orderId: orderResponse.data._id,
-    //       });
-    //       router.push(`/order-success?orderId=${orderResponse.data._id}`);
-    //     } else {
-    //       toast.error(
-    //         "Something went wrong with the order infomation but your payment was received."
-    //       );
-    //     }
-    //   } else {
-    //     console.log(`Transaction failed: ${chargeResponse.data.error}`);
-    //     toast.error(`Transaction failed: ${chargeResponse.data.error}`, {
-    //       theme: "colored",
-    //     });
-    //   }
-    // } catch (err) {
-    //   setLoading(false);
-    //   const errorMessage =
-    //     err?.response?.data?.error ||
-    //     err?.message ||
-    //     "An unexpected error occurred";
-    //   console.error("Order placement error:", err); // Full trace in dev tools
-    //   toast.error(`The transaction failed: ${errorMessage}`, {
-    //     theme: "colored",
-    //   });
-    // }
+    try {
+      setLoading(true);
+
+      const chargeResponse = await axios.post("/api/charge", {
+        cardNumber: data.ccnumber,
+        expirationDate: data.ccexp,
+        cardCode: data.cvv,
+        amount: discount ? totalPriceWithDiscount : totalPrice,
+        billingAddress: isAddress
+          ? shippingAddress
+          : {
+              firstName: data.first_name,
+              lastName: data.last_name,
+              address: data.address1,
+              city: data.city,
+              state: data.state,
+              zip: data.zip,
+              country: "USA",
+            },
+      });
+
+      if (chargeResponse.status !== 200) {
+        toast.error(`Transaction failed: ${chargeResponse.data.error}`, {
+          theme: "colored",
+        });
+        return;
+      }
+
+      toast.success(`Transaction successful: ${chargeResponse.data.message}`, {
+        theme: "colored",
+      });
+
+      for (const item of cartItems) {
+        const stockResponse = await axios.put(`/api/products/${item._id}`, {
+          quantity: item.quantity,
+        });
+
+        if (stockResponse.status !== 200) {
+          toast.error(
+            `Failed to update stock for ${item.name}. Please contact support.`,
+            { theme: "colored" }
+          );
+          return;
+        }
+      }
+
+      const orderData = {
+        orderItems: cartItems,
+        shippingAddress,
+        itemsPrice: discount ? itemsDiscountTotal : itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice: discount ? totalPriceWithDiscount : totalPrice,
+        isPaid: true,
+        paidAt: new Date(),
+        transactionId: chargeResponse.data.transactionId,
+      };
+
+      const orderResponse = await axios.post("/api/orders", orderData);
+
+      if (orderResponse.status !== 200 && orderResponse.status !== 201) {
+        toast.error(
+          "Order save failed — payment was successful, but order wasn't stored.",
+          { theme: "colored" }
+        );
+        return;
+      }
+
+      const savedOrder = orderResponse.data;
+
+      await axios.post("/api/receipt", {
+        orderData: savedOrder,
+        orderId: savedOrder._id,
+      });
+
+      router.push(`/order-success?orderId=${savedOrder._id}`);
+
+      dispatch({ type: "CART_CLEAR_ITEMS" });
+      Cookies.remove("cart");
+    } catch (err) {
+      setLoading(false);
+      const errorMessage =
+        err?.response?.data?.error ||
+        err?.message ||
+        "An unexpected error occurred";
+      console.error("Order placement error:", err);
+      toast.error(`The transaction failed: ${errorMessage}`, {
+        theme: "colored",
+      });
+    }
   };
 
   return (
@@ -249,20 +276,20 @@ const PlaceOrder = () => {
                               control={control}
                               rules={{
                                 required: true,
-                                pattern: /^\d{4}-\d{2}$/,
+                                pattern: /^\d{4}$/,
                               }}
                               render={({
                                 field: { onChange, ccexp, value },
                               }) => (
                                 <NumberFormat
-                                  format="####-##"
+                                  format="####"
                                   name={ccexp}
                                   className={`form-control ${
                                     errors.ccexp ? "is-invalid" : ""
                                   }`}
                                   value={value}
                                   id="ccexp"
-                                  placeholder="Expn Date YYYY-MM"
+                                  placeholder="Expn Date MMYY"
                                   onChange={onChange}
                                 />
                               )}
@@ -275,7 +302,7 @@ const PlaceOrder = () => {
                                 : ""}
                             </div>
                             <label htmlFor="floatingInput">
-                              Expn Date YYYY-MM
+                              Expn Date MMYY
                             </label>
                           </div>
                           <div className="form-floating">

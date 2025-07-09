@@ -12,9 +12,6 @@ export default async (req, res) => {
       itemsHTML += `
         <tr>
           <td>
-            <img src="${item.imageOne}" alt="${item.name}" class="item-image">
-          </td>
-          <td>
             <div class="item-name">${item.name}<br></br> ${item.color}</div>
           </td>
           <td>
@@ -120,6 +117,12 @@ export default async (req, res) => {
             flex-wrap: wrap;
             justify-content: space-between;
         }
+        .address h3 {
+          margin-bottom: 0;
+        }
+        .address p {
+          margin: 0;
+        }
 
         @media (max-width: 600px) {
             .item-details {
@@ -131,7 +134,7 @@ export default async (req, res) => {
     <body>
       <div class="container">
       <div class="header">
-        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751348888/do-logo-title-under_rfjkya.png" alt="Dragon Organics Logo" width="70" height="120" border="0" style="border: none; display: block; text-align: center; -ms-interpolation-mode: bicubic;">
+        <img src="https://res.cloudinary.com/do3ywogxk/image/upload/v1751348888/do-logo-title-under_rfjkya.png" alt="Dragon Organics Logo" width="90" height="120" border="0" style="border: none; display: block; text-align: center; -ms-interpolation-mode: bicubic;">
         <h2>Order Receipt</h2>
       </div>
         <div class="order-details">
@@ -143,11 +146,11 @@ export default async (req, res) => {
           <table>
             <thead>
               <tr>
-                <th>Image</th>
                 <th>Name</th>
                 <th>Pack Size</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Subtotal</th>
               </tr>
             </thead>
             <tbody>
@@ -169,9 +172,10 @@ export default async (req, res) => {
         <div class="address">
             <div class="address-left">
                 <h3>Shipping Address</h3>
-                <p>${orderData.shippingAddress.firstName} ${
-    orderData.shippingAddress.lastName
-  }</p>
+                <p>
+                  ${orderData.shippingAddress.firstName} 
+                  ${orderData.shippingAddress.lastName}
+                </p>
                 <p>${orderData.shippingAddress.address}</p>
                 <p>City: ${orderData.shippingAddress.city}</p>
                 <p>State: ${orderData.shippingAddress.state}</p>

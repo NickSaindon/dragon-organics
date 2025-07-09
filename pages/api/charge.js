@@ -1,3 +1,4 @@
+// pages/api/charge.js
 const { APIContracts, APIControllers } = require("authorizenet");
 
 export default async function handler(req, res) {
@@ -8,7 +9,6 @@ export default async function handler(req, res) {
   const { cardNumber, expirationDate, cardCode, amount, billingAddress } =
     req.body;
 
-  // Validate required fields
   if (
     !cardNumber ||
     !expirationDate ||
@@ -31,15 +31,6 @@ export default async function handler(req, res) {
   const paymentType = new APIContracts.PaymentType();
   paymentType.setCreditCard(creditCard);
 
-  const billTo = new APIContracts.CustomerAddressType();
-  billTo.setFirstName(billingAddress.firstName);
-  billTo.setLastName(billingAddress.lastName);
-  billTo.setAddress(billingAddress.address);
-  billTo.setCity(billingAddress.city);
-  billTo.setState(billingAddress.state);
-  billTo.setZip(billingAddress.zip);
-  billTo.setCountry(billingAddress.country);
-
   const transactionRequest = new APIContracts.TransactionRequestType();
   transactionRequest.setTransactionType(
     APIContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION
@@ -47,7 +38,6 @@ export default async function handler(req, res) {
   transactionRequest.setPayment(paymentType);
   transactionRequest.setAmount(amount);
   transactionRequest.setCurrencyCode("USD");
-  transactionRequest.setBillTo(billTo);
 
   const createRequest = new APIContracts.CreateTransactionRequest();
   createRequest.setMerchantAuthentication(merchantAuthentication);
@@ -58,47 +48,42 @@ export default async function handler(req, res) {
   );
 
   try {
-    await controller.execute();
-    const apiResponse = controller.getResponse();
+    const response = await new Promise((resolve, reject) => {
+      controller.execute(() => {
+        const apiResponse = controller.getResponse();
+        if (!apiResponse) return reject(new Error("Null response from API"));
 
-    console.log("apiResponse", apiResponse);
-
-    if (!apiResponse) {
-      return res.status(500).json({
-        error: "Transaction failed",
-        details: "Null response from API",
+        try {
+          const parsedResponse = new APIContracts.CreateTransactionResponse(
+            apiResponse
+          );
+          resolve(parsedResponse);
+        } catch (err) {
+          reject(err);
+        }
       });
-    }
+    });
 
-    const response = new APIContracts.CreateTransactionResponse(apiResponse);
-
+    // Check response
     if (
       response.getMessages().getResultCode() === APIContracts.MessageTypeEnum.OK
     ) {
       const transactionResponse = response.getTransactionResponse();
-      if (transactionResponse && transactionResponse.getMessages()) {
-        return res.status(200).json({
-          transactionId: transactionResponse.getTransId(),
-          message: transactionResponse
-            .getMessages()
-            .getMessage()[0]
-            .getDescription(),
-        });
-      } else {
-        const errorText =
-          transactionResponse?.getErrors()?.getError()[0]?.getErrorText() ||
-          "Unknown error";
-        return res
-          .status(400)
-          .json({ error: "Transaction failed", details: errorText });
-      }
+      return res.status(200).json({
+        transactionId: transactionResponse.getTransId(),
+        message: transactionResponse
+          .getMessages()
+          .getMessage()[0]
+          .getDescription(),
+      });
     } else {
-      const errorText = response.getMessages().getMessage()[0].getText();
-      return res
-        .status(400)
-        .json({ error: "Transaction failed", details: errorText });
+      return res.status(400).json({
+        error: "Transaction failed",
+        details: response.getMessages().getMessage()[0].getText(),
+      });
     }
   } catch (error) {
+    console.error("Transaction Error:", error);
     return res
       .status(500)
       .json({ error: "Transaction failed", details: error.message });
