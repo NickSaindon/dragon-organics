@@ -1,30 +1,31 @@
 import Image from "next/image";
-import Layout from '../components/Layout';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
-import { useContext } from 'react';
-import { Store } from '../utils/Store';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import Layout from "../components/Layout";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
+import { useRouter } from "next/router";
+import axios from "axios";
 import { ToastContainer, toast, Slide } from "react-toastify";
 
 const Cart = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
-  const { cart: { cartItems }} = state;
+  const {
+    cart: { cartItems },
+  } = state;
 
   const removeItemHandler = (item) => {
-    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+    dispatch({ type: "CART_REMOVE_ITEM", payload: item });
   };
 
   const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      return toast.error('Sorry. Product is out of stock');
+      return toast.error("Sorry. Product is out of stock");
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
-    toast.success('Product updated in the cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
 
   return (
@@ -38,7 +39,9 @@ const Cart = () => {
             <div className="empty-cart text-center">
               <h2 className="text-white">Cart is Empty.</h2>
               <Link href="/products" passHref>
-                <button type="button" className="btn btn-link">Go make an order <i className="bi bi-arrow-right"></i></button>
+                <button type="button" className="btn btn-link">
+                  Go make an order <i className="bi bi-arrow-right"></i>
+                </button>
               </Link>
             </div>
           ) : (
@@ -49,22 +52,24 @@ const Cart = () => {
                     <div className="card-body">
                       <div className="cart-row d-flex justify-content-between align-items-center">
                         <div className="product-img">
-                          <Image src={item.imageOne} className="d-block w-100" width={50} height={50} alt="..." />
+                          <Image
+                            src={item.imageOne}
+                            className="d-block w-100"
+                            width={50}
+                            height={50}
+                            alt="..."
+                          />
                         </div>
                         <div className="product-name d-flex align-items-center">
-                          <p className="text-center">
-                            {item.name}
-                          </p>
+                          <p className="text-center">{item.name}</p>
                         </div>
                         <div className="product-siz d-flex align-items-center">
-                          <p className="text-center">
-                            {item.size}
-                          </p>
+                          <p className="text-center">{item.size}</p>
                         </div>
                         <div className="quantity-select text-center">
                           <span>Quantity</span>
-                          <select 
-                            className="form-select" 
+                          <select
+                            className="form-select"
                             value={item.quantity}
                             onChange={(e) =>
                               updateCartHandler(item, e.target.value)
@@ -81,8 +86,8 @@ const Cart = () => {
                           <p>${item.price}</p>
                         </div>
                         <div className="cart-remove-btn">
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             className="btn btn-outline-primary"
                             onClick={() => removeItemHandler(item)}
                           >
@@ -100,31 +105,37 @@ const Cart = () => {
                     <div className="row">
                       <div className="col-6">
                         <h5>
-                          <b>Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) :</b>
+                          <b>
+                            Subtotal (
+                            {cartItems.reduce((a, c) => a + c.quantity, 0)}) :
+                          </b>
                         </h5>
                       </div>
                       <div className="col-6 text-end">
                         <h5 className="text-white">
-                          ${cartItems.reduce((a, c) => a + c.quantity * c.price, 0).toFixed(2)}
+                          $
+                          {cartItems
+                            .reduce((a, c) => a + c.quantity * c.price, 0)
+                            .toFixed(2)}
                         </h5>
                       </div>
                     </div>
                     <div className="d-grid gap-2">
-                      <button 
-                        className="w-100 btn btn-lg btn-outline-primary light"  
+                      <button
+                        className="w-100 btn btn-lg btn-outline-primary light"
                         type="button"
-                        onClick={() => router.push('/shipping')}
+                        onClick={() => router.push("/shipping")}
                       >
                         Check Out
                       </button>
-                    </div>                  
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            )}
-          </div>
+          )}
         </div>
+      </div>
     </Layout>
   );
 };

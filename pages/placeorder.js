@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 import Link from "next/link";
@@ -6,11 +6,9 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useForm, Controller } from "react-hook-form";
-import { getError } from "../utils/error";
 import Cookies from "js-cookie";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import CheckoutWizard from "../components/CheckoutWizard";
-import moment from "moment";
 import NumberFormat from "react-number-format";
 import OrderCard from "@/components/OrderCard";
 import ShippingCard from "@/components/ShippingCard";
@@ -216,7 +214,6 @@ const PlaceOrder = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="col">
                     <div className="card summary-card">
@@ -256,11 +253,18 @@ const PlaceOrder = () => {
                           <div className="form-floating">
                             <input
                               type="text"
-                              className="form-control"
+                              className={`form-control ${
+                                errors.ccnumber ? "is-invalid" : ""
+                              }`}
                               id="ccnumber"
                               placeholder="Card Number"
                               {...register("ccnumber", {
                                 required: "Please enter card number",
+                                pattern: {
+                                  value: /^\d{13,19}$/,
+                                  message:
+                                    "Card number must be 13 to 19 digits with no spaces or dashes",
+                                },
                               })}
                             />
                             {errors.ccnumber && (
@@ -356,11 +360,18 @@ const PlaceOrder = () => {
                           <div className="form-floating">
                             <input
                               type="text"
-                              className="form-control"
+                              className={`form-control ${
+                                errors.last_name ? "is-invalid" : ""
+                              }`}
                               id="last_name"
                               placeholder="Last Name"
                               {...register("last_name", {
                                 required: "Please enter cardholder last name",
+                                pattern: {
+                                  value: /^[A-Za-z]+$/,
+                                  message:
+                                    "Last name must contain letters only (no numbers or symbols)",
+                                },
                               })}
                             />
                             {errors.last_name && (
@@ -370,7 +381,6 @@ const PlaceOrder = () => {
                             )}
                             <label htmlFor="last_name">Last Name</label>
                           </div>
-
                           <div className="row pt-3">
                             <div className="col">
                               <div className="form-check">
@@ -415,7 +425,6 @@ const PlaceOrder = () => {
                                       )}
                                       <label htmlFor="address1">Address</label>
                                     </div>
-
                                     <div className="form-floating">
                                       <input
                                         type="text"
@@ -424,6 +433,11 @@ const PlaceOrder = () => {
                                         placeholder="City"
                                         {...register("city", {
                                           required: "Please enter city",
+                                          pattern: {
+                                            value: /^[A-Za-z\s'-]+$/,
+                                            message:
+                                              "City name must contain only letters, spaces, apostrophes, or hyphens",
+                                          },
                                         })}
                                       />
                                       {errors.city && (
@@ -433,7 +447,6 @@ const PlaceOrder = () => {
                                       )}
                                       <label htmlFor="city">City</label>
                                     </div>
-
                                     <div className="form-floating">
                                       <input
                                         type="text"
@@ -442,6 +455,11 @@ const PlaceOrder = () => {
                                         placeholder="State"
                                         {...register("state", {
                                           required: "Please enter a state",
+                                          pattern: {
+                                            value: /^[A-Za-z]{2}$/,
+                                            message:
+                                              "State must be exactly 2 letter abbreviation",
+                                          },
                                         })}
                                       />
                                       {errors.state && (
@@ -451,15 +469,21 @@ const PlaceOrder = () => {
                                       )}
                                       <label htmlFor="state">State</label>
                                     </div>
-
                                     <div className="form-floating">
                                       <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${
+                                          errors.zip ? "is-invalid" : ""
+                                        }`}
                                         id="zip"
                                         placeholder="Zip"
                                         {...register("zip", {
-                                          required: "Please enter cvv number",
+                                          required: "Please enter zip code",
+                                          pattern: {
+                                            value: /^\d{5}(-\d{4})?$/,
+                                            message:
+                                              "Enter a valid 5-digit ZIP or ZIP+4 (e.g. 12345 or 12345-6789)",
+                                          },
                                         })}
                                       />
                                       {errors.zip && (
