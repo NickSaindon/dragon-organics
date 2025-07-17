@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 import Link from "next/link";
@@ -20,6 +20,19 @@ const PlaceOrder = () => {
   const { cart } = state;
   const { cartItems, shippingAddress } = cart;
   const [isAddress, setIsAddress] = useState(true);
+  const [shippingPrice, setShippingPrice] = useState(null);
+
+  const parseWeight = (sizeStr) => {
+    if (!sizeStr) return 0;
+    const num = parseFloat(sizeStr.replace(/[^\d.]/g, ""));
+    return isNaN(num) ? 0 : num;
+  };
+
+  // Calculate total weight (assumes all weights are in grams — adjust if mixing units)
+  const totalWeight = cartItems.reduce((total, item) => {
+    const itemWeight = parseWeight(item.size) * item.quantity;
+    return total + itemWeight;
+  }, 0);
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
@@ -27,9 +40,24 @@ const PlaceOrder = () => {
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
 
-  const shippingPrice = itemsPrice > 200 ? 0 : 15;
-  const taxPrice = round2(itemsPrice * 0.15);
-  const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+  const getSalesTaxRate = (state, zip) => {
+    if (state === "GA") {
+      return 0.07;
+    }
+    return 0;
+  };
+
+  const calculateTax = (state, zip, subtotal) => {
+    const rate = getSalesTaxRate(state, zip);
+    return subtotal * rate;
+  };
+
+  const taxPrice = calculateTax(
+    shippingAddress.state,
+    shippingAddress.zipCode,
+    itemsPrice
+  );
+  const totalPrice = round2(itemsPrice + (shippingPrice ?? 0) + taxPrice);
   const [discount, setDiscount] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -50,8 +78,53 @@ const PlaceOrder = () => {
     : 0;
   const itemsDiscountTotal = itemsPrice - discountedItems;
   const totalPriceWithDiscount = round2(
-    itemsDiscountTotal + shippingPrice + taxPrice
+    itemsDiscountTotal + (shippingPrice ?? 0) + taxPrice
   );
+
+  const applyFallbackShipping = () => {
+    if (itemsPrice > 60) {
+      setShippingPrice(0);
+    } else {
+      setShippingPrice(5.95);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUSPSRate = async () => {
+      try {
+        const weightOz = (totalWeight / 28.3495).toFixed(1);
+
+        // Free shipping if subtotal > $60
+        if (itemsPrice > 60) {
+          setShippingPrice(0);
+          return;
+        }
+
+        const response = await axios.post("/api/shippo-rate", {
+          street1: shippingAddress.address,
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          zip: shippingAddress.zipCode,
+          weightOz,
+        });
+
+        const data = response.data;
+        console.log("📬 USPS BESTVALUE response:", data);
+
+        if (data.rate != null) {
+          setShippingPrice(parseFloat(data.rate));
+        } else {
+          applyFallbackShipping();
+        }
+      } catch (err) {
+        applyFallbackShipping();
+      }
+    };
+
+    if (shippingAddress?.zipCode && totalWeight > 0) {
+      fetchUSPSRate();
+    }
+  }, [totalWeight, shippingAddress?.zipCode, itemsPrice]);
 
   const placeOrderHandler = async (data) => {
     try {
@@ -129,10 +202,11 @@ const PlaceOrder = () => {
         orderId: savedOrder._id,
       });
 
-      router.push(`/order-success?orderId=${savedOrder._id}`);
-
       dispatch({ type: "CART_CLEAR_ITEMS" });
       Cookies.remove("cart");
+      Cookies.remove("discount", { path: "/" });
+
+      router.push(`/order-success?orderId=${savedOrder._id}`);
     } catch (err) {
       setLoading(false);
       const errorMessage =
@@ -197,7 +271,9 @@ const PlaceOrder = () => {
                         <div className=" summary d-flex justify-content-between">
                           <h6>Shipping:</h6>
                           <span className="text-white">
-                            ${shippingPrice.toFixed(2)}
+                            {shippingPrice === null
+                              ? "Calculating shipping..."
+                              : `$${shippingPrice.toFixed(2)}`}
                           </span>
                         </div>
                         <div className="summary-total d-flex justify-content-between">
@@ -343,7 +419,9 @@ const PlaceOrder = () => {
                           <div className="form-floating">
                             <input
                               type="text"
-                              className="form-control"
+                              className={`form-control ${
+                                errors.first_name ? "is-invalid" : ""
+                              }`}
                               id="first_name"
                               placeholder="First Name"
                               {...register("first_name", {
@@ -410,12 +488,19 @@ const PlaceOrder = () => {
                                     <div className="form-floating">
                                       <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${
+                                          errors.address1 ? "is-invalid" : ""
+                                        }`}
                                         id="address1"
                                         placeholder="Address"
                                         {...register("address1", {
                                           required:
-                                            "Please enter cardholder last name",
+                                            "Please enter a billing address",
+                                          pattern: {
+                                            value: /^[a-zA-Z0-9 #'-]+$/,
+                                            message:
+                                              "Address must contain only numbers, letters, apostrophes, or hyphens",
+                                          },
                                         })}
                                       />
                                       {errors.address1 && (
@@ -428,7 +513,9 @@ const PlaceOrder = () => {
                                     <div className="form-floating">
                                       <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${
+                                          errors.city ? "is-invalid" : ""
+                                        }`}
                                         id="city"
                                         placeholder="City"
                                         {...register("city", {
@@ -450,7 +537,9 @@ const PlaceOrder = () => {
                                     <div className="form-floating">
                                       <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${
+                                          errors.state ? "is-invalid" : ""
+                                        }`}
                                         id="state"
                                         placeholder="State"
                                         {...register("state", {
@@ -482,7 +571,7 @@ const PlaceOrder = () => {
                                           pattern: {
                                             value: /^\d{5}(-\d{4})?$/,
                                             message:
-                                              "Enter a valid 5-digit ZIP or ZIP+4 (e.g. 12345 or 12345-6789)",
+                                              "Enter a valid 5-digit ZIP",
                                           },
                                         })}
                                       />

@@ -41,7 +41,8 @@ const DiscountForm = ({ onDiscountApplied }) => {
           ...discountObj,
           numOfDiscounts: discountObj.numOfDiscounts - 1,
         });
-        Cookies.set("discount", JSON.stringify(discountObj));
+        Cookies.set("discount", JSON.stringify(discountObj), { path: "/" });
+
         reset();
         toast.success(
           "Discount code has been applied. Please place your order now.",

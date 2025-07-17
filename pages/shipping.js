@@ -16,12 +16,14 @@ const Shipping = () => {
     formState: { errors },
     setValue,
   } = useForm();
+
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [states, setStates] = useState("");
   const stateOption = StateOptions.states;
   const { shippingAddress } = cart;
+  const [isAgreed, setIsAgreed] = useState(false);
 
   useEffect(() => {
     setValue("firstName", shippingAddress.firstName);
@@ -313,9 +315,34 @@ const Shipping = () => {
                   </div>
                   <label htmlFor="address">Zip Code</label>
                 </div>
+                <div className="card my-4 bg-black text-white agreement">
+                  <div className="card-body">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="checkDefault"
+                        checked={isAgreed}
+                        onChange={(e) => setIsAgreed(e.target.checked)}
+                      />
+                      <label
+                        className="form-check-label text-start"
+                        htmlFor="checkDefault"
+                      >
+                        I agree to the{" "}
+                        <Link href="/terms-of-service" className="text-primary">
+                          Terms of Service
+                        </Link>
+                        , confirm I’m 21+, and that Kratom is legal in my
+                        jurisdiction.
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="w-100 btn btn-3 btn-outline-primary btn-lg px-4 me-sm-3"
                   type="submit"
+                  disabled={!isAgreed}
                 >
                   Continue
                 </button>
