@@ -109,7 +109,6 @@ const PlaceOrder = () => {
         });
 
         const data = response.data;
-        console.log("📬 USPS BESTVALUE response:", data);
 
         if (data.rate != null) {
           setShippingPrice(parseFloat(data.rate));
