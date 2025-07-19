@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST")
     return res.status(405).json({ error: "Method not allowed" });
 
-  const { street1, city, state, zip, weightOz } = req.body;
+  const { name, street1, city, state, zip, weightOz } = req.body;
 
   try {
     const response = await fetch("https://api.goshippo.com/shipments/", {
@@ -21,6 +21,7 @@ export default async function handler(req, res) {
           country: "US",
         },
         address_to: {
+          name,
           street1,
           city,
           state,
@@ -34,7 +35,7 @@ export default async function handler(req, res) {
             width: "4",
             height: "2",
             distance_unit: "in",
-            weight: weightOz,
+            weight: parseFloat(weightOz),
             mass_unit: "oz",
           },
         ],
@@ -61,7 +62,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ rate: parseFloat(bestRate.amount) });
   } catch (err) {
-    console.error("❌ Shippo error:", err);
+    console.error("Shippo error:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
 }

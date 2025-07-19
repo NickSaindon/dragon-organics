@@ -101,6 +101,7 @@ const PlaceOrder = () => {
         }
 
         const response = await axios.post("/api/shippo-rate", {
+          name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
           street1: shippingAddress.address,
           city: shippingAddress.city,
           state: shippingAddress.state,
