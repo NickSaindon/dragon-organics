@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /manufacturer/
+Allow: /
+
+Sitemap: https://dragon-organics.com/sitemap.xml
