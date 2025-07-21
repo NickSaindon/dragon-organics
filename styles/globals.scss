@@ -516,6 +516,15 @@ main {
   font-size: 18px;
   .navbar-left {
     padding-left: 20px;
+    input {
+      background-color: #1a1a1a;
+      border-radius: 0;
+      color: white;
+      &::placeholder {
+        color: white;
+        opacity: 1;
+      }
+    }
     .nav-item {
       &.dropdown {
         .dropdown-item {
@@ -1775,6 +1784,17 @@ main {
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+    }
+  }
+
+  // Search Page
+  .search-container {
+    margin-top: 10px;
+    .empty-search {
+      padding-top: 10%;
+      h2 {
+        font-size: 35px;
+      }
     }
   }
 
