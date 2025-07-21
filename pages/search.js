@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import { Store } from "../utils/Store";
+import Image from "next/image";
 import { ToastContainer, toast, Slide } from "react-toastify";
 
 const SearchPage = () => {
@@ -13,7 +14,7 @@ const SearchPage = () => {
   const { q } = router.query;
   const { cart } = state;
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -62,26 +63,28 @@ const SearchPage = () => {
           <h1 className="mb-4 text-white">
             Search results for: <em>{q}</em>
           </h1>
-          <div className="empty-search text-center text-white">
-            {!loading && products.length === 0 && (
+          {!loading && products?.length === 0 && (
+            <div className="empty-search text-center text-white">
               <h2>
                 No results found.
                 <br />
                 Try a New Search.
               </h2>
-            )}
-          </div>
-          <div className="container-xl">
-            <div className="row product-category-row gy-3">
-              {products.map((product) => (
-                <ProductItem
-                  product={product}
-                  key={product._id}
-                  addToCartHandler={addToCartHandler}
-                ></ProductItem>
-              ))}
             </div>
-          </div>
+          )}
+          {!loading && products?.length > 0 && (
+            <div className="container-xl">
+              <div className="row product-category-row gy-3">
+                {products.map((product) => (
+                  <ProductItem
+                    product={product}
+                    key={product._id}
+                    addToCartHandler={addToCartHandler}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

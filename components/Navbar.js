@@ -35,6 +35,7 @@ function Navbar() {
   const { cart } = state;
   const router = useRouter();
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
   const [{ loading, error, categories }, dispatchCat] = useReducer(reducer, {
     loading: true,
     categories: [],
@@ -62,6 +63,13 @@ function Navbar() {
 
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
+
+  const searchHandler = (e) => {
+    e.preventDefault(); // prevent full page reload
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <nav className="navbar fixed-top navbar-expand-xl navbar-dark">
@@ -199,15 +207,15 @@ function Navbar() {
           <div className="d-flex">
             <ul className="navbar-nav navbar-left me-auto mb-2 mb-lg-0">
               <li>
-                <form action="/search" method="get" className="d-flex">
+                <form onSubmit={searchHandler} className="d-flex">
                   <input
                     className="form-control me-2 search-input"
                     type="search"
-                    name="q"
                     placeholder="Search Kratom..."
-                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <button className="btn btn-primary" type="submit">
+                  <button className="btn btn-primary me-3" type="submit">
                     Search
                   </button>
                 </form>
