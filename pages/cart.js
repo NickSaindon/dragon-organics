@@ -38,7 +38,7 @@ const Cart = () => {
           {cartItems.length === 0 ? (
             <div className="empty-cart text-center">
               <h2 className="text-white">Cart is Empty.</h2>
-              <Link href="/products" passHref>
+              <Link href="/category/raw-leaf-powder" passHref>
                 <button type="button" className="btn btn-link">
                   Go make an order <i className="bi bi-arrow-right"></i>
                 </button>
