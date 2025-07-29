@@ -43,6 +43,9 @@ export default async function handler(req, res) {
   createRequest.setMerchantAuthentication(merchantAuthentication);
   createRequest.setTransactionRequest(transactionRequest);
 
+  console.log("Login ID:", process.env.API_LOGIN_ID);
+  console.log("Transaction Key:", process.env.API_TRANSACTION_KEY);
+
   const controller = new APIControllers.CreateTransactionController(
     createRequest.getJSON()
   );
