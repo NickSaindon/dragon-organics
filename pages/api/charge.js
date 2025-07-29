@@ -1,5 +1,5 @@
 // pages/api/charge.js
-const { APIContracts, APIControllers } = require("authorizenet");
+const { APIContracts, APIControllers, Constants } = require("authorizenet");
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -43,12 +43,16 @@ export default async function handler(req, res) {
   createRequest.setMerchantAuthentication(merchantAuthentication);
   createRequest.setTransactionRequest(transactionRequest);
 
-  console.log("Login ID:", process.env.API_LOGIN_ID);
-  console.log("Transaction Key:", process.env.API_TRANSACTION_KEY);
-
   const controller = new APIControllers.CreateTransactionController(
     createRequest.getJSON()
   );
+
+  // 👇 Use environment variable to determine sandbox or production
+  if (process.env.AUTHORIZE_NET_ENV === "production") {
+    controller.setEnvironment(Constants.endpoint.production);
+  } else {
+    controller.setEnvironment(Constants.endpoint.sandbox);
+  }
 
   try {
     const response = await new Promise((resolve, reject) => {
@@ -67,7 +71,6 @@ export default async function handler(req, res) {
       });
     });
 
-    // Check response
     if (
       response.getMessages().getResultCode() === APIContracts.MessageTypeEnum.OK
     ) {
@@ -87,8 +90,9 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error("Transaction Error:", error);
-    return res
-      .status(500)
-      .json({ error: "Transaction failed", details: error.message });
+    return res.status(500).json({
+      error: "Transaction failed",
+      details: error.message,
+    });
   }
 }
