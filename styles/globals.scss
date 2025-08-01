@@ -142,6 +142,27 @@ a {
   }
 }
 
+// Transcation Loader
+.full-screen-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-screen-loader .loader-text {
+  color: white;
+  margin-top: 1rem;
+  font-size: 1.25rem;
+}
+
 /* Rating */
 .rating span {
   color: #f0c040;

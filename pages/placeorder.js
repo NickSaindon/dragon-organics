@@ -322,6 +322,21 @@ const PlaceOrder = () => {
                             alt="..."
                           />
                         </div>
+                        {loading && (
+                          <div className="full-screen-loader">
+                            <div
+                              className="spinner-border text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                            <p className="loader-text">
+                              Processing your transaction, please wait...
+                            </p>
+                          </div>
+                        )}
                         <form
                           onSubmit={handleSubmit(placeOrderHandler)}
                           className="col-lg-12 col-md-12 col-sm-12 form-credit-card justify-content-center"
